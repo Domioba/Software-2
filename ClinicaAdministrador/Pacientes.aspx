@@ -72,10 +72,9 @@
         </div>
         <div class="card-body">
             <asp:HiddenField ID="hfIDPaciente" runat="server" />
-            <!-- Timestamp para prevenir doble envío -->
             <asp:HiddenField ID="hfTimestamp" runat="server" />
 
-            <!-- Primera Fila: Nombre y Fecha de Nacimiento -->
+            <!-- Fila 1: Nombre y Fecha de Nacimiento -->
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="txtNombreCompleto" class="form-label fw-bold">Nombre Completo <span class="text-danger">*</span></label>
@@ -87,7 +86,7 @@
                         autocomplete="name"
                         placeholder="Ej: María José Rodríguez López"></asp:TextBox>
                     <small class="text-danger" id="errorNombre" style="display:none;"></small>
-                    <div class="form-text">Ingrese nombre y apellido,(Numeros no Permitidos))</div>
+                    <div class="form-text">Ingrese nombre y apellido (números no permitidos)</div>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="txtFechaNacimiento" class="form-label fw-bold">Fecha de Nacimiento <span class="text-danger">*</span></label>
@@ -96,11 +95,11 @@
                         max='<%= DateTime.Now.AddYears(-12).ToString("yyyy-MM-dd") %>'
                         min='<%= DateTime.Now.AddYears(-85).ToString("yyyy-MM-dd") %>'></asp:TextBox>
                     <small class="text-danger" id="errorFecha" style="display:none;"></small>
-                    <div class="form-text">Edad valida, entre 12 y 85 años </div>
+                    <div class="form-text">Edad válida: entre 12 y 85 años</div>
                 </div>
-            </div> <!-- Cierre de la primera fila -->
+            </div>
 
-            <!-- Segunda Fila: Teléfono y Correo -->
+            <!-- Fila 2: Teléfono y Correo -->
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="txtTelefono" class="form-label fw-bold">Teléfono <span class="text-danger">*</span></label>
@@ -122,23 +121,23 @@
                     <small class="text-danger" id="errorCorreo" style="display:none;"></small>
                     <div class="form-text">Formato válido: usuario@dominio.com</div>
                 </div>
-            </div> <!-- Cierre de la segunda fila -->
+            </div>
 
-            <!-- Tercera Fila: Observaciones -->
+            <!-- Fila 3: Observaciones -->
             <div class="mb-3">
                 <label for="txtObservaciones" class="form-label fw-bold">Observaciones</label>
                 <asp:TextBox ID="txtObservaciones" runat="server" TextMode="MultiLine" Rows="3" CssClass="form-control" 
                     MaxLength="500" 
                     oninput="validarContenidoSeguro(this, 'observaciones')"
                     placeholder="Observaciones generales del paciente"></asp:TextBox>
-                <div class="form-text"><span id="contadorObservaciones">0</span>/500 caracteres - Escribe únicamente información válida.</div>
+                <div class="form-text"><span id="contadorObservaciones">0</span>/500 caracteres - Información válida únicamente</div>
                 <small class="text-danger" id="errorObservaciones" style="display:none;"></small>
             </div>
 
-           <!-- NUEVO: Historial Médico Estructurado -->
+            <!-- Historial Médico Estructurado -->
             <div class="mb-3">
                 <label for="ddlCondicionMedica" class="form-label fw-bold">Condición Médica Principal <span class="text-danger">*</span></label>
-                <asp:DropDownList ID="ddlCondicionMedica" runat="server" CssClass="form-select">
+                <asp:DropDownList ID="ddlCondicionMedica" runat="server" CssClass="form-select" onchange="actualizarMensajeCondicion()">
                     <asp:ListItem Text="-- Seleccione una condición --" Value="" Selected="True" />
                     <asp:ListItem Text="Ninguna / Sano sin antecedentes" Value="Ninguna" />
                     <asp:ListItem Text="Diabetes Tipo 1" Value="Diabetes Tipo 1" />
@@ -150,8 +149,17 @@
                     <asp:ListItem Text="Cáncer / Oncológico" Value="Cáncer" />
                     <asp:ListItem Text="Embarazo" Value="Embarazo" />
                     <asp:ListItem Text="Otras Enfermedades Crónicas" Value="Otras" />
+                 
+                    <asp:ListItem Text="Trastornos de Coagulación / Anticoagulantes" Value="Coagulacion" />
+                    <asp:ListItem Text="Alergias Severas / Anafilaxia" Value="Alergias" />
+                    <asp:ListItem Text="Enfermedad Autoinmune" Value="Autoinmune" />
+                    <asp:ListItem Text="Fotosensibilidad / Lupus" Value="Fotosensibilidad" />
+                    <asp:ListItem Text="Quimioterapia / Inmunosupresión" Value="Inmunosupresion" />
+                    <asp:ListItem Text="Marcapasos / Dispositivos Electrónicos" Value="Marcapasos" />
+                    <asp:ListItem Text="Cicatrización Queloide" Value="Queloide" />
                 </asp:DropDownList>
-                <div class="form-text">Seleccione la condición principal para la validación de seguridad.</div>
+                <div class="form-text">Seleccione la condición principal para validación de seguridad en citas.</div>
+                <small id="mensajeCondicion" class="form-text text-info" style="display:none;"></small>
             </div>
 
             <div class="mb-3">
@@ -165,13 +173,13 @@
             
             <!-- Botones -->
             <div class="d-flex gap-2">
-               <asp:Button ID="btnGuardarPaciente" runat="server" Text="Guardar" 
-            OnClick="btnGuardarPaciente_Click" CssClass="btn btn-primary" OnClientClick="return validarFormularioCompleto();" />
+                <asp:Button ID="btnGuardarPaciente" runat="server" Text="Guardar" 
+                    OnClick="btnGuardarPaciente_Click" CssClass="btn btn-primary" OnClientClick="return validarFormularioCompleto();" />
                 <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" CssClass="btn btn-secondary-custom" 
                     OnClick="btnCancelar_Click" CausesValidation="false" />
             </div>
-        </div> <!-- Cierre de card-body -->
-    </asp:Panel> <!-- Cierre de Panel -->
+        </div>
+    </asp:Panel>
 
     <!-- GRIDVIEW -->
     <div class="table-responsive-custom">
@@ -213,370 +221,255 @@
         </asp:GridView>
     </div>
 
-   <script type="text/javascript">
-       // ========== VALIDACIONES DE NOMBRE ==========
-       function validarSoloLetras(event) {
-           var charCode = event.which ? event.which : event.keyCode;
-
-           // Permitir teclas de control
-           if (charCode < 33 || (charCode >= 37 && charCode <= 40)) {
-               return true;
-           }
-
-           // Permitir espacios (32)
-           if (charCode === 32) {
-               return true;
-           }
-
-           // Permitir letras (a-z, A-Z) y caracteres con acento
-           var charStr = String.fromCharCode(charCode);
-           var regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s']$/;
-
-           if (!regex.test(charStr)) {
-               event.preventDefault();
-               mostrarErrorTemporal('nombre', 'Solo se permiten letras, espacios y acentos');
-               return false;
-           }
-
-           return true;
-       }
-
-       function validarNombreCompleto() {
-           var nombre = document.getElementById('<%= txtNombreCompleto.ClientID %>');
-           var errorElement = document.getElementById('errorNombre');
-           var valor = nombre.value.trim();
-
-           // Remover números y caracteres no permitidos
-           var valorLimpio = valor.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s']/g, '');
-           if (valor !== valorLimpio) {
-               nombre.value = valorLimpio;
-           }
-
-           return true;
-       }
-
-       function validarNombreCompletoCompleto() {
-           var nombre = document.getElementById('<%= txtNombreCompleto.ClientID %>');
-           var errorElement = document.getElementById('errorNombre');
-           var valor = nombre.value.trim();
-           var palabras = valor.split(' ').filter(function (palabra) {
-               return palabra.length > 0;
-           });
-
-           if (!valor) {
-               errorElement.style.display = 'block';
-               errorElement.textContent = 'El nombre completo es obligatorio';
-               return false;
-           } else if (valor.length < 2) {
-               errorElement.style.display = 'block';
-               errorElement.textContent = 'El nombre debe tener al menos 2 caracteres';
-               return false;
-           } else if (valor.length > 80) {
-               errorElement.style.display = 'block';
-               errorElement.textContent = 'El nombre no puede exceder 80 caracteres';
-               return false;
-           } else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s']+$/.test(valor)) {
-               errorElement.style.display = 'block';
-               errorElement.textContent = 'Solo se permiten letras, espacios y acentos';
-               return false;
-           } else if (palabras.length < 2) {
-               errorElement.style.display = 'block';
-               errorElement.textContent = 'Debe ingresar al menos un nombre y un apellido';
-               return false;
-           }
-
-           // Validar que cada palabra tenga al menos 2 caracteres
-           for (var i = 0; i < palabras.length; i++) {
-               if (palabras[i].length < 2) {
-                   errorElement.style.display = 'block';
-                   errorElement.textContent = 'Cada palabra del nombre debe tener al menos 2 caracteres';
-                   return false;
-               }
-           }
-
-           errorElement.style.display = 'none';
-           return true;
-       }
-
-       // ========== VALIDACIONES DE FECHA DE NACIMIENTO ==========
-       function validarEdad() {
-           var fechaNacimientoInput = document.getElementById('<%= txtFechaNacimiento.ClientID %>');
-           var errorElement = document.getElementById('errorFecha');
-           var fechaNacimiento = fechaNacimientoInput.value;
-
-           if (!fechaNacimiento) {
-               errorElement.style.display = 'block';
-               errorElement.textContent = 'La fecha de nacimiento es obligatoria';
-               return false;
-           }
-
-           var fecha = new Date(fechaNacimiento);
-           var hoy = new Date();
-           var edad = hoy.getFullYear() - fecha.getFullYear();
-           var mes = hoy.getMonth() - fecha.getMonth();
-
-           if (mes < 0 || (mes === 0 && hoy.getDate() < fecha.getDate())) {
-               edad--;
-           }
-
-           if (fecha > hoy) {
-               errorElement.style.display = 'block';
-               errorElement.textContent = 'La fecha no puede ser mayor a la actual';
-               return false;
-           } else if (edad < 12) {
-               errorElement.style.display = 'block';
-               errorElement.textContent = 'El paciente debe tener al menos 12 años (clínica para adultos)';
-               return false;
-           } else if (edad > 85) {
-               errorElement.style.display = 'block';
-               errorElement.textContent = 'La edad no puede ser mayor a 85 años';
-               return false;
-           }
-
-           errorElement.style.display = 'none';
-           return true;
-       }
-
-       // ========== VALIDACIONES DE TELÉFONO ==========
-       function validarSoloNumerosTelefono(event) {
-           var charCode = event.which ? event.which : event.keyCode;
-
-           // Permitir teclas de control
-           if (charCode < 33 || (charCode >= 37 && charCode <= 40)) {
-               return true;
-           }
-
-           // Solo permitir números (48-57)
-           if (charCode >= 48 && charCode <= 57) {
-               return true;
-           }
-
-           event.preventDefault();
-           mostrarErrorTemporal('telefono', 'Solo se permiten números');
-           return false;
-       }
-
-       function validarFormatoTelefono() {
-           var telefono = document.getElementById('<%= txtTelefono.ClientID %>');
-           // Remover cualquier carácter que no sea número
-           telefono.value = telefono.value.replace(/\D/g, '');
-       }
-
-       function validarTelefonoCompleto() {
-           var telefonoInput = document.getElementById('<%= txtTelefono.ClientID %>');
-           var errorElement = document.getElementById('errorTelefono');
-           var valor = telefonoInput.value.replace(/\D/g, '');
-
-           if (!valor) {
-               errorElement.style.display = 'block';
-               errorElement.textContent = 'El teléfono es obligatorio';
-               return false;
-           }
-
-           if (valor.length < 8) {
-               errorElement.style.display = 'block';
-               errorElement.textContent = 'El teléfono debe tener al menos 8 dígitos';
-               return false;
-           } else if (valor.length > 15) {
-               errorElement.style.display = 'block';
-               errorElement.textContent = 'El teléfono no puede exceder 15 dígitos';
-               return false;
-           } else if (!/^\d+$/.test(valor)) {
-               errorElement.style.display = 'block';
-               errorElement.textContent = 'Solo se permiten números';
-               return false;
-           }
-
-           errorElement.style.display = 'none';
-           return true;
-       }
-
-       // ========== VALIDACIONES DE CORREO ELECTRÓNICO ==========
-       function validarCorreoCompleto() {
-           var correoInput = document.getElementById('<%= txtCorreo.ClientID %>');
-        var errorElement = document.getElementById('errorCorreo');
-        var valor = correoInput.value.trim().toLowerCase();
-        
-        if (!valor) {
-            errorElement.style.display = 'block';
-            errorElement.textContent = 'El correo electrónico es obligatorio';
-            return false;
-        }
-        
-        // Expresión regular robusta para validar correos
-        var emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-        
-        if (!emailRegex.test(valor)) {
-            errorElement.style.display = 'block';
-            errorElement.textContent = 'Formato de correo inválido. Use: usuario@dominio.com';
-            return false;
-        }
-        
-        // Validar que no tenga dominios vacíos
-        var partes = valor.split('@');
-        if (partes.length !== 2 || !partes[0] || !partes[1] || partes[1].indexOf('.') === -1) {
-            errorElement.style.display = 'block';
-            errorElement.textContent = 'El dominio del correo no es válido';
-            return false;
-        }
-        
-        // Validar que el dominio tenga extensión
-        var dominioPartes = partes[1].split('.');
-        if (dominioPartes.length < 2 || !dominioPartes[dominioPartes.length - 1]) {
-            errorElement.style.display = 'block';
-            errorElement.textContent = 'El dominio del correo debe tener una extensión válida';
-            return false;
-        }
-        
-        correoInput.value = valor; // Normalizar a minúsculas
-        errorElement.style.display = 'none';
-        return true;
-    }
-
-    // ========== VALIDACIONES DE CONTENIDO SEGURO ==========
-    function validarContenidoSeguro(elemento, tipo) {
-        var valor = elemento.value;
-        var errorElement = document.getElementById('error' + tipo.charAt(0).toUpperCase() + tipo.slice(1));
-        var maxCaracteres = tipo === 'observaciones' ? 500 : 3000;
-        
-        // Validar longitud
-        if (valor.length > maxCaracteres) {
-            errorElement.style.display = 'block';
-            errorElement.textContent = 'El texto excede el límite de ' + maxCaracteres + ' caracteres';
-            elemento.value = valor.substring(0, maxCaracteres);
-            return false;
-        }
-        
-        // Detectar y eliminar contenido peligroso
-        var patronesPeligrosos = [
-            /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
-            /javascript:/gi,
-            /on\w+\s*=/gi,
-            /<\w+[^>]*>/gi,
-            /data:/gi,
-            /vbscript:/gi,
-            /expression\s*\(/gi,
-            /url\s*\(/gi
-        ];
-        
-        var contenidoLimpio = valor;
-        var contenidoPeligrosoEncontrado = false;
-        
-        for (var i = 0; i < patronesPeligrosos.length; i++) {
-            if (patronesPeligrosos[i].test(valor)) {
-                contenidoPeligrosoEncontrado = true;
-                contenidoLimpio = contenidoLimpio.replace(patronesPeligrosos[i], '');
-            }
-        }
-        
-        if (contenidoPeligrosoEncontrado) {
-            errorElement.style.display = 'block';
-            errorElement.textContent = 'Se ha detectado y eliminado contenido no permitido';
-            elemento.value = contenidoLimpio;
-            return false;
-        }
-        
-        errorElement.style.display = 'none';
-        return true;
-    }
-
-    // ========== VALIDACIÓN COMPLETA DEL FORMULARIO ==========
-    function validarFormularioCompleto() {
-        var validaciones = [
-            validarNombreCompletoCompleto(),
-            validarEdad(),
-            validarTelefonoCompleto(),
-            validarCorreoCompleto(),
-            validarContenidoSeguro(document.getElementById('<%= txtObservaciones.ClientID %>'), 'observaciones'),
-            validarContenidoSeguro(document.getElementById('<%= txtDetalleMedico.ClientID %>'), 'historial') // CORREGIDO: txtDetalleMedico
-        ];
-
-        var esValido = validaciones.every(function(validacion) {
-            return validacion === true;
-        });
-
-        if (esValido) {
-            // Deshabilitar botón para prevenir doble envío
-            var btnGuardar = document.getElementById('<%= btnGuardarPaciente.ClientID %>');
-            if (btnGuardar) {
-                btnGuardar.disabled = true;
-                btnGuardar.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando...';
+    <script type="text/javascript">
+        // ========== VALIDACIONES DE NOMBRE ==========
+        function validarSoloLetras(event) {
+            var charCode = event.which ? event.which : event.keyCode;
+            if (charCode < 33 || (charCode >= 37 && charCode <= 40)) return true;
+            if (charCode === 32) return true;
+            var charStr = String.fromCharCode(charCode);
+            var regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s']$/;
+            if (!regex.test(charStr)) {
+                event.preventDefault();
+                mostrarErrorTemporal('nombre', 'Solo se permiten letras, espacios y acentos');
+                return false;
             }
             return true;
-        } else {
-            // Enfocar el primer campo con error
-            var primerosErrores = document.querySelectorAll('.text-danger[style*="display: block"]');
-            if (primerosErrores.length > 0) {
-                var campoId = primerosErrores[0].id.replace('error', 'txt');
-                var campo = document.getElementById(campoId);
-                if (campo) {
-                    campo.focus();
-                }
-            }
+        }
+
+        function validarNombreCompleto() {
+            var nombre = document.getElementById('<%= txtNombreCompleto.ClientID %>');
+            var valor = nombre.value.trim();
+            var valorLimpio = valor.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s']/g, '');
+            if (valor !== valorLimpio) nombre.value = valorLimpio;
+            return true;
+        }
+
+        function validarNombreCompletoCompleto() {
+            var nombre = document.getElementById('<%= txtNombreCompleto.ClientID %>');
+            var errorElement = document.getElementById('errorNombre');
+            var valor = nombre.value.trim();
+            var palabras = valor.split(' ').filter(function (p) { return p.length > 0; });
+
+            if (!valor) { errorElement.style.display = 'block'; errorElement.textContent = 'El nombre completo es obligatorio'; return false; }
+            if (valor.length < 2) { errorElement.style.display = 'block'; errorElement.textContent = 'Mínimo 2 caracteres'; return false; }
+            if (valor.length > 80) { errorElement.style.display = 'block'; errorElement.textContent = 'Máximo 80 caracteres'; return false; }
+            if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s']+$/.test(valor)) { errorElement.style.display = 'block'; errorElement.textContent = 'Solo letras, espacios y acentos'; return false; }
+            if (palabras.length < 2) { errorElement.style.display = 'block'; errorElement.textContent = 'Debe ingresar nombre y apellido'; return false; }
+            for (var i = 0; i < palabras.length; i++) { if (palabras[i].length < 2) { errorElement.style.display = 'block'; errorElement.textContent = 'Cada palabra debe tener mínimo 2 caracteres'; return false; } }
+            errorElement.style.display = 'none';
+            return true;
+        }
+
+        // ========== VALIDACIONES DE FECHA ==========
+        function validarEdad() {
+            var input = document.getElementById('<%= txtFechaNacimiento.ClientID %>');
+            var errorElement = document.getElementById('errorFecha');
+            var fechaNacimiento = input.value;
+            if (!fechaNacimiento) { errorElement.style.display = 'block'; errorElement.textContent = 'Fecha obligatoria'; return false; }
+            var fecha = new Date(fechaNacimiento);
+            var hoy = new Date();
+            var edad = hoy.getFullYear() - fecha.getFullYear();
+            var mes = hoy.getMonth() - fecha.getMonth();
+            if (mes < 0 || (mes === 0 && hoy.getDate() < fecha.getDate())) edad--;
+            if (fecha > hoy) { errorElement.style.display = 'block'; errorElement.textContent = 'Fecha no puede ser futura'; return false; }
+            if (edad < 12) { errorElement.style.display = 'block'; errorElement.textContent = 'Mínimo 12 años'; return false; }
+            if (edad > 85) { errorElement.style.display = 'block'; errorElement.textContent = 'Máximo 85 años'; return false; }
+            errorElement.style.display = 'none';
+            return true;
+        }
+
+        // ========== VALIDACIONES DE TELÉFONO ==========
+        function validarSoloNumerosTelefono(event) {
+            var charCode = event.which ? event.which : event.keyCode;
+            if (charCode < 33 || (charCode >= 37 && charCode <= 40)) return true;
+            if (charCode >= 48 && charCode <= 57) return true;
+            event.preventDefault();
+            mostrarErrorTemporal('telefono', 'Solo números permitidos');
             return false;
         }
-    }
 
-    // ========== FUNCIONES AUXILIARES ==========
-    function mostrarErrorTemporal(campo, mensaje) {
-        var errorElement = document.getElementById('error' + campo.charAt(0).toUpperCase() + campo.slice(1));
-        if (errorElement) {
-            errorElement.style.display = 'block';
-            errorElement.textContent = mensaje;
-            setTimeout(function() {
-                errorElement.style.display = 'none';
-            }, 3000);
+        function validarFormatoTelefono() {
+            var telefono = document.getElementById('<%= txtTelefono.ClientID %>');
+            telefono.value = telefono.value.replace(/\D/g, '');
         }
-    }
 
-    function confirmarEliminacion(boton) {
-        var fila = boton.closest('tr');
-        var nombrePaciente = fila.cells[1].textContent;
-        return confirm('¿Está seguro de que desea eliminar al paciente: ' + nombrePaciente + '?\nEsta acción no se puede deshacer.');
-    }
+        function validarTelefonoCompleto() {
+            var input = document.getElementById('<%= txtTelefono.ClientID %>');
+            var errorElement = document.getElementById('errorTelefono');
+            var valor = input.value.replace(/\D/g, '');
+            if (!valor) { errorElement.style.display = 'block'; errorElement.textContent = 'Teléfono obligatorio'; return false; }
+            if (valor.length < 8) { errorElement.style.display = 'block'; errorElement.textContent = 'Mínimo 8 dígitos'; return false; }
+            if (valor.length > 15) { errorElement.style.display = 'block'; errorElement.textContent = 'Máximo 15 dígitos'; return false; }
+            if (!/^\d+$/.test(valor)) { errorElement.style.display = 'block'; errorElement.textContent = 'Solo números'; return false; }
+            errorElement.style.display = 'none';
+            return true;
+        }
 
-    // Contadores de caracteres
-    document.addEventListener('DOMContentLoaded', function() {
-        var txtObservaciones = document.getElementById('<%= txtObservaciones.ClientID %>');
-        var txtDetalleMedico = document.getElementById('<%= txtDetalleMedico.ClientID %>'); // CORREGIDO: txtDetalleMedico
-        var contadorObservaciones = document.getElementById('contadorObservaciones');
-        var contadorHistorial = document.getElementById('contadorHistorial');
+        // ========== VALIDACIONES DE CORREO ==========
+        function validarCorreoCompleto() {
+            var input = document.getElementById('<%= txtCorreo.ClientID %>');
+            var errorElement = document.getElementById('errorCorreo');
+            var valor = input.value.trim().toLowerCase();
+            if (!valor) { errorElement.style.display='block'; errorElement.textContent='Correo obligatorio'; return false; }
+            var emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+            if (!emailRegex.test(valor)) { errorElement.style.display='block'; errorElement.textContent='Formato inválido'; return false; }
+            var partes = valor.split('@');
+            if (partes.length !== 2 || !partes[0] || !partes[1] || partes[1].indexOf('.') === -1) { errorElement.style.display='block'; errorElement.textContent='Dominio inválido'; return false; }
+            var dominioPartes = partes[1].split('.');
+            if (dominioPartes.length < 2 || !dominioPartes[dominioPartes.length - 1]) { errorElement.style.display='block'; errorElement.textContent='Extensión de dominio inválida'; return false; }
+            input.value = valor;
+            errorElement.style.display='none';
+            return true;
+        }
 
-        function actualizarContador(elemento, contador, maximo) {
-            if (elemento && contador) {
-                contador.textContent = elemento.value.length;
-                if (elemento.value.length > maximo * 0.9) {
-                    contador.className = 'text-warning';
-                } else if (elemento.value.length > maximo) {
-                    contador.className = 'text-danger';
-                } else {
-                    contador.className = 'text-muted';
-                }
+        // ========== VALIDACIONES DE CONTENIDO SEGURO ==========
+        function validarContenidoSeguro(elemento, tipo) {
+            var valor = elemento.value;
+            var errorElement = document.getElementById('error' + tipo.charAt(0).toUpperCase() + tipo.slice(1));
+            var maxCaracteres = tipo === 'observaciones' ? 500 : 3000;
+            if (valor.length > maxCaracteres) {
+                if (errorElement) { errorElement.style.display='block'; errorElement.textContent='Excede límite de '+maxCaracteres+' caracteres'; }
+                elemento.value = valor.substring(0, maxCaracteres);
+                return false;
+            }
+            var patronesPeligrosos = [/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, /javascript:/gi, /on\w+\s*=/gi, /<\w+[^>]*>/gi, /data:/gi, /vbscript:/gi, /expression\s*\(/gi, /url\s*\(/gi];
+            var contenidoLimpio = valor;
+            var contenidoPeligroso = false;
+            for (var i=0; i<patronesPeligrosos.length; i++) {
+                if (patronesPeligrosos[i].test(valor)) { contenidoPeligroso = true; contenidoLimpio = contenidoLimpio.replace(patronesPeligrosos[i], ''); }
+            }
+            if (contenidoPeligroso) {
+                if (errorElement) { errorElement.style.display='block'; errorElement.textContent='Contenido no permitido eliminado'; }
+                elemento.value = contenidoLimpio;
+                return false;
+            }
+            if (errorElement) errorElement.style.display='none';
+            return true;
+        }
+
+        // ========== MENSAJE INFORMATIVO POR CONDICIÓN MÉDICA ==========
+        function actualizarMensajeCondicion() {
+            var ddl = document.getElementById('<%= ddlCondicionMedica.ClientID %>');
+            var mensaje = document.getElementById('mensajeCondicion');
+            var valor = ddl.value;
+            var mensajes = {
+                'Embarazo': '⚠️ Con esta condición, no se podrán agendar: Inyectables ni Láser en la misma cita.',
+                'Diabetes Tipo 1': '⚠️ Restricciones: Procedimientos con microlesiones o láser requieren evaluación previa.',
+                'Diabetes Tipo 2': '⚠️ Precaución: Inyectables y procedimientos invasivos requieren autorización médica.',
+                'Hipertensión': '⚠️ Los tratamientos inyectables pueden interactuar con medicamentos para la presión.',
+                'Cardíaco': '⚠️ Inyectables requieren evaluación cardiológica previa.',
+                'Epilepsia': '⚠️ Tratamientos con láser/luz pulsada están contraindicados por fotosensibilidad.',
+                'Hepatitis': '⚠️ Procedimientos invasivos requieren evaluación hepática previa.',
+                'Cáncer': '⚠️ Cualquier tratamiento invasivo requiere autorización oncológica.',
+                'Coagulacion': '⚠️ Procedimientos que rompen la piel tienen riesgo elevado de sangrado.',
+                'Alergias': '⚠️ Inyectables requieren prueba de alergia previa.',
+                'Fotosensibilidad': '⚠️ Tratamientos con láser están contraindicados.',
+                'Inmunosupresion': '⚠️ Procedimientos que rompen la barrera cutánea tienen riesgo de infección.',
+                'Marcapasos': '⚠️ Equipos láser pueden interferir con dispositivos electrónicos implantados.',
+                'Queloide': '⚠️ Procedimientos con microagujas pueden causar cicatrices queloides.'
+            };
+            if (mensajes[valor]) {
+                mensaje.textContent = mensajes[valor];
+                mensaje.style.display = 'block';
+            } else {
+                mensaje.style.display = 'none';
             }
         }
 
-        if (txtObservaciones && contadorObservaciones) {
-            actualizarContador(txtObservaciones, contadorObservaciones, 500);
-            txtObservaciones.addEventListener('input', function() {
-                actualizarContador(this, contadorObservaciones, 500);
-            });
+        // ========== VALIDACIÓN COMPLETA DEL FORMULARIO ==========
+        // ========== VALIDACIÓN COMPLETA DEL FORMULARIO ==========
+        // ========== VALIDACIÓN COMPLETA DEL FORMULARIO (CON DEBUG) ==========
+        // ========== VALIDACIÓN COMPLETA DEL FORMULARIO (CORREGIDA) ==========
+        function validarFormularioCompleto() {
+            console.log("🔍 Iniciando validación del formulario...");
+
+            var resultados = {
+                nombre: validarNombreCompletoCompleto(),
+                fecha: validarEdad(),
+                telefono: validarTelefonoCompleto(),
+                correo: validarCorreoCompleto(),
+                observaciones: validarContenidoSeguro(document.getElementById('<%= txtObservaciones.ClientID %>'), 'observaciones'),
+                historial: validarContenidoSeguro(document.getElementById('<%= txtDetalleMedico.ClientID %>'), 'historial')
+            };
+    
+            console.log("📋 Resultados validación:", resultados);
+    
+            var esValido = Object.values(resultados).every(function(v) { return v === true; });
+    
+            if (esValido) {
+                console.log("✅ Validaciones cliente OK. Enviando al servidor...");
+                // RETIRADO: No deshabilitamos el botón aquí para evitar bloqueos si el servidor rechaza los datos.
+                // return true permite el postback.
+                return true;
+            } else {
+                console.log("❌ Validación fallida. Campos con error:", Object.keys(resultados).filter(k => !resultados[k]));
+        
+                // Enfocar primer campo con error
+                var primerosErrores = document.querySelectorAll('.text-danger[style*="display: block"]');
+                if (primerosErrores.length > 0) {
+                    var campoId = primerosErrores[0].id.replace('error', 'txt'); // Ajuste genérico
+                    // Caso especial para drop-downs si fuera necesario, aquí asumimos txt
+                    if (campoId === 'txtCondicion') campoId = '<%= ddlCondicionMedica.ClientID %>';
+
+                    var campo = document.getElementById(campoId);
+                    if (campo) {
+                        campo.focus();
+                        campo.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
+
+                return false;
+            }
+        }
+        // ========== FUNCIONES AUXILIARES ==========
+        function mostrarErrorTemporal(campo, mensaje) {
+            var errorElement = document.getElementById('error' + campo.charAt(0).toUpperCase() + campo.slice(1));
+            if (errorElement) {
+                errorElement.style.display = 'block';
+                errorElement.textContent = mensaje;
+                setTimeout(function() { errorElement.style.display = 'none'; }, 3000);
+            }
         }
 
-        if (txtDetalleMedico && contadorHistorial) {
-            actualizarContador(txtDetalleMedico, contadorHistorial, 3000);
-            txtDetalleMedico.addEventListener('input', function() {
-                actualizarContador(this, contadorHistorial, 3000);
-            });
+        function confirmarEliminacion(boton) {
+            var fila = boton.closest('tr');
+            var nombrePaciente = fila.cells[1].textContent;
+            return confirm('¿Eliminar al paciente: ' + nombrePaciente + '?\nEsta acción no se puede deshacer.');
         }
-    });
 
-    // Restaurar estado del botón si hay error de validación
-    window.restaurarBotonGuardar = function() {
-        var btnGuardar = document.getElementById('<%= btnGuardarPaciente.ClientID %>');
-           if (btnGuardar) {
-               btnGuardar.disabled = false;
-               btnGuardar.innerHTML = 'Guardar Paciente';
-           }
-       };
-   </script>
+        // Contadores de caracteres
+        document.addEventListener('DOMContentLoaded', function() {
+            var txtObservaciones = document.getElementById('<%= txtObservaciones.ClientID %>');
+            var txtDetalleMedico = document.getElementById('<%= txtDetalleMedico.ClientID %>');
+            var contadorObservaciones = document.getElementById('contadorObservaciones');
+            var contadorHistorial = document.getElementById('contadorHistorial');
+
+            function actualizarContador(elemento, contador, maximo) {
+                if (elemento && contador) {
+                    contador.textContent = elemento.value.length;
+                    if (elemento.value.length > maximo * 0.9) contador.className = 'text-warning';
+                    else if (elemento.value.length > maximo) contador.className = 'text-danger';
+                    else contador.className = 'text-muted';
+                }
+            }
+            if (txtObservaciones && contadorObservaciones) {
+                actualizarContador(txtObservaciones, contadorObservaciones, 500);
+                txtObservaciones.addEventListener('input', function() { actualizarContador(this, contadorObservaciones, 500); });
+            }
+            if (txtDetalleMedico && contadorHistorial) {
+                actualizarContador(txtDetalleMedico, contadorHistorial, 3000);
+                txtDetalleMedico.addEventListener('input', function() { actualizarContador(this, contadorHistorial, 3000); });
+            }
+        });
+
+        // Restaurar botón después de error
+        window.restaurarBotonGuardar = function() {
+            var btnGuardar = document.getElementById('<%= btnGuardarPaciente.ClientID %>');
+            if (btnGuardar) {
+                btnGuardar.disabled = false;
+                btnGuardar.innerHTML = 'Guardar';
+            }
+        };
+    </script>
 </asp:Content>

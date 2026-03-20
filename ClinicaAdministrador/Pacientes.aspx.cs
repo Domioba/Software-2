@@ -184,9 +184,10 @@ namespace ClinicaAdministrador
         {
             try
             {
+                // 🔧 CORRECCIÓN: Restaurar botón si falla validación servidor
                 if (!ValidarDatosPacienteCompleto())
                 {
-                    // Si falla la validación, salimos
+                    ScriptManager.RegisterStartupScript(this, GetType(), "restoreButton", "restaurarBotonGuardar();", true);
                     return;
                 }
 
@@ -194,8 +195,6 @@ namespace ClinicaAdministrador
                 {
                     string query;
                     bool esNuevo = string.IsNullOrEmpty(hfIDPaciente.Value);
-
-                    // CORRECCIÓN: Declaramos la variable fuera del if/else para que tenga alcance en todo el método
                     int idPacienteActual = 0;
 
                     if (!esNuevo)
@@ -207,12 +206,11 @@ namespace ClinicaAdministrador
                     string telefono = SanitizeInput(txtTelefono.Text.Trim());
                     string correo = SanitizeInput(txtCorreo.Text.Trim().ToLower());
 
-                    // Concatenamos la condición seleccionada con el detalle para el campo HistorialMedico de la BD
+                    // Concatenamos la condición seleccionada con el detalle
                     string condicion = ddlCondicionMedica.SelectedValue;
                     string detalle = SanitizeInput(txtDetalleMedico.Text.Trim());
-
-                    // Construimos el texto completo que se guardará en la BD
                     string historialFinal = condicion;
+
                     if (!string.IsNullOrEmpty(detalle))
                     {
                         historialFinal += " - " + detalle;
@@ -227,29 +225,29 @@ namespace ClinicaAdministrador
                             ScriptManager.RegisterStartupScript(this, GetType(), "restoreButton", "restaurarBotonGuardar();", true);
                             return;
                         }
-                        query = @"INSERT INTO Pacientes (NombreCompleto, FechaNacimiento, Telefono, Correo, Observaciones, HistorialMedico, Estado) 
-                          VALUES (@NombreCompleto, @FechaNacimiento, @Telefono, @Correo, @Observaciones, @HistorialMedico, 1)";
+                        query = @"INSERT INTO Pacientes (NombreCompleto, FechaNacimiento, Telefono, Correo, Observaciones, HistorialMedico, Estado)
+                         VALUES (@NombreCompleto, @FechaNacimiento, @Telefono, @Correo, @Observaciones, @HistorialMedico, 1)";
                     }
                     else
                     {
-                        // Usamos la variable idPacienteActual que ya declaramos arriba
                         if (ExistePacienteDuplicado(nombreCompleto, telefono, correo, idPacienteActual))
                         {
                             MostrarMensajeError("Ya existe otro paciente con el mismo nombre, teléfono o correo electrónico.");
                             ScriptManager.RegisterStartupScript(this, GetType(), "restoreButton", "restaurarBotonGuardar();", true);
                             return;
                         }
-                        query = @"UPDATE Pacientes 
-                          SET NombreCompleto = @NombreCompleto, FechaNacimiento = @FechaNacimiento, Telefono = @Telefono, 
-                              Correo = @Correo, Observaciones = @Observaciones, HistorialMedico = @HistorialMedico
-                          WHERE IDPaciente = @IDPaciente AND Estado = 1";
+                        query = @"UPDATE Pacientes
+                         SET NombreCompleto = @NombreCompleto, FechaNacimiento = @FechaNacimiento, Telefono = @Telefono,
+                             Correo = @Correo, Observaciones = @Observaciones, HistorialMedico = @HistorialMedico
+                         WHERE IDPaciente = @IDPaciente AND Estado = 1";
                     }
 
                     using (SqlCommand cmd = new SqlCommand(query, con))
                     {
                         cmd.Parameters.Add("@NombreCompleto", SqlDbType.NVarChar, 80).Value = nombreCompleto;
 
-                        if (!string.IsNullOrEmpty(txtFechaNacimiento.Text) && DateTime.TryParse(txtFechaNacimiento.Text, out DateTime fechaNacimiento))
+                        if (!string.IsNullOrEmpty(txtFechaNacimiento.Text) &&
+                            DateTime.TryParseExact(txtFechaNacimiento.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime fechaNacimiento))
                         {
                             cmd.Parameters.Add("@FechaNacimiento", SqlDbType.Date).Value = fechaNacimiento;
                         }
@@ -276,8 +274,8 @@ namespace ClinicaAdministrador
                         if (resultado > 0)
                         {
                             pnlFormularioPaciente.Visible = false;
-                            LimpiarFormulario(); // Limpiamos para la próxima
-                            CargarPacientes();  // Recargamos la grilla
+                            LimpiarFormulario();
+                            CargarPacientes();
                             MostrarMensajeExito(esNuevo ? "Paciente creado exitosamente." : "Paciente actualizado exitosamente.");
                         }
                         else
@@ -297,7 +295,7 @@ namespace ClinicaAdministrador
             catch (Exception ex)
             {
                 LogError("Error inesperado", ex);
-                MostrarMensajeError("Error inesperado. Por favor contacte al administrador.");
+                MostrarMensajeError("Error inesperado: " + ex.Message);
                 ScriptManager.RegisterStartupScript(this, GetType(), "restoreButton", "restaurarBotonGuardar();", true);
             }
         }

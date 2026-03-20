@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -17,16 +18,42 @@ namespace ClinicaAdministrador
             if (Session["Usuario"] == null)
             {
                 Response.Redirect("Login.aspx");
-                return; // Importante salir del método
+                return;
             }
             // --- FIN DE LA LÓGICA DE SEGURIDAD ---
 
             if (!IsPostBack)
             {
+                // CORRECCIÓN: Agregada la carga de estados para que el DDL no esté vacío
+                CargarEstadosDDL();
                 CargarPacientesDDL();
                 CargarServiciosCheckBoxList();
                 CargarCitas();
             }
+        }
+
+        // MÉTODO NUEVO: Carga los estados válidos para una cita
+        private void CargarEstadosDDL()
+        {
+            if (ddlEstado.Items.Count == 0) // Cargar solo si está vacío para no duplicar
+            {
+                ddlEstado.Items.Add(new ListItem("Programada", "Programada"));
+                ddlEstado.Items.Add(new ListItem("Confirmada", "Confirmada"));
+                ddlEstado.Items.Add(new ListItem("Realizada", "Realizada"));
+                ddlEstado.Items.Add(new ListItem("Cancelada", "Cancelada"));
+            }
+
+            // Opcional: Si usas un filtro de estado con la misma lista, descomenta esto:
+            /*
+            if (ddlFiltroEstado.Items.Count == 0)
+            {
+                ddlFiltroEstado.Items.Add(new ListItem("-- Todos --", ""));
+                ddlFiltroEstado.Items.Add(new ListItem("Programada", "Programada"));
+                ddlFiltroEstado.Items.Add(new ListItem("Confirmada", "Confirmada"));
+                ddlFiltroEstado.Items.Add(new ListItem("Realizada", "Realizada"));
+                ddlFiltroEstado.Items.Add(new ListItem("Cancelada", "Cancelada"));
+            }
+            */
         }
 
         private void CargarPacientesDDL()
@@ -69,7 +96,6 @@ namespace ClinicaAdministrador
                         {
                             string categoria = reader["TipoProcedimiento"].ToString();
 
-                            // Agregar separador de categoría
                             if (categoria != categoriaActual)
                             {
                                 cblServicios.Items.Add(new ListItem($"--- {categoria.ToUpper()} ---", "0")
@@ -142,7 +168,12 @@ namespace ClinicaAdministrador
         {
             hfIDCita.Value = "";
             ddlPaciente.ClearSelection();
-            ddlEstado.ClearSelection();
+            ddlPaciente.SelectedValue = "0";
+
+            // CORRECCIÓN: Usar FindByValue para evitar error si la lista no tiene el valor (aunque ya la cargamos en Page_Load)
+            ListItem liProgramada = ddlEstado.Items.FindByValue("Programada");
+            if (liProgramada != null) ddlEstado.SelectedValue = "Programada";
+
             txtFecha.Text = "";
             txtHora.Text = "";
             txtNotas.Text = "";
@@ -163,6 +194,7 @@ namespace ClinicaAdministrador
                 // Validaciones en el servidor
                 if (!ValidarDatosCita())
                 {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "restoreButton", "if(typeof(restaurarBotonGuardar)==='function')restaurarBotonGuardar();", true);
                     return;
                 }
 
@@ -181,42 +213,47 @@ namespace ClinicaAdministrador
 
                             if (string.IsNullOrEmpty(hfIDCita.Value))
                             {
-                                // Nueva cita
-                                string queryCita = @"INSERT INTO Citas (IDPaciente, Fecha, Hora, Estado, Notas, DuracionTotal) 
+                                // === NUEVA CITA ===
+                                string queryCita = @"INSERT INTO Citas (IDPaciente, Fecha, Hora, Estado, Notas, DuracionTotal, FechaRegistro) 
                                                    OUTPUT INSERTED.IDCita
-                                                   VALUES (@IDPaciente, @Fecha, @Hora, @Estado, @Notas, @DuracionTotal)";
+                                                   VALUES (@IDPaciente, @Fecha, @Hora, @Estado, @Notas, @DuracionTotal, GETDATE())";
                                 using (SqlCommand cmd = new SqlCommand(queryCita, con, transaction))
                                 {
-                                    cmd.Parameters.AddWithValue("@IDPaciente", ddlPaciente.SelectedValue);
-                                    cmd.Parameters.AddWithValue("@Fecha", txtFecha.Text);
-                                    cmd.Parameters.AddWithValue("@Hora", txtHora.Text);
+                                    cmd.Parameters.AddWithValue("@IDPaciente", Convert.ToInt32(ddlPaciente.SelectedValue));
+                                    cmd.Parameters.AddWithValue("@Fecha", DateTime.ParseExact(txtFecha.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture).Date);
+                                    cmd.Parameters.AddWithValue("@Hora", TimeSpan.Parse(txtHora.Text));
                                     cmd.Parameters.AddWithValue("@Estado", ddlEstado.SelectedValue);
-                                    cmd.Parameters.AddWithValue("@Notas", txtNotas.Text.Trim());
+                                    cmd.Parameters.AddWithValue("@Notas", string.IsNullOrEmpty(txtNotas.Text.Trim()) ? (object)DBNull.Value : txtNotas.Text.Trim());
                                     cmd.Parameters.AddWithValue("@DuracionTotal", duracionTotal);
                                     idCita = (int)cmd.ExecuteScalar();
                                 }
                             }
                             else
                             {
-                                // Editar cita existente
+                                // === EDITAR CITA EXISTENTE ===
                                 idCita = Convert.ToInt32(hfIDCita.Value);
                                 string queryCita = @"UPDATE Citas 
-                                                   SET IDPaciente = @IDPaciente, Fecha = @Fecha, Hora = @Hora, 
-                                                       Estado = @Estado, Notas = @Notas, DuracionTotal = @DuracionTotal 
+                                                   SET IDPaciente = @IDPaciente, 
+                                                       Fecha = @Fecha, 
+                                                       Hora = @Hora, 
+                                                       Estado = @Estado, 
+                                                       Notas = @Notas, 
+                                                       DuracionTotal = @DuracionTotal,
+                                                       FechaModificacion = GETDATE()
                                                    WHERE IDCita = @IDCita";
                                 using (SqlCommand cmd = new SqlCommand(queryCita, con, transaction))
                                 {
-                                    cmd.Parameters.AddWithValue("@IDPaciente", ddlPaciente.SelectedValue);
-                                    cmd.Parameters.AddWithValue("@Fecha", txtFecha.Text);
-                                    cmd.Parameters.AddWithValue("@Hora", txtHora.Text);
+                                    cmd.Parameters.AddWithValue("@IDPaciente", Convert.ToInt32(ddlPaciente.SelectedValue));
+                                    cmd.Parameters.AddWithValue("@Fecha", DateTime.ParseExact(txtFecha.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture).Date);
+                                    cmd.Parameters.AddWithValue("@Hora", TimeSpan.Parse(txtHora.Text));
                                     cmd.Parameters.AddWithValue("@Estado", ddlEstado.SelectedValue);
-                                    cmd.Parameters.AddWithValue("@Notas", txtNotas.Text.Trim());
+                                    cmd.Parameters.AddWithValue("@Notas", string.IsNullOrEmpty(txtNotas.Text.Trim()) ? (object)DBNull.Value : txtNotas.Text.Trim());
                                     cmd.Parameters.AddWithValue("@DuracionTotal", duracionTotal);
                                     cmd.Parameters.AddWithValue("@IDCita", idCita);
                                     cmd.ExecuteNonQuery();
                                 }
 
-                                // Eliminar los servicios anteriores
+                                // Eliminar los servicios anteriores de esta cita
                                 string queryDeleteDetalles = "DELETE FROM Citas_Servicios WHERE IDCita = @IDCita";
                                 using (SqlCommand cmdDelete = new SqlCommand(queryDeleteDetalles, con, transaction))
                                 {
@@ -225,16 +262,20 @@ namespace ClinicaAdministrador
                                 }
                             }
 
-                            // Agregar los servicios seleccionados
-                            var serviciosSeleccionados = cblServicios.Items.Cast<ListItem>().Where(item => item.Selected).ToList();
+                            // === AGREGAR LOS SERVICIOS SELECCIONADOS ===
+                            var serviciosSeleccionados = cblServicios.Items.Cast<ListItem>()
+                                .Where(item => item.Selected && !string.IsNullOrEmpty(item.Value) && item.Value != "0")
+                                .ToList();
+
                             foreach (ListItem item in serviciosSeleccionados)
                             {
-                                int idServicio = Convert.ToInt32(item.Value);
+                                if (!int.TryParse(item.Value, out int idServicio)) continue;
+
                                 decimal precio = ObtenerPrecioServicio(idServicio, con, transaction);
                                 total += precio;
 
-                                string queryDetalle = @"INSERT INTO Citas_Servicios (IDCita, IDServicio, PrecioUnitario) 
-                                                        VALUES (@IDCita, @IDServicio, @Precio)";
+                                string queryDetalle = @"INSERT INTO Citas_Servicios (IDCita, IDServicio, PrecioUnitario, FechaAsignacion) 
+                                                        VALUES (@IDCita, @IDServicio, @Precio, GETDATE())";
                                 using (SqlCommand cmdDetalle = new SqlCommand(queryDetalle, con, transaction))
                                 {
                                     cmdDetalle.Parameters.AddWithValue("@IDCita", idCita);
@@ -245,23 +286,48 @@ namespace ClinicaAdministrador
                             }
 
                             transaction.Commit();
-                            MostrarMensajeExito("Cita guardada exitosamente.");
+
+                            // Actualizar labels de total y duración
+                            lblTotalPrecio.Text = $"${total.ToString("N2")}";
+                            lblDuracionTotal.Text = $"{duracionTotal} minutos";
+
+                            MostrarMensajeExito($"Cita {(string.IsNullOrEmpty(hfIDCita.Value) ? "creada" : "actualizada")} exitosamente. Total: ${total.ToString("N2")}");
                         }
                         catch (Exception ex)
                         {
                             transaction.Rollback();
+                            System.Diagnostics.Debug.WriteLine($"Error en transacción de cita: {ex.Message}\n{ex.StackTrace}");
                             MostrarMensajeError("Error al guardar la cita: " + ex.Message);
+                            ScriptManager.RegisterStartupScript(this, GetType(), "restoreButton", "if(typeof(restaurarBotonGuardar)==='function')restaurarBotonGuardar();", true);
                             return;
                         }
                     }
                 }
 
+                // Limpiar y recargar
                 pnlFormularioCita.Visible = false;
+
+                // Limpieza inline de controles
+                hfIDCita.Value = "";
+                ddlPaciente.ClearSelection();
+                ddlPaciente.SelectedValue = "0";
+                ddlEstado.ClearSelection();
+                if (ddlEstado.Items.FindByValue("Programada") != null) ddlEstado.SelectedValue = "Programada";
+                txtFecha.Text = "";
+                txtHora.Text = "";
+                txtNotas.Text = "";
+                lblTotalPrecio.Text = "$0.00";
+                lblDuracionTotal.Text = "0 minutos";
+                foreach (ListItem item in cblServicios.Items) { item.Selected = false; }
+
                 CargarCitas();
+                ClearMessages();
             }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine($"Error inesperado al guardar cita: {ex.Message}\n{ex.StackTrace}");
                 MostrarMensajeError("Error inesperado: " + ex.Message);
+                ScriptManager.RegisterStartupScript(this, GetType(), "restoreButton", "if(typeof(restaurarBotonGuardar)==='function')restaurarBotonGuardar();", true);
             }
         }
 
@@ -270,7 +336,7 @@ namespace ClinicaAdministrador
         private bool ValidarDatosCita()
         {
             // Validar que se haya seleccionado un paciente
-            if (ddlPaciente.SelectedValue == "0")
+            if (ddlPaciente.SelectedValue == "0" || string.IsNullOrEmpty(ddlPaciente.SelectedValue))
             {
                 MostrarMensajeError("Debe seleccionar un paciente para la cita.");
                 return false;
@@ -284,8 +350,9 @@ namespace ClinicaAdministrador
                 return false;
             }
 
-            // *** NUEVA VALIDACIÓN: Límite de servicios por cita ***
+            // Obtener IDs de servicios seleccionados para validaciones
             List<int> serviciosSeleccionadosIds = serviciosSeleccionadosItems
+                .Where(item => !string.IsNullOrEmpty(item.Value) && item.Value != "0")
                 .Select(item => Convert.ToInt32(item.Value))
                 .ToList();
 
@@ -295,13 +362,23 @@ namespace ClinicaAdministrador
                 return false;
             }
 
-            // *** NUEVA VALIDACIÓN: Compatibilidad de servicios ***
             if (!ValidarCompatibilidadServicios(serviciosSeleccionadosIds))
             {
                 return false;
             }
 
-            // Validar fecha
+            int idPacienteSeleccionado = Convert.ToInt32(ddlPaciente.SelectedValue);
+            List<string> serviciosBloqueadosPorCondicion;
+
+            if (!ValidarRestriccionesPorCondicionMedica(idPacienteSeleccionado, serviciosSeleccionadosIds, out serviciosBloqueadosPorCondicion))
+            {
+                string mensaje = "<div class='alert alert-warning'><strong>⚠️ SERVICIOS BLOQUEADOS POR CONDICIÓN MÉDICA:</strong><br/><br/>" +
+                                 string.Join("<br/>", serviciosBloqueadosPorCondicion) +
+                                 "<br/><br/><em>Por favor, consulte con el especialista para reprogramar estos tratamientos.</em></div>";
+                MostrarMensajeError(mensaje);
+                return false;
+            }
+
             if (string.IsNullOrEmpty(txtFecha.Text))
             {
                 MostrarMensajeError("Debe seleccionar una fecha para la cita.");
@@ -309,20 +386,18 @@ namespace ClinicaAdministrador
             }
 
             DateTime fechaCita;
-            if (!DateTime.TryParse(txtFecha.Text, out fechaCita))
+            if (!DateTime.TryParseExact(txtFecha.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out fechaCita))
             {
-                MostrarMensajeError("La fecha seleccionada no es válida.");
+                MostrarMensajeError("La fecha seleccionada no es válida. Formato requerido: AAAA-MM-DD");
                 return false;
             }
 
-            // Validar que la fecha no sea en el pasado
-            if (fechaCita < DateTime.Today)
+            if (fechaCita.Date < DateTime.Today)
             {
                 MostrarMensajeError("La fecha de la cita no puede ser en el pasado.");
                 return false;
             }
 
-            // Validar que la fecha no sea mayor a un año
             DateTime fechaMaxima = DateTime.Today.AddYears(1);
             if (fechaCita > fechaMaxima)
             {
@@ -330,7 +405,6 @@ namespace ClinicaAdministrador
                 return false;
             }
 
-            // Validar hora
             if (string.IsNullOrEmpty(txtHora.Text))
             {
                 MostrarMensajeError("Debe seleccionar una hora para la cita.");
@@ -340,11 +414,10 @@ namespace ClinicaAdministrador
             TimeSpan horaCita;
             if (!TimeSpan.TryParse(txtHora.Text, out horaCita))
             {
-                MostrarMensajeError("La hora seleccionada no es válida.");
+                MostrarMensajeError("La hora seleccionada no es válida. Formato: HH:mm");
                 return false;
             }
 
-            // Validar que la hora esté dentro del horario de atención (7:00 AM - 8:00 PM)
             TimeSpan horaApertura = new TimeSpan(7, 0, 0);
             TimeSpan horaCierre = new TimeSpan(20, 0, 0);
             if (horaCita < horaApertura || horaCita >= horaCierre)
@@ -353,18 +426,15 @@ namespace ClinicaAdministrador
                 return false;
             }
 
-            // Calcular duración total y verificar solapamiento
             int duracionTotal = CalcularDuracionTotal();
 
-            // Verificar que la duración total no exceda el horario de atención
             TimeSpan horaFinCalculada = horaCita.Add(new TimeSpan(0, duracionTotal, 0));
             if (horaFinCalculada > horaCierre)
             {
-                MostrarMensajeError($"La cita excede el horario de atención. Duración total: {duracionTotal} minutos. Hora de fin: {horaFinCalculada:hh\\:mm}");
+                MostrarMensajeError($"La cita excede el horario de atención. Duración total: {duracionTotal} minutos. Hora de fin estimada: {horaFinCalculada:hh\\:mm}");
                 return false;
             }
 
-            // Verificar solapamiento con otras citas
             int idCitaExcluir = string.IsNullOrEmpty(hfIDCita.Value) ? 0 : Convert.ToInt32(hfIDCita.Value);
             if (ExisteSolapamientoCitas(fechaCita, horaCita, duracionTotal, idCitaExcluir))
             {
@@ -372,8 +442,7 @@ namespace ClinicaAdministrador
                 return false;
             }
 
-            // Validar que no exista una cita duplicada para el mismo paciente en el mismo horario
-            if (ExisteCitaDuplicada(Convert.ToInt32(ddlPaciente.SelectedValue), fechaCita, horaCita))
+            if (ExisteCitaDuplicada(idPacienteSeleccionado, fechaCita, horaCita))
             {
                 MostrarMensajeError("El paciente ya tiene una cita programada en el mismo día y hora.");
                 return false;
@@ -388,14 +457,13 @@ namespace ClinicaAdministrador
 
             using (SqlConnection con = DatabaseHelper.GetConnection())
             {
-                // Crear lista de parámetros
                 var parametros = new List<string>();
-                var commandParams = new SqlParameter[serviciosSeleccionados.Count];
+                var commandParams = new List<SqlParameter>();
 
                 for (int i = 0; i < serviciosSeleccionados.Count; i++)
                 {
                     parametros.Add($"@p{i}");
-                    commandParams[i] = new SqlParameter($"@p{i}", serviciosSeleccionados[i]);
+                    commandParams.Add(new SqlParameter($"@p{i}", SqlDbType.Int) { Value = serviciosSeleccionados[i] });
                 }
 
                 string query = $@"SELECT DISTINCT s1.NombreServicio as Servicio1, s2.NombreServicio as Servicio2, r.Motivo
@@ -407,7 +475,7 @@ namespace ClinicaAdministrador
 
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
-                    cmd.Parameters.AddRange(commandParams);
+                    cmd.Parameters.AddRange(commandParams.ToArray());
                     con.Open();
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -427,6 +495,123 @@ namespace ClinicaAdministrador
             return true;
         }
 
+        private bool ValidarRestriccionesPorCondicionMedica(int idPaciente, List<int> serviciosSeleccionadosIds, out List<string> serviciosBloqueados)
+        {
+            serviciosBloqueados = new List<string>();
+
+            using (SqlConnection con = DatabaseHelper.GetConnection())
+            {
+                con.Open();
+
+                string condicionMedica = "";
+                string queryPaciente = "SELECT HistorialMedico FROM Pacientes WHERE IDPaciente = @IDPaciente AND Estado = 1";
+                using (SqlCommand cmdPaciente = new SqlCommand(queryPaciente, con))
+                {
+                    cmdPaciente.Parameters.AddWithValue("@IDPaciente", idPaciente);
+                    object result = cmdPaciente.ExecuteScalar();
+                    if (result != null && !string.IsNullOrEmpty(result.ToString()))
+                    {
+                        string historial = result.ToString();
+                        if (historial.Contains(" - "))
+                        {
+                            condicionMedica = historial.Split(new[] { " - " }, StringSplitOptions.None)[0].Trim();
+                        }
+                        else
+                        {
+                            condicionMedica = historial.Trim();
+                        }
+                    }
+                }
+
+                if (string.IsNullOrEmpty(condicionMedica) || condicionMedica.Equals("Ninguna", StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+
+                if (serviciosSeleccionadosIds == null || serviciosSeleccionadosIds.Count == 0)
+                    return true;
+
+                var paramsServicios = new List<string>();
+                var sqlParams = new List<SqlParameter>();
+                for (int i = 0; i < serviciosSeleccionadosIds.Count; i++)
+                {
+                    paramsServicios.Add($"@s{i}");
+                    sqlParams.Add(new SqlParameter($"@s{i}", SqlDbType.Int) { Value = serviciosSeleccionadosIds[i] });
+                }
+
+                string queryRestricciones = $@"
+                    SELECT s.NombreServicio, s.TipoProcedimiento, 
+                           CASE 
+                               WHEN @Condicion = 'Embarazo' AND (s.EsInyectable = 1 OR s.TipoProcedimiento = 'Láser') 
+                                    THEN 'Contraindicado durante el embarazo por seguridad fetal y materna.'
+                               WHEN @Condicion IN ('Diabetes Tipo 1', 'Diabetes Tipo 2') AND s.TipoProcedimiento IN ('Facial Microlesiones', 'Láser') 
+                                    THEN 'Riesgo de cicatrización lenta o infecciones en pacientes con diabetes.'
+                               WHEN @Condicion = 'Diabetes Tipo 2' AND s.EsInyectable = 1 
+                                    THEN 'Precaución: la diabetes puede afectar la respuesta a tratamientos inyectables.'
+                               WHEN @Condicion = 'Hipertensión' AND s.EsInyectable = 1 
+                                    THEN 'Los inyectables pueden interactuar con medicamentos para la presión arterial.'
+                               WHEN @Condicion = 'Cardíaco' AND s.EsInyectable = 1 
+                                    THEN 'Precaución con inyectables por posibles interacciones con medicación cardíaca.'
+                               WHEN @Condicion = 'Epilepsia' AND s.TipoProcedimiento = 'Láser' 
+                                    THEN 'La luz pulsada/láser puede desencadenar fotosensibilidad en pacientes epilépticos.'
+                               WHEN @Condicion = 'Hepatitis' AND (s.EsInyectable = 1 OR s.TipoProcedimiento LIKE '%Microlesiones%') 
+                                    THEN 'Procedimientos invasivos requieren evaluación hepática previa por riesgo de sangrado.'
+                               WHEN @Condicion = 'Cáncer' AND (s.EsInyectable = 1 OR s.TipoProcedimiento IN ('Láser', 'Facial Microlesiones')) 
+                                    THEN 'Contraindicado sin autorización oncológica: puede interferir con tratamientos.'
+                               WHEN @Condicion = 'Coagulacion' AND (s.EsInyectable = 1 OR s.TipoProcedimiento LIKE '%Microlesiones%' OR s.TipoProcedimiento LIKE '%Exfoliante%') 
+                                    THEN 'Riesgo elevado de hematomas o sangrado en procedimientos invasivos.'
+                               WHEN @Condicion = 'Alergias' AND s.EsInyectable = 1 
+                                    THEN 'Requiere prueba de alergia previa para componentes de inyectables.'
+                               WHEN @Condicion = 'Fotosensibilidad' AND s.TipoProcedimiento = 'Láser' 
+                                    THEN 'Contraindicado: riesgo de reacción fotosensible severa.'
+                               WHEN @Condicion = 'Inmunosupresion' AND (s.TipoProcedimiento LIKE '%Microlesiones%' OR s.TipoProcedimiento LIKE '%Exfoliante%') 
+                                    THEN 'Riesgo elevado de infección en procedimientos que rompen la barrera cutánea.'
+                               WHEN @Condicion = 'Marcapasos' AND s.TipoProcedimiento = 'Láser' 
+                                    THEN 'Algunos equipos láser pueden interferir con dispositivos electrónicos implantados.'
+                               WHEN @Condicion = 'Queloide' AND s.TipoProcedimiento LIKE '%Microlesiones%' 
+                                    THEN 'Riesgo de formación de cicatrices queloides en procedimientos invasivos.'
+                               ELSE NULL
+                           END AS Motivo
+                    FROM Servicios s
+                    WHERE s.IDServicio IN ({string.Join(",", paramsServicios)})
+                    AND s.Estado = 'Activo'
+                    AND (
+                        (@Condicion = 'Embarazo' AND (s.EsInyectable = 1 OR s.TipoProcedimiento = 'Láser')) OR
+                        (@Condicion IN ('Diabetes Tipo 1', 'Diabetes Tipo 2') AND s.TipoProcedimiento IN ('Facial Microlesiones', 'Láser')) OR
+                        (@Condicion = 'Diabetes Tipo 2' AND s.EsInyectable = 1) OR
+                        (@Condicion = 'Hipertensión' AND s.EsInyectable = 1) OR
+                        (@Condicion = 'Cardíaco' AND s.EsInyectable = 1) OR
+                        (@Condicion = 'Epilepsia' AND s.TipoProcedimiento = 'Láser') OR
+                        (@Condicion = 'Hepatitis' AND (s.EsInyectable = 1 OR s.TipoProcedimiento LIKE '%Microlesiones%')) OR
+                        (@Condicion = 'Cáncer' AND (s.EsInyectable = 1 OR s.TipoProcedimiento IN ('Láser', 'Facial Microlesiones'))) OR
+                        (@Condicion = 'Coagulacion' AND (s.EsInyectable = 1 OR s.TipoProcedimiento LIKE '%Microlesiones%' OR s.TipoProcedimiento LIKE '%Exfoliante%')) OR
+                        (@Condicion = 'Alergias' AND s.EsInyectable = 1) OR
+                        (@Condicion = 'Fotosensibilidad' AND s.TipoProcedimiento = 'Láser') OR
+                        (@Condicion = 'Inmunosupresion' AND (s.TipoProcedimiento LIKE '%Microlesiones%' OR s.TipoProcedimiento LIKE '%Exfoliante%')) OR
+                        (@Condicion = 'Marcapasos' AND s.TipoProcedimiento = 'Láser') OR
+                        (@Condicion = 'Queloide' AND s.TipoProcedimiento LIKE '%Microlesiones%')
+                    )";
+
+                using (SqlCommand cmd = new SqlCommand(queryRestricciones, con))
+                {
+                    cmd.Parameters.AddWithValue("@Condicion", condicionMedica);
+                    cmd.Parameters.AddRange(sqlParams.ToArray());
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string servicio = reader["NombreServicio"].ToString();
+                            string motivo = reader["Motivo"].ToString();
+                            serviciosBloqueados.Add($"• <strong>{servicio}</strong>: {motivo}");
+                        }
+                    }
+                }
+            }
+
+            return serviciosBloqueados.Count == 0;
+        }
+
         private int CalcularDuracionTotal()
         {
             int duracionTotal = 0;
@@ -437,7 +622,7 @@ namespace ClinicaAdministrador
                 con.Open();
                 foreach (ListItem item in serviciosSeleccionados)
                 {
-                    int idServicio = Convert.ToInt32(item.Value);
+                    if (!int.TryParse(item.Value, out int idServicio)) continue;
                     duracionTotal += ObtenerDuracionServicio(idServicio, con);
                 }
             }
@@ -467,13 +652,10 @@ namespace ClinicaAdministrador
                                 AND Estado <> 'Cancelada'
                                 AND IDCita <> @IDCitaExcluir
                                 AND (
-                                    -- Nueva cita empieza durante una cita existente
                                     (@HoraInicio >= Hora AND @HoraInicio < DATEADD(MINUTE, DuracionTotal, Hora))
                                     OR
-                                    -- Nueva cita termina durante una cita existente
                                     (@HoraFin > Hora AND @HoraFin <= DATEADD(MINUTE, DuracionTotal, Hora))
                                     OR
-                                    -- Nueva cita engloba una cita existente
                                     (@HoraInicio <= Hora AND @HoraFin >= DATEADD(MINUTE, DuracionTotal, Hora))
                                 )";
 
@@ -502,7 +684,6 @@ namespace ClinicaAdministrador
                                 AND Hora = @Hora 
                                 AND Estado <> 'Cancelada'";
 
-                // Si estamos editando una cita, excluimos la cita actual de la verificación
                 if (!string.IsNullOrEmpty(hfIDCita.Value))
                 {
                     query += " AND IDCita <> @IDCita";
@@ -526,8 +707,6 @@ namespace ClinicaAdministrador
             }
         }
 
-        #endregion
-
         private decimal ObtenerPrecioServicio(int idServicio, SqlConnection con, SqlTransaction transaction)
         {
             string query = "SELECT Precio FROM Servicios WHERE IDServicio = @IDServicio";
@@ -538,6 +717,8 @@ namespace ClinicaAdministrador
                 return result != null ? Convert.ToDecimal(result) : 0;
             }
         }
+
+        #endregion
 
         protected void btnCancelarCita_Click(object sender, EventArgs e)
         {
@@ -552,13 +733,13 @@ namespace ClinicaAdministrador
 
         protected void gvCitas_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            int idCita = Convert.ToInt32(e.CommandArgument);
+            if (string.IsNullOrEmpty(e.CommandArgument?.ToString())) return;
+            if (!int.TryParse(e.CommandArgument.ToString(), out int idCita)) return;
 
             if (e.CommandName == "Editar")
             {
                 try
                 {
-                    // 1. Cargar datos de la cita principal
                     using (SqlConnection con = DatabaseHelper.GetConnection())
                     {
                         string queryCita = "SELECT * FROM Citas WHERE IDCita = @IDCita";
@@ -571,13 +752,28 @@ namespace ClinicaAdministrador
                                 if (reader.Read())
                                 {
                                     hfIDCita.Value = reader["IDCita"].ToString();
+
                                     if (ddlPaciente.Items.FindByValue(reader["IDPaciente"].ToString()) != null)
                                     {
                                         ddlPaciente.SelectedValue = reader["IDPaciente"].ToString();
                                     }
+
                                     txtFecha.Text = Convert.ToDateTime(reader["Fecha"]).ToString("yyyy-MM-dd");
                                     txtHora.Text = reader["Hora"].ToString();
-                                    ddlEstado.SelectedValue = reader["Estado"].ToString();
+
+                                    // CORRECCIÓN: Asignación segura de estado para evitar ArgumentOutOfRangeException
+                                    string estadoVal = reader["Estado"].ToString();
+                                    ListItem liEstado = ddlEstado.Items.FindByValue(estadoVal);
+                                    if (liEstado != null)
+                                    {
+                                        ddlEstado.SelectedValue = estadoVal;
+                                    }
+                                    else
+                                    {
+                                        // Fallback si el estado en DB no está en la lista
+                                        ddlEstado.SelectedIndex = 0;
+                                    }
+
                                     txtNotas.Text = reader["Notas"].ToString();
                                     lblDuracionTotal.Text = reader["DuracionTotal"].ToString() + " minutos";
                                 }
@@ -585,7 +781,6 @@ namespace ClinicaAdministrador
                         }
                     }
 
-                    // 2. Cargar los servicios de esta cita y marcarlos en el CheckBoxList
                     using (SqlConnection con = DatabaseHelper.GetConnection())
                     {
                         string queryServicios = @"SELECT s.IDServicio, s.NombreServicio 
@@ -604,7 +799,6 @@ namespace ClinicaAdministrador
                                     serviciosCita.Add(Convert.ToInt32(reader["IDServicio"]));
                                 }
 
-                                // Marcar los checkboxes correspondientes
                                 foreach (ListItem item in cblServicios.Items)
                                 {
                                     int idServicio = Convert.ToInt32(item.Value);
@@ -614,12 +808,9 @@ namespace ClinicaAdministrador
                         }
                     }
 
-                    // 3. Actualizar el título y mostrar el formulario
                     tituloFormularioCita.InnerText = "Editar Cita";
                     pnlFormularioCita.Visible = true;
                     ClearMessages();
-
-                    // 4. Llamar a la función de JavaScript para recalcular el total y duración
                     ScriptManager.RegisterStartupScript(this, this.GetType(), "CalcularTotalYDuracion", "calcularTotalYDuracion();", true);
                 }
                 catch (Exception ex)
@@ -627,17 +818,14 @@ namespace ClinicaAdministrador
                     MostrarMensajeError("Error al cargar la cita para editar: " + ex.Message);
                 }
             }
-            // NUEVO: Manejar el clic en el botón "Registrar Tratamiento"
             else if (e.CommandName == "RegistrarTratamiento")
             {
-                // Redirigir a la página de Tratamientos.aspx, pasando el IDCita en la URL
                 Response.Redirect($"Tratamientos.aspx?IDCita={idCita}");
             }
             else if (e.CommandName == "MarcarRealizada")
             {
                 try
                 {
-                    // Verificar que la cita exista y esté en estado "Confirmada"
                     using (SqlConnection con = DatabaseHelper.GetConnection())
                     {
                         string queryVerificar = "SELECT Fecha, Hora FROM Citas WHERE IDCita = @IDCita AND Estado = 'Confirmada'";
@@ -653,7 +841,6 @@ namespace ClinicaAdministrador
                                     TimeSpan horaCita = TimeSpan.Parse(reader["Hora"].ToString());
                                     DateTime fechaHoraCita = fechaCita.Date.Add(horaCita);
 
-                                    // Verificar que ya haya pasado la fecha y hora de la cita
                                     if (DateTime.Now < fechaHoraCita)
                                     {
                                         MostrarMensajeError("No se puede marcar como realizada una cita que aún no ha ocurrido.");
@@ -662,7 +849,6 @@ namespace ClinicaAdministrador
 
                                     reader.Close();
 
-                                    // Actualizar el estado a "Realizada"
                                     string queryActualizar = "UPDATE Citas SET Estado = 'Realizada' WHERE IDCita = @IDCita";
                                     using (SqlCommand cmdActualizar = new SqlCommand(queryActualizar, con))
                                     {
