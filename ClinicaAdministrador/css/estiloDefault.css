@@ -1,318 +1,422 @@
 ﻿/* =============================================
-   1. VARIABLES GLOBALES Y PALETA DE COLORES PASTEL
+   1. VARIABLES GLOBALES - MODO OSCURO PROFESIONAL (REFINADO)
    ============================================= */
 :root {
-    /* Fuentes */
+    /* Tipografía */
     --font-family-sans: 'Poppins', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    /* Paleta de Colores Pastel */
-    --primary-pastel-blue: #B3D9FF; /* Azul clínico suave */
-    --primary-pastel-blue-light: #E6F2FF;
-    --accent-pastel-blue: #80C0FF;
-    --secondary-pastel-mint: #B3FFDF; /* Verde menta */
-    --secondary-pastel-mint-light: #E6FFF2;
-    --accent-pastel-mint: #80FFCC;
-    --tertiary-pastel-lavender: #D9B3FF; /* Lavanda */
-    --tertiary-pastel-lavender-light: #F0E6FF;
-    --accent-pastel-lavender: #C280FF;
-    --quaternary-pastel-pink: #FFB3D9; /* Rosa tenue */
-    --quaternary-pastel-pink-light: #FFE6F0;
-    --accent-pastel-pink: #FF80CC;
-    /* Colores para Alertas - Rojo #E83B31 */
-    --alert-pastel-red: #E83B31;
-    --alert-pastel-red-light: #FDE8E7;
-    --accent-pastel-red: #D32A20;
-    /* Colores Neutros */
-    --bg-color: #F8F9FA; /* Beige muy claro */
-    --card-bg: #FFFFFF;
-    --text-primary: #343A40;
-    --text-secondary: #6C757D;
-    --border-color: #E9ECEF;
-    /* Sombras y Efectos */
-    --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.05);
-    --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.1);
+    /* Paleta de Colores Pastel (Ajustada para mejor contraste en oscuro) */
+    --primary-blue: #60A5FA; /* Más brillante */
+    --primary-blue-bg: rgba(96, 165, 250, 0.15);
+    --secondary-mint: #34D399; /* Más vibrante */
+    --secondary-mint-bg: rgba(52, 211, 153, 0.15);
+    --tertiary-lavender: #A78BFA;
+    --tertiary-lavender-bg: rgba(167, 139, 250, 0.15);
+    --quaternary-pink: #F472B6;
+    --quaternary-pink-bg: rgba(244, 114, 182, 0.15);
+    --alert-red: #EF4444;
+    --alert-red-bg: rgba(239, 68, 68, 0.15);
+    /* Fondos y Estructura */
+    --bg-dark: #0B1120; /* Fondo base más profundo */
+    --bg-gradient-start: #0F172A;
+    --bg-gradient-end: #1E293B;
+    --card-bg: rgba(30, 41, 59, 0.7); /* Vidrio esmerilado */
+    --card-bg-hover: rgba(30, 41, 59, 0.9);
+    /* Texto */
+    --text-primary: #F8FAFC; /* Blanco casi puro para mejor lectura */
+    --text-secondary: #94A3B8; /* Gris azulado suave */
+    --text-muted: #64748B;
+    /* Bordes y Sombras */
+    --border-light: rgba(255, 255, 255, 0.08); /* Borde sutil blanco */
+    --border-hover: rgba(255, 255, 255, 0.2);
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+    --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+    --glow-blue: 0 0 15px rgba(96, 165, 250, 0.3);
+    /* Transiciones */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* Espaciado y Radios */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 0.75rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-xxl: 3rem;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-full: 9999px;
 }
+
 /* =============================================
-   2. ESTILOS GENERALES Y FONDO
+   2. BASE Y FONDO
    ============================================= */
 body {
     font-family: var(--font-family-sans);
-    background-color: var(--bg-color);
+    background-color: var(--bg-dark);
+    background-image: radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
     color: var(--text-primary);
-    position: relative;
-    overflow-x: hidden;
+    min-height: 100vh;
+    line-height: 1.6;
+    margin: 0;
+    overflow-x: hidden; /* Evitar scroll horizontal por animaciones */
 }
 
-    /* Fondo con formas orgánicas sutiles */
-    body::before, body::after {
+    /* Orbes de fondo animados (Mejorados para no distraer) */
+    body::before,
+    body::after {
         content: '';
         position: fixed;
         border-radius: 50%;
         z-index: -1;
         filter: blur(80px);
         opacity: 0.4;
+        pointer-events: none;
+        animation: float 20s ease-in-out infinite;
     }
 
     body::before {
-        width: 400px;
-        height: 400px;
-        background: radial-gradient(circle, var(--primary-pastel-blue), transparent);
-        top: -100px;
-        right: -100px;
+        width: 50vw;
+        height: 50vw;
+        background: radial-gradient(circle, var(--primary-blue) 0%, transparent 70%);
+        top: -10%;
+        right: -10%;
+        opacity: 0.15;
     }
 
     body::after {
-        width: 350px;
-        height: 350px;
-        background: radial-gradient(circle, var(--secondary-pastel-mint), transparent);
-        bottom: -100px;
-        left: -100px;
-    }
-
-.dashboard-container {
-    padding: 2rem 3rem;
-    animation: fadeInUp 0.8s ease-out;
-}
-
-    /* =============================================
-   3. TIPOGRAFÍA Y MENSAJE DE BIENVENIDA
-   ============================================= */
-    .dashboard-container h1 {
-        font-weight: 600;
-        color: var(--text-primary);
-        margin-bottom: 0.5rem;
-        font-size: 2.2rem;
-    }
-
-    .dashboard-container p {
-        color: var(--text-secondary);
-        font-size: 1.1rem;
-        margin-bottom: 2.5rem;
+        width: 40vw;
+        height: 40vw;
+        background: radial-gradient(circle, var(--secondary-mint) 0%, transparent 70%);
+        bottom: -10%;
+        left: -10%;
+        opacity: 0.15;
+        animation-direction: reverse;
     }
 
 /* =============================================
-   4. TARJETAS ESTADÍSTICAS (dashboard-card)
+   3. LAYOUT PRINCIPAL
    ============================================= */
+.dashboard-container {
+    padding: var(--spacing-xl);
+    max-width: 1400px;
+    margin: 0 auto;
+    animation: fadeInUp 0.8s ease-out;
+    position: relative;
+    z-index: 1;
+}
+
+    .dashboard-container h1 {
+        font-weight: 700;
+        background: linear-gradient(to right, #fff, #94A3B8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: var(--spacing-xs);
+        font-size: clamp(1.8rem, 5vw, 2.5rem);
+        letter-spacing: -0.03em;
+    }
+
+        .dashboard-container h1 + p {
+            color: var(--text-secondary);
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            margin-bottom: var(--spacing-xxl);
+            font-weight: 300;
+            max-width: 600px;
+        }
+
+/* =============================================
+   4. GRID DE TARJETAS (DASHBOARD CARDS)
+   ============================================= */
+.row.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xxl);
+}
+
+/* Responsive Grid */
+@media (max-width: 1200px) {
+    .row.dashboard-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .row.dashboard-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
 .dashboard-card {
-    background-color: var(--card-bg);
-    border-radius: 16px;
-    padding: 1.5rem;
-    box-shadow: var(--shadow-soft);
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--border-light);
     transition: var(--transition-smooth);
-    border: 1px solid var(--border-color);
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between; /* Distribuir contenido verticalmente */
     text-decoration: none;
     color: inherit;
-    overflow: hidden;
     position: relative;
+    overflow: hidden;
+    min-height: 180px;
 }
 
-    /* Efecto hover para todas las tarjetas */
+    /* Efecto de brillo al hover */
+    .dashboard-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+    }
+
     .dashboard-card:hover {
-        transform: translateY(-8px);
+        transform: translateY(-5px);
         box-shadow: var(--shadow-hover);
-        text-decoration: none;
-        color: inherit;
+        border-color: var(--border-hover);
     }
 
-    /* Icono dentro de las tarjetas */
+        .dashboard-card:hover::before {
+            opacity: 1;
+        }
+
+    /* Iconos */
     .dashboard-card .card-body i {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
-        display: inline-block;
-        padding: 1rem;
-        border-radius: 12px;
-        color: var(--card-bg);
+        font-size: 2rem;
+        margin-bottom: var(--spacing-md);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 3.5rem;
+        height: 3.5rem;
+        border-radius: var(--radius-md);
+        transition: var(--transition-bounce);
     }
 
-/* --- Personalización por color de tarjeta --- */
+    .dashboard-card:hover .card-body i {
+        transform: scale(1.1) rotate(-5deg);
+    }
 
-/* Pacientes - Verde Menta */
-.dashboard-pacientes {
-    border-left: 5px solid var(--secondary-pastel-mint);
+/* Estilos específicos por tipo de tarjeta */
+.dashboard-pacientes .card-body i {
+    background: var(--secondary-mint-bg);
+    color: var(--secondary-mint);
+    box-shadow: 0 0 15px rgba(52, 211, 153, 0.2);
 }
 
-    .dashboard-pacientes:hover {
-        background: linear-gradient(135deg, var(--card-bg) 0%, var(--secondary-pastel-mint-light) 100%);
-    }
-
-    .dashboard-pacientes .card-body i {
-        background-color: var(--secondary-pastel-mint);
-    }
-
-/* Citas - Lavanda */
-.dashboard-citas {
-    border-left: 5px solid var(--tertiary-pastel-lavender);
+.dashboard-citas .card-body i {
+    background: var(--tertiary-lavender-bg);
+    color: var(--tertiary-lavender);
+    box-shadow: 0 0 15px rgba(167, 139, 250, 0.2);
 }
 
-    .dashboard-citas:hover {
-        background: linear-gradient(135deg, var(--card-bg) 0%, var(--tertiary-pastel-lavender-light) 100%);
-    }
-
-    .dashboard-citas .card-body i {
-        background-color: var(--tertiary-pastel-lavender);
-    }
-
-/* Ingresos - Rosa */
-.dashboard-ingresos {
-    border-left: 5px solid var(--quaternary-pastel-pink);
+.dashboard-ingresos .card-body i {
+    background: var(--quaternary-pink-bg);
+    color: var(--quaternary-pink);
+    box-shadow: 0 0 15px rgba(244, 114, 182, 0.2);
 }
 
-    .dashboard-ingresos:hover {
-        background: linear-gradient(135deg, var(--card-bg) 0%, var(--quaternary-pastel-pink-light) 100%);
-    }
-
-    .dashboard-ingresos .card-body i {
-        background-color: var(--quaternary-pastel-pink);
-    }
-
-/* Alertas - Rojo #E83B31 */
-.dashboard-alertas {
-    border-left: 5px solid var(--alert-pastel-red);
+.dashboard-alertas .card-body i {
+    background: var(--alert-red-bg);
+    color: var(--alert-red);
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
 }
 
-    .dashboard-alertas:hover {
-        background: linear-gradient(135deg, var(--card-bg) 0%, #FFD1D1 100%);
-    }
-    .dashboard-alertas .card-body i {
-        background-color: var(--alert-pastel-red);
-        color: #FFFFFF;
-    }
-
-/* Estilo del texto dentro de las tarjetas */
+/* Tipografía de tarjetas */
 .dashboard-card .card-title {
-    font-size: 0.9rem;
-    font-weight: 500;
+    font-size: 0.85rem;
+    font-weight: 600;
     color: var(--text-secondary);
-    margin-bottom: 0.5rem;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
 }
 
 .dashboard-card .card-text {
-    font-size: 2rem;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
     font-weight: 700;
     color: var(--text-primary);
-    margin: 0;
+    line-height: 1.1;
 }
 
-/* Animación de entrada para las tarjetas */
-.col-md-3 {
-    animation: fadeInUp 0.6s ease-out;
-    animation-fill-mode: both;
+/* Barra de progreso alerta */
+.progress-alert {
+    margin-top: auto; /* Empujar al fondo */
+    height: 4px;
+    background: rgba(255,255,255,0.1);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    margin-top: var(--spacing-md);
 }
 
-    .col-md-3:nth-child(1) {
-        animation-delay: 0.1s;
-    }
-
-    .col-md-3:nth-child(2) {
-        animation-delay: 0.2s;
-    }
-
-    .col-md-3:nth-child(3) {
-        animation-delay: 0.3s;
-    }
-
-    .col-md-3:nth-child(4) {
-        animation-delay: 0.4s;
-    }
-
+.progress-alert-bar {
+    height: 100%;
+    background: var(--alert-red);
+    border-radius: var(--radius-full);
+    width: 75%;
+    box-shadow: 0 0 10px var(--alert-red);
+    animation: pulse-width 3s ease-in-out infinite;
+}
 
 /* =============================================
-   5. SECCIÓN DE INFORMACIÓN (Citas y Servicios)
+   5. SECCIÓN DE INFORMACIÓN (LISTAS)
    ============================================= */
-.info-section .card {
-    border: none;
-    border-radius: 16px;
-    box-shadow: var(--shadow-soft);
-    overflow: hidden;
-    transition: var(--transition-smooth);
+.info-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
 }
 
-    .info-section .card:hover {
-        box-shadow: var(--shadow-hover);
+@media (max-width: 900px) {
+    .info-section {
+        grid-template-columns: 1fr;
     }
+}
+
+.info-section .card {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
 
 .info-section .card-header {
-    background-color: var(--bg-color);
-    border-bottom: 1px solid var(--border-color);
-    padding: 1.25rem;
-    font-weight: 600;
-    color: var(--text-primary);
+    background: rgba(0,0,0,0.2);
+    border-bottom: 1px solid var(--border-light);
+    padding: var(--spacing-md) var(--spacing-lg);
     display: flex;
     align-items: center;
+    gap: var(--spacing-sm);
 }
 
-    .info-section .card-header i {
-        margin-right: 0.75rem;
-        color: var(--primary-pastel-blue);
-        font-size: 1.2rem;
+    .info-section .card-header h5 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-primary);
     }
 
-.info-section .card-body {
-    padding: 0;
-}
+    .info-section .card-header i {
+        color: var(--primary-blue);
+    }
 
-/* Estilo para la lista personalizada */
+/* Lista personalizada */
 .custom-list-group {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-    /* Asumimos que el contenido de proximas_citas y servicios_populares
-   se genera como <a> o <div> dentro de este contenedor. */
     .custom-list-group > div,
     .custom-list-group > a {
-        padding: 1rem 1.25rem;
-        border-bottom: 1px solid var(--border-color);
+        padding: var(--spacing-md) var(--spacing-lg);
+        border-bottom: 1px solid var(--border-light);
         color: var(--text-primary);
         text-decoration: none;
         transition: var(--transition-smooth);
         display: flex;
         justify-content: space-between;
         align-items: center;
+        position: relative;
     }
 
-        .custom-list-group > div:last-child,
-        .custom-list-group > a:last-child {
+        .custom-list-group > div:last-child {
             border-bottom: none;
         }
 
         .custom-list-group > div:hover,
         .custom-list-group > a:hover {
-            background-color: var(--primary-pastel-blue-light);
-            text-decoration: none;
-            color: var(--text-primary);
+            background-color: rgba(255,255,255,0.03);
+            padding-left: calc(var(--spacing-lg) + 8px); /* Pequeño desplazamiento */
         }
 
-    /* Si el contenido es una cita, podemos estilizarlo así */
-    .custom-list-group .cita-item {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-    }
+        /* Indicador lateral animado */
+        .custom-list-group > div::after,
+        .custom-list-group > a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 60%;
+            width: 3px;
+            background: var(--primary-blue);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            border-radius: 0 4px 4px 0;
+        }
 
-    .custom-list-group .cita-paciente {
-        font-weight: 500;
-    }
+        .custom-list-group > div:hover::after,
+        .custom-list-group > a:hover::after {
+            opacity: 1;
+        }
 
-    .custom-list-group .cita-hora {
-        color: var(--text-secondary);
-        font-size: 0.9rem;
+/* Elementos de la lista */
+.cita-paciente {
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.cita-hora {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    padding: 0.25rem 0.6rem;
+    background: rgba(0,0,0,0.3);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-light);
+}
+
+/* Badges */
+.badge {
+    background: var(--primary-blue-bg);
+    color: var(--primary-blue);
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid rgba(96, 165, 250, 0.2);
+}
+
+/* Última actualización */
+.last-update {
+    display: inline-flex;
+    align-items: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: var(--spacing-md);
+    padding: 0.5rem 1rem;
+    background: rgba(0,0,0,0.2);
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-light);
+}
+
+    .last-update i {
+        margin-right: 0.5rem;
+        animation: pulse 2s infinite;
     }
 
 /* =============================================
-   6. ANIMACIONES
+   6. ANIMACIONES Y EXTRAS
    ============================================= */
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(20px);
     }
 
     to {
@@ -321,24 +425,106 @@ body {
     }
 }
 
-/* =============================================
-   7. RESPONSIVIDAD
-   ============================================= */
-@media (max-width: 768px) {
-    .dashboard-container {
-        padding: 1.5rem;
+@keyframes float {
+    0%, 100% {
+        transform: translate(0, 0);
     }
 
-        .dashboard-container h1 {
-            font-size: 1.8rem;
-        }
-
-    .dashboard-card .card-text {
-        font-size: 1.5rem;
-    }
-
-    body::before, body::after {
-        filter: blur(60px);
-        opacity: 0.3;
+    50% {
+        transform: translate(20px, -20px);
     }
 }
+
+@keyframes pulse-width {
+    0%, 100% {
+        width: 75%;
+        opacity: 0.8;
+    }
+
+    50% {
+        width: 85%;
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+}
+
+/* Scrollbar personalizada para Webkit */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 4px;
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #475569;
+    }
+
+/* Accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--primary-blue);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* Ajustes Mobile */
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: var(--spacing-md);
+    }
+
+    .dashboard-card {
+        padding: var(--spacing-md);
+    }
+
+        .dashboard-card .card-body i {
+            width: 3rem;
+            height: 3rem;
+            font-size: 1.5rem;
+        }
+}
+
+/* =============================================
+   CORRECCIÓN: TEXTO LEGIBLE EN MODO OSCURO
+   ============================================= */
+
+/* Esto fuerza a que la clase 'text-muted' de Bootstrap sea gris claro en vez de oscuro */
+.text-muted {
+    color: var(--text-secondary) !important;
+    opacity: 1;
+}
+
+/* Asegura que el contenido dentro de las listas del dashboard sea visible */
+#proximas_citas,
+#servicios_populares {
+    color: var(--text-primary) !important;
+}
+
+    /* Si hay párrafos dentro de esas listas (como el mensaje de 'No hay citas') */
+    #proximas_citas p,
+    #servicios_populares p {
+        color: var(--text-secondary) !important;
+        font-style: italic;
+    }

@@ -135,21 +135,38 @@
                 <small class="text-danger" id="errorObservaciones" style="display:none;"></small>
             </div>
 
-            <!-- Cuarta Fila: Historial Médico -->
+           <!-- NUEVO: Historial Médico Estructurado -->
             <div class="mb-3">
-                <label for="txtHistorialMedico" class="form-label fw-bold">Historial Médico <span class="text-danger">*</span></label>
-                <asp:TextBox ID="txtHistorialMedico" runat="server" TextMode="MultiLine" Rows="4" CssClass="form-control" 
+                <label for="ddlCondicionMedica" class="form-label fw-bold">Condición Médica Principal <span class="text-danger">*</span></label>
+                <asp:DropDownList ID="ddlCondicionMedica" runat="server" CssClass="form-select">
+                    <asp:ListItem Text="-- Seleccione una condición --" Value="" Selected="True" />
+                    <asp:ListItem Text="Ninguna / Sano sin antecedentes" Value="Ninguna" />
+                    <asp:ListItem Text="Diabetes Tipo 1" Value="Diabetes Tipo 1" />
+                    <asp:ListItem Text="Diabetes Tipo 2" Value="Diabetes Tipo 2" />
+                    <asp:ListItem Text="Hipertensión Arterial" Value="Hipertensión" />
+                    <asp:ListItem Text="Problemas Cardíacos" Value="Cardíaco" />
+                    <asp:ListItem Text="Epilepsia / Convulsiones" Value="Epilepsia" />
+                    <asp:ListItem Text="Hepatitis" Value="Hepatitis" />
+                    <asp:ListItem Text="Cáncer / Oncológico" Value="Cáncer" />
+                    <asp:ListItem Text="Embarazo" Value="Embarazo" />
+                    <asp:ListItem Text="Otras Enfermedades Crónicas" Value="Otras" />
+                </asp:DropDownList>
+                <div class="form-text">Seleccione la condición principal para la validación de seguridad.</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="txtDetalleMedico" class="form-label fw-bold">Detalles Adicionales / Observaciones Médicas</label>
+                <asp:TextBox ID="txtDetalleMedico" runat="server" TextMode="MultiLine" Rows="3" CssClass="form-control" 
                     MaxLength="3000" 
-                    oninput="validarContenidoSeguro(this, 'historial')"
-                    placeholder="Información médica relevante del paciente"></asp:TextBox>
-                <div class="form-text"><span id="contadorHistorial">0</span>/3000 caracteres - Escribe únicamente información válida.</div>
-                <small class="text-danger" id="errorHistorial" style="display:none;"></small>
+                    placeholder="Especifique medicamentos, alergias o detalles de la condición seleccionada..." 
+                    oninput="validarContenidoSeguro(this, 'historial')"></asp:TextBox>
+                <div class="form-text"><span id="contadorHistorial">0</span>/3000 caracteres (Opcional pero recomendado)</div>
             </div>
             
             <!-- Botones -->
             <div class="d-flex gap-2">
                <asp:Button ID="btnGuardarPaciente" runat="server" Text="Guardar" 
-            OnClick="btnGuardarPaciente_Click" CssClass="btn btn-primary" />
+            OnClick="btnGuardarPaciente_Click" CssClass="btn btn-primary" OnClientClick="return validarFormularioCompleto();" />
                 <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" CssClass="btn btn-secondary-custom" 
                     OnClick="btnCancelar_Click" CausesValidation="false" />
             </div>
@@ -272,7 +289,7 @@
            for (var i = 0; i < palabras.length; i++) {
                if (palabras[i].length < 2) {
                    errorElement.style.display = 'block';
-                   errorElement.textContent = 'Cada palabra debe tener al menos 2 caracteres';
+                   errorElement.textContent = 'Cada palabra del nombre debe tener al menos 2 caracteres';
                    return false;
                }
            }
@@ -471,7 +488,7 @@
             validarTelefonoCompleto(),
             validarCorreoCompleto(),
             validarContenidoSeguro(document.getElementById('<%= txtObservaciones.ClientID %>'), 'observaciones'),
-            validarContenidoSeguro(document.getElementById('<%= txtHistorialMedico.ClientID %>'), 'historial')
+            validarContenidoSeguro(document.getElementById('<%= txtDetalleMedico.ClientID %>'), 'historial') // CORREGIDO: txtDetalleMedico
         ];
 
         var esValido = validaciones.every(function(validacion) {
@@ -521,7 +538,7 @@
     // Contadores de caracteres
     document.addEventListener('DOMContentLoaded', function() {
         var txtObservaciones = document.getElementById('<%= txtObservaciones.ClientID %>');
-        var txtHistorialMedico = document.getElementById('<%= txtHistorialMedico.ClientID %>');
+        var txtDetalleMedico = document.getElementById('<%= txtDetalleMedico.ClientID %>'); // CORREGIDO: txtDetalleMedico
         var contadorObservaciones = document.getElementById('contadorObservaciones');
         var contadorHistorial = document.getElementById('contadorHistorial');
 
@@ -545,9 +562,9 @@
             });
         }
 
-        if (txtHistorialMedico && contadorHistorial) {
-            actualizarContador(txtHistorialMedico, contadorHistorial, 3000);
-            txtHistorialMedico.addEventListener('input', function() {
+        if (txtDetalleMedico && contadorHistorial) {
+            actualizarContador(txtDetalleMedico, contadorHistorial, 3000);
+            txtDetalleMedico.addEventListener('input', function() {
                 actualizarContador(this, contadorHistorial, 3000);
             });
         }

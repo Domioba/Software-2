@@ -1,6 +1,8 @@
 ﻿/* ==========================================================================
-   RESET Y VARIABLES
+   LOGIN PAGE - MODO OSCURO PROFESIONAL
    ========================================================================== */
+
+/* --- 1. RESET Y VARIABLES (MODO OSCURO) --- */
 * {
     margin: 0;
     padding: 0;
@@ -8,45 +10,56 @@
 }
 
 :root {
-    /* Paleta de azules profesionales */
-    --azul-oscuro: #1a365d;
-    --azul-profesional: #2d4a7a;
-    --azul-principal: #3b6cb7;
-    --azul-medio: #4a8cd6;
-    --azul-claro: #6ba8e9;
-    --azul-acento: #8bc5ff;
-    --azul-suave: #e8f2ff;
-    /* Colores neutros */
-    --blanco: #ffffff;
-    --blanco-suave: #f8fafc;
-    --gris-claro: #e2e8f0;
-    --gris-medio: #cbd5e0;
-    --gris-texto-claro: #718096;
-    --gris-texto-oscuro: #2d3748;
-    /* Gradientes profesionales */
-    --gradiente-principal: linear-gradient(135deg, var(--azul-principal) 0%, var(--azul-profesional) 100%);
-    --gradiente-secundario: linear-gradient(135deg, var(--azul-medio) 0%, var(--azul-claro) 100%);
-    --gradiente-derecho: linear-gradient(135deg, var(--azul-oscuro) 0%, var(--azul-profesional) 50%, var(--azul-principal) 100%);
-    --gradiente-hover: linear-gradient(135deg, var(--azul-claro) 0%, var(--azul-medio) 100%);
-    /* Efectos */
-    --sombra-suave: 0 4px 6px rgba(26, 54, 93, 0.1);
-    --sombra-media: 0 8px 15px rgba(26, 54, 93, 0.15);
-    --sombra-fuerte: 0 15px 30px rgba(26, 54, 93, 0.2);
-    --sombra-destacada: 0 20px 40px rgba(26, 54, 93, 0.25);
-    --borde-redondeado: 12px;
-    --borde-redondeado-fuerte: 20px;
-    --transicion-suave: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transicion-lenta: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Fondos y estructura - Modo Oscuro */
+    --bg-dark: #0F172A;
+    --bg-card: rgba(30, 41, 59, 0.8);
+    --bg-card-solid: #1E293B;
+    --bg-input: rgba(15, 23, 42, 0.6);
+    /* Texto */
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+    /* Bordes */
+    --border-color: rgba(51, 65, 85, 0.6);
+    --border-color-hover: rgba(110, 168, 254, 0.4);
+    /* Acentos (coherentes con dashboard) */
+    --accent-blue: #6EA8FE;
+    --accent-blue-rgb: 110, 168, 254;
+    --accent-blue-dark: #2A3A4F;
+    --accent-mint: #6ED4B0;
+    --accent-mint-rgb: 110, 212, 176;
+    --accent-lavender: #C4B5FD;
+    --accent-pink: #FDA4AF;
+    /* Gradientes profesionales oscuros */
+    --gradient-primary: linear-gradient(135deg, #6EA8FE 0%, #A78BFA 100%);
+    --gradient-secondary: linear-gradient(135deg, #3B82F6 0%, #6EA8FE 100%);
+    --gradient-dark: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #334155 100%);
+    --gradient-glow: linear-gradient(135deg, rgba(110,168,254,0.3), rgba(167,139,250,0.3));
+    /* Sombras y efectos */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 15px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.7);
+    --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.9);
+    --shadow-glow: 0 0 30px rgba(var(--accent-blue-rgb), 0.3);
+    /* Transiciones */
+    --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* Bordes redondeados */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-full: 9999px;
 }
 
-/* ==========================================================================
-   ESTILOS BASE
-   ========================================================================== */
+/* --- 2. BASE Y RESET --- */
 html, body {
     height: 100%;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
     overflow: hidden;
-    background: var(--azul-suave);
+    background: var(--bg-dark);
+    background-image: radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
 }
 
 /* Ocultar elementos del master page */
@@ -59,38 +72,94 @@ html, body {
     margin: 0 !important;
 }
 
-/* ==========================================================================
-   CONTENEDOR PRINCIPAL
-   ========================================================================== */
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-blue);
+    border-radius: var(--radius-sm);
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--accent-lavender);
+    }
+
+/* --- 3. CONTENEDOR PRINCIPAL --- */
 .login-page {
     display: flex;
     height: 100vh;
     width: 100vw;
     position: relative;
-    background: var(--azul-suave);
+    background: var(--bg-dark);
 }
 
-/* ==========================================================================
-   COLUMNA IZQUIERDA - FORMULARIO
-   ========================================================================== */
+    /* Orbes de fondo animados */
+    .login-page::before,
+    .login-page::after {
+        content: '';
+        position: fixed;
+        border-radius: 50%;
+        z-index: 0;
+        filter: blur(80px);
+        opacity: 0.15;
+        pointer-events: none;
+        animation: float 20s ease-in-out infinite;
+    }
+
+    .login-page::before {
+        width: 50vw;
+        height: 50vw;
+        background: radial-gradient(circle, var(--accent-blue) 0%, transparent 70%);
+        top: -10%;
+        right: -10%;
+    }
+
+    .login-page::after {
+        width: 40vw;
+        height: 40vw;
+        background: radial-gradient(circle, var(--accent-lavender) 0%, transparent 70%);
+        bottom: -10%;
+        left: -10%;
+        animation-direction: reverse;
+    }
+
+@keyframes float {
+    0%, 100% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(20px, -20px);
+    }
+}
+
+/* --- 4. COLUMNA IZQUIERDA - FORMULARIO (GLASSMORPHISM) --- */
 .login-left {
     width: 50%;
-    background: var(--blanco);
+    background: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 40px;
     position: relative;
     z-index: 10;
-    box-shadow: var(--sombra-fuerte);
 }
 
 .login-form-container {
     width: 100%;
     max-width: 420px;
-    background: var(--blanco);
-    border-radius: var(--borde-redondeado-fuerte);
-    box-shadow: var(--sombra-destacada);
+    background: var(--bg-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
     padding: 50px 40px;
     position: relative;
     overflow: hidden;
@@ -103,12 +172,11 @@ html, body {
         top: 0;
         left: 0;
         right: 0;
-        height: 6px;
-        background: var(--gradiente-principal);
-        border-radius: var(--borde-redondeado-fuerte) var(--borde-redondeado-fuerte) 0 0;
+        height: 4px;
+        background: var(--gradient-primary);
+        border-radius: var(--radius-xl) var(--radius-xl) 0 0;
     }
 
-    /* Efecto de brillo sutil */
     .login-form-container::after {
         content: '';
         position: absolute;
@@ -116,7 +184,7 @@ html, body {
         left: -50%;
         width: 200%;
         height: 200%;
-        background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+        background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
         transform: rotate(45deg);
         animation: shine 6s infinite linear;
         pointer-events: none;
@@ -154,15 +222,16 @@ html, body {
 .logo-icon {
     width: 80px;
     height: 80px;
-    background: var(--gradiente-principal);
+    background: var(--gradient-primary);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 15px;
-    box-shadow: var(--sombra-media);
+    box-shadow: var(--shadow-md), 0 0 30px rgba(var(--accent-blue-rgb), 0.4);
     position: relative;
     overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
     .logo-icon::before {
@@ -172,37 +241,37 @@ html, body {
         left: -10px;
         right: -10px;
         bottom: -10px;
-        background: var(--gradiente-secundario);
+        background: var(--gradient-secondary);
         border-radius: 50%;
         z-index: -1;
-        opacity: 0.6;
+        opacity: 0.5;
         animation: pulse 3s ease-in-out infinite;
     }
 
 @keyframes pulse {
     0%, 100% {
         transform: scale(1);
-        opacity: 0.6;
+        opacity: 0.5;
     }
 
     50% {
         transform: scale(1.1);
-        opacity: 0.8;
+        opacity: 0.7;
     }
 }
 
 .logo-icon i {
-    color: var(--blanco);
+    color: var(--text-primary);
     font-size: 32px;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 }
 
 .login-logo h1 {
     font-family: 'Playfair Display', serif;
-    color: var(--azul-oscuro);
+    color: var(--text-primary);
     font-size: 24px;
     font-weight: 700;
-    background: linear-gradient(135deg, var(--azul-oscuro), var(--azul-principal));
+    background: linear-gradient(135deg, var(--text-primary), var(--accent-blue));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -229,18 +298,18 @@ html, body {
 
 .login-header h2 {
     font-family: 'Playfair Display', serif;
-    color: var(--azul-oscuro);
+    color: var(--text-primary);
     font-size: 28px;
     font-weight: 700;
     margin-bottom: 8px;
 }
 
 .login-header p {
-    color: var(--gris-texto-claro);
+    color: var(--text-secondary);
     font-size: 14px;
 }
 
-/* Campos del formulario */
+/* --- 5. CAMPOS DEL FORMULARIO (MODO OSCURO) --- */
 .form-group {
     margin-bottom: 20px;
     position: relative;
@@ -251,7 +320,7 @@ html, body {
     display: block;
     margin-bottom: 8px;
     font-weight: 500;
-    color: var(--azul-oscuro);
+    color: var(--text-secondary);
     font-size: 14px;
 }
 
@@ -262,21 +331,28 @@ html, body {
 .form-input {
     width: 100%;
     padding: 15px 15px 15px 45px;
-    border: 2px solid var(--gris-claro);
-    border-radius: var(--borde-redondeado);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
     font-size: 14px;
-    transition: var(--transicion-suave);
-    background: var(--blanco-suave);
+    transition: var(--transition-normal);
+    background: var(--bg-input);
+    color: var(--text-primary);
     font-family: 'Poppins', sans-serif;
-    box-shadow: var(--sombra-suave);
+    box-shadow: var(--shadow-sm);
 }
+
+    .form-input::placeholder {
+        color: var(--text-muted);
+        opacity: 1;
+    }
 
     .form-input:focus {
         outline: none;
-        border-color: var(--azul-principal);
-        background: var(--blanco);
-        box-shadow: 0 0 0 4px rgba(59, 108, 183, 0.15);
+        border-color: var(--accent-blue);
+        background: rgba(15, 23, 42, 0.8);
+        box-shadow: 0 0 0 3px rgba(var(--accent-blue-rgb), 0.2);
         transform: translateY(-2px);
+        color: var(--text-primary);
     }
 
 .input-icon {
@@ -284,13 +360,13 @@ html, body {
     left: 15px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--azul-principal);
+    color: var(--text-secondary);
     font-size: 16px;
-    transition: var(--transicion-suave);
+    transition: var(--transition-fast);
 }
 
 .form-input:focus + .input-icon {
-    color: var(--azul-oscuro);
+    color: var(--accent-blue);
     transform: translateY(-50%) scale(1.1);
 }
 
@@ -299,21 +375,21 @@ html, body {
     right: 15px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--gris-texto-claro);
+    color: var(--text-secondary);
     cursor: pointer;
-    transition: var(--transicion-suave);
-    background: rgba(255,255,255,0.8);
-    padding: 5px;
-    border-radius: 4px;
+    transition: var(--transition-fast);
+    background: rgba(255,255,255,0.05);
+    padding: 5px 8px;
+    border-radius: var(--radius-sm);
 }
 
     .password-toggle:hover {
-        color: var(--azul-principal);
-        background: var(--azul-suave);
-        transform: translateY(-50%) scale(1.1);
+        color: var(--accent-blue);
+        background: rgba(110,168,254,0.1);
+        transform: translateY(-50%) scale(1.05);
     }
 
-/* Opciones */
+/* --- 6. OPCIONES Y CHECKBOX --- */
 .form-options {
     display: flex;
     justify-content: space-between;
@@ -327,33 +403,39 @@ html, body {
     align-items: center;
     gap: 8px;
     cursor: pointer;
-    transition: var(--transicion-suave);
+    transition: var(--transition-fast);
 }
 
     .remember-me:hover {
-        transform: translateX(5px);
+        transform: translateX(3px);
     }
 
+/* Checkbox personalizado oscuro */
 .remember-checkbox {
     width: 18px;
     height: 18px;
-    border: 2px solid var(--gris-medio);
+    border: 2px solid var(--border-color);
     border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: var(--transicion-suave);
-    background: var(--blanco);
+    transition: var(--transition-fast);
+    background: var(--bg-input);
+    cursor: pointer;
 }
 
+    .remember-checkbox:hover {
+        border-color: var(--accent-blue);
+    }
+
     .remember-checkbox.checked {
-        background: var(--azul-principal);
-        border-color: var(--azul-principal);
-        box-shadow: var(--sombra-suave);
+        background: var(--accent-blue);
+        border-color: var(--accent-blue);
+        box-shadow: 0 0 0 3px rgba(var(--accent-blue-rgb), 0.2);
     }
 
         .remember-checkbox.checked i {
-            color: var(--blanco);
+            color: var(--text-primary);
             font-size: 12px;
             display: block;
             animation: checkmark 0.3s ease-out;
@@ -375,20 +457,20 @@ html, body {
 
 .remember-text {
     font-size: 14px;
-    color: var(--gris-texto-claro);
-    transition: var(--transicion-suave);
+    color: var(--text-secondary);
+    transition: var(--transition-fast);
 }
 
 .remember-me:hover .remember-text {
-    color: var(--azul-oscuro);
+    color: var(--text-primary);
 }
 
 .forgot-link {
-    color: var(--azul-principal);
+    color: var(--accent-blue);
     text-decoration: none;
     font-size: 14px;
     font-weight: 500;
-    transition: var(--transicion-suave);
+    transition: var(--transition-fast);
     position: relative;
 }
 
@@ -399,32 +481,32 @@ html, body {
         left: 0;
         width: 0;
         height: 2px;
-        background: var(--azul-principal);
-        transition: var(--transicion-suave);
+        background: var(--accent-blue);
+        transition: var(--transition-fast);
     }
 
     .forgot-link:hover {
-        color: var(--azul-oscuro);
+        color: var(--text-primary);
     }
 
         .forgot-link:hover::after {
             width: 100%;
         }
 
-/* Botón */
+/* --- 7. BOTÓN DE LOGIN (MEJORADO) --- */
 .login-btn {
     width: 100%;
     padding: 15px;
-    background: var(--gradiente-principal);
-    color: var(--blanco);
+    background: var(--gradient-primary);
+    color: var(--text-primary);
     border: none;
-    border-radius: var(--borde-redondeado);
+    border-radius: var(--radius-md);
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    transition: var(--transicion-suave);
+    transition: var(--transition-normal);
     font-family: 'Poppins', sans-serif;
-    box-shadow: var(--sombra-media);
+    box-shadow: var(--shadow-md), var(--shadow-glow);
     position: relative;
     overflow: hidden;
     animation: fadeInUp 0.8s ease-out 1s both;
@@ -437,14 +519,14 @@ html, body {
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-        transition: left 0.5s;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 0.5s ease;
     }
 
     .login-btn:hover {
         transform: translateY(-3px);
-        box-shadow: var(--sombra-fuerte);
-        background: var(--gradiente-hover);
+        box-shadow: var(--shadow-lg), 0 0 40px rgba(var(--accent-blue-rgb), 0.5);
+        background: var(--gradient-secondary);
     }
 
         .login-btn:hover::before {
@@ -453,19 +535,54 @@ html, body {
 
     .login-btn:active {
         transform: translateY(-1px);
+        transition: var(--transition-fast);
     }
 
-/* Mensaje de error */
+    .login-btn:focus-visible {
+        outline: 2px solid var(--accent-blue);
+        outline-offset: 2px;
+    }
+
+    /* Estado de carga */
+    .login-btn.loading {
+        position: relative;
+        color: transparent !important;
+        pointer-events: none;
+    }
+
+        .login-btn.loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin-left: -10px;
+            margin-top: -10px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: var(--text-primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* --- 8. MENSAJE DE ERROR (MODO OSCURO) --- */
 .error-message {
-    background: linear-gradient(135deg, #fed7d7, #feb2b2);
-    color: #c53030;
+    background: linear-gradient(135deg, rgba(248, 113, 113, 0.15), rgba(74, 42, 42, 0.9));
+    color: #FECACA;
     padding: 12px 15px;
-    border-radius: var(--borde-redondeado);
+    border-radius: var(--radius-md);
     margin-bottom: 20px;
     text-align: center;
     font-size: 14px;
-    border: 1px solid #fc8181;
-    box-shadow: var(--sombra-suave);
+    border: 1px solid rgba(248, 113, 113, 0.4);
+    border-left: 4px solid #F87171;
+    box-shadow: var(--shadow-sm);
     animation: shake 0.5s ease-in-out;
 }
 
@@ -483,12 +600,10 @@ html, body {
     }
 }
 
-/* ==========================================================================
-   COLUMNA DERECHA - INFORMACIÓN
-   ========================================================================== */
+/* --- 9. COLUMNA DERECHA - INFORMACIÓN (MODO OSCURO) --- */
 .login-right {
     width: 50%;
-    background: var(--gradiente-derecho);
+    background: var(--gradient-dark);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -509,7 +624,7 @@ html, body {
 
 .particle {
     position: absolute;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.08);
     border-radius: 50%;
     animation: float 6s infinite ease-in-out;
 }
@@ -557,12 +672,12 @@ html, body {
 @keyframes float {
     0%, 100% {
         transform: translateY(0) translateX(0);
-        opacity: 0.7;
+        opacity: 0.5;
     }
 
     50% {
         transform: translateY(-20px) translateX(10px);
-        opacity: 1;
+        opacity: 0.8;
     }
 }
 
@@ -573,7 +688,7 @@ html, body {
     left: 0;
     width: 100%;
     height: 100px;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath fill='rgba(255,255,255,0.1)' d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25'%3E%3C/path%3E%3C/svg%3E");
+    background: url("image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath fill='rgba(255,255,255,0.05)' d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25'%3E%3C/path%3E%3C/svg%3E");
     animation: wave 10s linear infinite;
 }
 
@@ -590,7 +705,7 @@ html, body {
 /* Contenido derecho */
 .right-content {
     text-align: center;
-    color: var(--blanco);
+    color: var(--text-primary);
     max-width: 500px;
     padding: 40px;
     position: relative;
@@ -616,8 +731,8 @@ html, body {
     font-weight: 700;
     margin-bottom: 20px;
     line-height: 1.2;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-    background: linear-gradient(135deg, var(--blanco), var(--azul-acento));
+    text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+    background: linear-gradient(135deg, var(--text-primary), var(--accent-blue));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -628,10 +743,11 @@ html, body {
     margin-bottom: 40px;
     opacity: 0.9;
     line-height: 1.5;
+    color: var(--text-secondary);
     text-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }
 
-/* Características */
+/* Características con glassmorphism */
 .features-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -640,13 +756,14 @@ html, body {
 }
 
 .feature-card {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(30, 41, 59, 0.4);
     backdrop-filter: blur(10px);
-    border-radius: var(--borde-redondeado);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: var(--radius-md);
     padding: 25px 20px;
     text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: var(--transicion-suave);
+    border: 1px solid var(--border-color);
+    transition: var(--transition-normal);
     position: relative;
     overflow: hidden;
 }
@@ -658,14 +775,15 @@ html, body {
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-        transition: var(--transicion-lenta);
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+        transition: var(--transition-slow);
     }
 
     .feature-card:hover {
-        background: rgba(255, 255, 255, 0.25);
+        background: rgba(30, 41, 59, 0.6);
         transform: translateY(-8px) scale(1.02);
-        box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        box-shadow: var(--shadow-lg), var(--shadow-glow);
+        border-color: var(--border-color-hover);
     }
 
         .feature-card:hover::before {
@@ -675,27 +793,30 @@ html, body {
 .feature-icon {
     width: 60px;
     height: 60px;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(var(--accent-blue-rgb), 0.15);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 15px;
     font-size: 24px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    transition: var(--transicion-suave);
+    border: 1px solid rgba(var(--accent-blue-rgb), 0.3);
+    transition: var(--transition-normal);
+    color: var(--accent-blue);
 }
 
 .feature-card:hover .feature-icon {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(var(--accent-blue-rgb), 0.25);
     transform: scale(1.1) rotate(5deg);
-    border-color: rgba(255, 255, 255, 0.5);
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 20px rgba(var(--accent-blue-rgb), 0.3);
 }
 
 .feature-title {
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 8px;
+    color: var(--text-primary);
     text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
@@ -703,12 +824,11 @@ html, body {
     font-size: 13px;
     opacity: 0.9;
     line-height: 1.4;
+    color: var(--text-secondary);
     text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
-/* ==========================================================================
-   FOOTER MEJORADO
-   ========================================================================== */
+/* --- 10. FOOTER MEJORADO (MODO OSCURO) --- */
 .login-footer {
     position: absolute;
     bottom: 0;
@@ -716,12 +836,13 @@ html, body {
     right: 0;
     text-align: center;
     padding: 25px 20px;
-    background: linear-gradient(180deg, transparent 0%, rgba(26, 54, 93, 0.9) 100%);
-    color: var(--blanco);
+    background: linear-gradient(180deg, transparent 0%, rgba(15, 23, 42, 0.95) 100%);
+    color: var(--text-secondary);
     font-size: 14px;
     z-index: 20;
     backdrop-filter: blur(5px);
-    border: none;
+    -webkit-backdrop-filter: blur(5px);
+    border-top: 1px solid var(--border-color);
 }
 
     .login-footer p {
@@ -731,11 +852,163 @@ html, body {
         font-weight: 400;
     }
 
+    .login-footer a {
+        color: var(--accent-blue);
+        text-decoration: none;
+        transition: var(--transition-fast);
+    }
+
+        .login-footer a:hover {
+            color: var(--text-primary);
+            text-decoration: underline;
+        }
+
 /* Asegurar que el contenido no se solape con el footer */
 .login-right {
-    padding-bottom: 80px; /* Espacio para el footer */
+    padding-bottom: 80px;
 }
 
 .right-content {
-    margin-bottom: 40px; /* Espacio adicional */
+    margin-bottom: 40px;
 }
+
+/* --- 11. ACCESIBILIDAD Y PREFERENCIAS --- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .login-form-container:hover,
+    .feature-card:hover,
+    .login-btn:hover {
+        transform: none !important;
+    }
+}
+
+/* --- 12. RESPONSIVE DESIGN --- */
+@media (max-width: 992px) {
+    .login-page {
+        flex-direction: column;
+    }
+
+    .login-left,
+    .login-right {
+        width: 100%;
+        height: auto;
+        min-height: 50vh;
+    }
+
+    .login-left {
+        padding: 30px 20px;
+        justify-content: flex-start;
+        padding-top: 60px;
+    }
+
+    .login-form-container {
+        max-width: 100%;
+        padding: 40px 30px;
+    }
+
+    .login-right {
+        display: none; /* Ocultar columna derecha en tablets para mejor UX */
+    }
+}
+
+@media (max-width: 480px) {
+    .login-left {
+        padding: 20px 15px;
+        padding-top: 40px;
+    }
+
+    .login-form-container {
+        padding: 35px 25px;
+        border-radius: var(--radius-lg);
+    }
+
+    .login-header h2 {
+        font-size: 24px;
+    }
+
+    .login-logo h1 {
+        font-size: 20px;
+    }
+
+    .logo-icon {
+        width: 70px;
+        height: 70px;
+    }
+
+    .login-btn {
+        padding: 14px;
+        font-size: 15px;
+    }
+
+    .form-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .forgot-link {
+        margin-left: 26px; /* Alinear con el texto del checkbox */
+    }
+}
+
+/* --- 13. UTILIDADES ADICIONALES --- */
+/* Animación de entrada escalonada */
+.fade-in-stagger > * {
+    opacity: 0;
+    animation: fadeInUp 0.4s ease-out forwards;
+}
+
+    .fade-in-stagger > *:nth-child(1) {
+        animation-delay: 0.1s;
+    }
+
+    .fade-in-stagger > *:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+
+    .fade-in-stagger > *:nth-child(3) {
+        animation-delay: 0.3s;
+    }
+
+    .fade-in-stagger > *:nth-child(4) {
+        animation-delay: 0.4s;
+    }
+
+    .fade-in-stagger > *:nth-child(n+5) {
+        animation-delay: 0.5s;
+    }
+
+/* Efecto de brillo en hover */
+.glow-on-hover {
+    position: relative;
+}
+
+    .glow-on-hover::after {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: var(--gradient-glow);
+        border-radius: inherit;
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .glow-on-hover:hover::after {
+        opacity: 1;
+    }

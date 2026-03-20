@@ -186,7 +186,7 @@ namespace ClinicaAdministrador
             {
                 if (!ValidarDatosPacienteCompleto())
                 {
-                    ScriptManager.RegisterStartupScript(this, GetType(), "restoreButton", "restaurarBotonGuardar();", true);
+                    // Si falla la validación, salimos
                     return;
                 }
 
@@ -194,11 +194,31 @@ namespace ClinicaAdministrador
                 {
                     string query;
                     bool esNuevo = string.IsNullOrEmpty(hfIDPaciente.Value);
+
+                    // CORRECCIÓN: Declaramos la variable fuera del if/else para que tenga alcance en todo el método
+                    int idPacienteActual = 0;
+
+                    if (!esNuevo)
+                    {
+                        idPacienteActual = Convert.ToInt32(hfIDPaciente.Value);
+                    }
+
                     string nombreCompleto = SanitizeInput(txtNombreCompleto.Text.Trim());
                     string telefono = SanitizeInput(txtTelefono.Text.Trim());
                     string correo = SanitizeInput(txtCorreo.Text.Trim().ToLower());
 
-                    // Verificar duplicados robustos
+                    // Concatenamos la condición seleccionada con el detalle para el campo HistorialMedico de la BD
+                    string condicion = ddlCondicionMedica.SelectedValue;
+                    string detalle = SanitizeInput(txtDetalleMedico.Text.Trim());
+
+                    // Construimos el texto completo que se guardará en la BD
+                    string historialFinal = condicion;
+                    if (!string.IsNullOrEmpty(detalle))
+                    {
+                        historialFinal += " - " + detalle;
+                    }
+
+                    // Verificar duplicados
                     if (esNuevo)
                     {
                         if (ExistePacienteDuplicado(nombreCompleto, telefono, correo, 0))
@@ -207,32 +227,26 @@ namespace ClinicaAdministrador
                             ScriptManager.RegisterStartupScript(this, GetType(), "restoreButton", "restaurarBotonGuardar();", true);
                             return;
                         }
-
                         query = @"INSERT INTO Pacientes (NombreCompleto, FechaNacimiento, Telefono, Correo, Observaciones, HistorialMedico, Estado) 
-                              VALUES (@NombreCompleto, @FechaNacimiento, @Telefono, @Correo, @Observaciones, @HistorialMedico, 1)";
+                          VALUES (@NombreCompleto, @FechaNacimiento, @Telefono, @Correo, @Observaciones, @HistorialMedico, 1)";
                     }
                     else
                     {
-                        int idPacienteActual = Convert.ToInt32(hfIDPaciente.Value);
-
+                        // Usamos la variable idPacienteActual que ya declaramos arriba
                         if (ExistePacienteDuplicado(nombreCompleto, telefono, correo, idPacienteActual))
                         {
                             MostrarMensajeError("Ya existe otro paciente con el mismo nombre, teléfono o correo electrónico.");
                             ScriptManager.RegisterStartupScript(this, GetType(), "restoreButton", "restaurarBotonGuardar();", true);
                             return;
                         }
-
                         query = @"UPDATE Pacientes 
-                              SET NombreCompleto = @NombreCompleto, FechaNacimiento = @FechaNacimiento, Telefono = @Telefono, 
-                                  Correo = @Correo, Observaciones = @Observaciones, HistorialMedico = @HistorialMedico
-                              WHERE IDPaciente = @IDPaciente AND Estado = 1";
+                          SET NombreCompleto = @NombreCompleto, FechaNacimiento = @FechaNacimiento, Telefono = @Telefono, 
+                              Correo = @Correo, Observaciones = @Observaciones, HistorialMedico = @HistorialMedico
+                          WHERE IDPaciente = @IDPaciente AND Estado = 1";
                     }
 
                     using (SqlCommand cmd = new SqlCommand(query, con))
                     {
-                        cmd.CommandTimeout = 30;
-
-                        // Parámetros con tipos específicos y longitud
                         cmd.Parameters.Add("@NombreCompleto", SqlDbType.NVarChar, 80).Value = nombreCompleto;
 
                         if (!string.IsNullOrEmpty(txtFechaNacimiento.Text) && DateTime.TryParse(txtFechaNacimiento.Text, out DateTime fechaNacimiento))
@@ -249,11 +263,11 @@ namespace ClinicaAdministrador
                         cmd.Parameters.Add("@Telefono", SqlDbType.VarChar, 15).Value = telefono;
                         cmd.Parameters.Add("@Correo", SqlDbType.VarChar, 100).Value = correo;
                         cmd.Parameters.Add("@Observaciones", SqlDbType.NVarChar, 500).Value = SanitizeInput(txtObservaciones.Text.Trim());
-                        cmd.Parameters.Add("@HistorialMedico", SqlDbType.NVarChar, 3000).Value = SanitizeInput(txtHistorialMedico.Text.Trim());
+                        cmd.Parameters.Add("@HistorialMedico", SqlDbType.NVarChar, 3000).Value = historialFinal;
 
                         if (!esNuevo)
                         {
-                            cmd.Parameters.Add("@IDPaciente", SqlDbType.Int).Value = Convert.ToInt32(hfIDPaciente.Value);
+                            cmd.Parameters.Add("@IDPaciente", SqlDbType.Int).Value = idPacienteActual;
                         }
 
                         con.Open();
@@ -261,9 +275,10 @@ namespace ClinicaAdministrador
 
                         if (resultado > 0)
                         {
-                            MostrarMensajeExito(esNuevo ? "Paciente creado exitosamente." : "Paciente actualizado exitosamente.");
                             pnlFormularioPaciente.Visible = false;
-                            CargarPacientes();
+                            LimpiarFormulario(); // Limpiamos para la próxima
+                            CargarPacientes();  // Recargamos la grilla
+                            MostrarMensajeExito(esNuevo ? "Paciente creado exitosamente." : "Paciente actualizado exitosamente.");
                         }
                         else
                         {
@@ -311,8 +326,8 @@ namespace ClinicaAdministrador
             if (!ValidarObservaciones(txtObservaciones.Text.Trim()))
                 return false;
 
-            // Validar Historial Médico
-            if (!ValidarHistorialMedico(txtHistorialMedico.Text.Trim()))
+            // Validar Historial Médico (Ahora valida el DDL y el detalle)
+            if (!ValidarHistorialMedico(txtDetalleMedico.Text.Trim()))
                 return false;
 
             return true;
@@ -554,24 +569,33 @@ namespace ClinicaAdministrador
             return true;
         }
 
-        private bool ValidarHistorialMedico(string historial)
+        // --- MÉTODO ACTUALIZADO: Validación con Dropdown ---
+        private bool ValidarHistorialMedico(string detalle)
         {
-            if (string.IsNullOrWhiteSpace(historial))
+            // Validamos el DropDownList directo
+            string condicion = ddlCondicionMedica.SelectedValue;
+
+            if (string.IsNullOrWhiteSpace(condicion))
             {
-                MostrarMensajeError("El historial médico es obligatorio.");
+                MostrarMensajeError("Debe seleccionar una condición médica de la lista.");
                 return false;
             }
 
-            if (historial.Length > 3000)
-            {
-                MostrarMensajeError("El historial médico no puede exceder 3000 caracteres.");
-                return false;
-            }
+            // Ya no rechazamos "Ninguna", es una opción válida.
+            // El trigger de SQL detectará "Ninguna" y no bloqueará.
 
-            // Validar contenido seguro
-            if (!ValidarContenidoSeguro(historial, "historial médico"))
+            // Validamos el detalle (opcional, pero si hay texto, que sea seguro)
+            if (!string.IsNullOrEmpty(detalle))
             {
-                return false;
+                if (detalle.Length > 3000)
+                {
+                    MostrarMensajeError("Los detalles médicos no pueden exceder 3000 caracteres.");
+                    return false;
+                }
+                if (!ValidarContenidoSeguro(detalle, "detalles médicos"))
+                {
+                    return false;
+                }
             }
 
             return true;
@@ -765,7 +789,39 @@ namespace ClinicaAdministrador
                                 txtTelefono.Text = reader["Telefono"].ToString();
                                 txtCorreo.Text = reader["Correo"].ToString();
                                 txtObservaciones.Text = reader["Observaciones"].ToString();
-                                txtHistorialMedico.Text = reader["HistorialMedico"].ToString();
+
+                                // LÓGICA NUEVA PARA SEPARAR HISTORIAL
+                                string historialCompleto = reader["HistorialMedico"].ToString();
+
+                                // Intentamos encontrar si coincide exactamente con alguna opción del DDL
+                                bool encontradoEnLista = false;
+                                foreach (ListItem item in ddlCondicionMedica.Items)
+                                {
+                                    // Si el historial empieza con el valor de la lista (ej: "Diabetes Tipo 1 - ...")
+                                    if (historialCompleto.StartsWith(item.Value))
+                                    {
+                                        ddlCondicionMedica.SelectedValue = item.Value;
+                                        encontradoEnLista = true;
+
+                                        // Extraemos el detalle quitando la condición seleccionada y el guión
+                                        if (historialCompleto.Length > item.Value.Length)
+                                        {
+                                            txtDetalleMedico.Text = historialCompleto.Substring(item.Value.Length).Trim().TrimStart('-').Trim();
+                                        }
+                                        else
+                                        {
+                                            txtDetalleMedico.Text = "";
+                                        }
+                                        break;
+                                    }
+                                }
+
+                                // Si no coincide (dato antiguo), lo ponemos en detalles y dejamos la lista en seleccionar
+                                if (!encontradoEnLista)
+                                {
+                                    ddlCondicionMedica.SelectedValue = "";
+                                    txtDetalleMedico.Text = historialCompleto;
+                                }
 
                                 tituloFormulario.InnerText = "Editar Paciente";
                                 pnlFormularioPaciente.Visible = true;
@@ -931,7 +987,9 @@ namespace ClinicaAdministrador
             txtTelefono.Text = "";
             txtCorreo.Text = "";
             txtObservaciones.Text = "";
-            txtHistorialMedico.Text = "";
+            // Limpiar nuevos campos
+            ddlCondicionMedica.ClearSelection();
+            txtDetalleMedico.Text = "";
         }
 
         private void ClearMessages()

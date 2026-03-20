@@ -1,16 +1,120 @@
-﻿/* --- ARCHIVO: css/estiloCitas.css --- */
+﻿/* =============================================
+   ARCHIVO: css/estiloCitas.css
+   MODO OSCURO PROFESIONAL - CLÍNICA ESTÉTICA
+   ============================================= */
 
-/* --- Estilos para el CheckBoxList de Servicios (MEJORADO) --- */
+/* --- 1. VARIABLES GLOBALES (Consistencia con Dashboard) --- */
+:root {
+    /* Fondos y estructura */
+    --bg-dark: #0F172A;
+    --bg-card: rgba(30, 41, 59, 0.7);
+    --bg-card-solid: #1E293B;
+    --bg-card-rgb: 30, 41, 59;
+    --bg-input: rgba(15, 23, 42, 0.6);
+    --bg-hover: rgba(110, 168, 254, 0.08);
+    /* Texto */
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+    --text-primary-rgb: 241, 245, 249;
+    /* Bordes */
+    --border-color: rgba(51, 65, 85, 0.6);
+    --border-color-hover: rgba(110, 168, 254, 0.4);
+    --border-color-rgb: 51, 65, 85;
+    /* Acentos pastel (coherentes con dashboard) */
+    --accent-blue: #6EA8FE;
+    --accent-blue-rgb: 110, 168, 254;
+    --accent-blue-dark: #2A3A4F;
+    --accent-mint: #6ED4B0;
+    --accent-mint-rgb: 110, 212, 176;
+    --accent-mint-dark: #1F3A33;
+    --accent-lavender: #C4B5FD;
+    --accent-lavender-rgb: 196, 181, 253;
+    --accent-lavender-dark: #2E2A4A;
+    --accent-pink: #FDA4AF;
+    --accent-pink-rgb: 253, 164, 175;
+    --accent-pink-dark: #442A36;
+    --accent-red: #F87171;
+    --accent-red-rgb: 248, 113, 113;
+    --accent-red-dark: #4A2A2A;
+    --accent-yellow: #FBBF24;
+    --accent-yellow-rgb: 251, 191, 36;
+    /* Gradientes profesionales */
+    --gradient-primary: linear-gradient(135deg, #6EA8FE 0%, #A78BFA 100%);
+    --gradient-success: linear-gradient(135deg, #6ED4B0 0%, #34D399 100%);
+    --gradient-warning: linear-gradient(135deg, #FBBF24 0%, #F87171 100%);
+    --gradient-danger: linear-gradient(135deg, #F87171 0%, #FB7185 100%);
+    --gradient-info: linear-gradient(135deg, #6EA8FE 0%, #6ED4B0 100%);
+    --gradient-lavender: linear-gradient(135deg, #C4B5FD 0%, #A78BFA 100%);
+    /* Sombras y efectos */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 15px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.7);
+    --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.9);
+    --shadow-glow: 0 0 20px rgba(var(--accent-blue-rgb), 0.25);
+    --shadow-glow-success: 0 0 20px rgba(var(--accent-mint-rgb), 0.25);
+    --shadow-glow-danger: 0 0 20px rgba(var(--accent-red-rgb), 0.25);
+    /* Transiciones */
+    --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* Bordes redondeados */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-full: 9999px;
+    /* Espaciado */
+    --space-xs: 0.5rem;
+    --space-sm: 0.75rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-xxl: 3rem;
+}
+
+/* --- 2. BASE Y RESET --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+    border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-blue);
+    border-radius: var(--radius-sm);
+    border: 2px solid var(--bg-dark);
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--accent-lavender);
+    }
+
+/* --- 3. CHECKBOXLIST DE SERVICIOS (GLASSMORPHISM) --- */
 .service-checkbox-list {
-    list-style-type: none;
-    padding-left: 0;
+    list-style: none;
+    padding: 0;
     margin: 0;
     column-count: 2;
-    column-gap: 30px;
-    background: var(--blanco);
-    border-radius: var(--borde-redondeado);
-    padding: 1.5rem;
-    box-shadow: var(--sombra-suave);
+    column-gap: var(--space-lg);
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-md);
     position: relative;
     overflow: hidden;
 }
@@ -20,360 +124,382 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 5px;
-        background: var(--gradiente-principal);
+        right: 0;
+        height: 4px;
+        background: var(--gradient-primary);
     }
 
 @media (max-width: 768px) {
     .service-checkbox-list {
         column-count: 1;
-        padding: 1rem;
+        padding: var(--space-md);
     }
 }
 
 .service-checkbox-list li {
-    margin-bottom: 15px;
+    margin-bottom: var(--space-sm);
     break-inside: avoid;
-    padding: 0.8rem 1rem 0.8rem 2.5rem;
+    padding: 0.8rem 1rem 0.8rem 2.8rem;
     position: relative;
-    border-radius: var(--borde-redondeado-suave);
-    transition: var(--transicion-suave);
-    border: 1px solid var(--gris-claro);
-    background: var(--blanco-suave);
+    border-radius: var(--radius-sm);
+    transition: var(--transition-normal);
+    border: 1px solid var(--border-color);
+    background: rgba(30, 41, 59, 0.5);
+    color: var(--text-primary);
 }
 
     .service-checkbox-list li:hover {
-        background: linear-gradient(135deg, var(--blanco-suave) 0%, var(--gris-fondo) 100%);
-        border-color: var(--azul-principal);
-        transform: translateX(5px);
-        box-shadow: var(--sombra-suave);
+        background: var(--bg-hover);
+        border-color: var(--accent-blue);
+        transform: translateX(4px);
+        box-shadow: var(--shadow-sm);
     }
 
 .service-checkbox-list input[type="checkbox"] {
     position: absolute;
-    left: 0.8rem;
+    left: 0.9rem;
     top: 50%;
-    transform: translateY(-50%) scale(1.3);
-    accent-color: var(--azul-principal);
+    transform: translateY(-50%) scale(1.2);
+    accent-color: var(--accent-blue);
     cursor: pointer;
+    width: 18px;
+    height: 18px;
 }
 
 .service-checkbox-list label {
     font-weight: 500;
-    color: var(--gris-texto);
+    color: var(--text-primary);
     cursor: pointer;
     display: block;
-    transition: var(--transicion-suave);
+    transition: var(--transition-fast);
+    font-size: 0.95rem;
 }
 
     .service-checkbox-list label:hover {
-        color: var(--azul-oscuro);
+        color: var(--accent-blue);
     }
 
 .service-price {
     display: block;
-    font-size: 0.9rem;
-    color: var(--rosa-vibrante);
+    font-size: 0.85rem;
+    color: var(--accent-pink);
     font-weight: 600;
-    margin-top: 0.3rem;
+    margin-top: 0.25rem;
 }
 
 .service-duration {
     display: block;
     font-size: 0.8rem;
-    color: var(--gris-texto-claro);
-    margin-top: 0.2rem;
+    color: var(--text-secondary);
+    margin-top: 0.15rem;
 }
 
     .service-duration::before {
         content: '⏱';
         margin-right: 0.3rem;
+        opacity: 0.8;
     }
 
-/* --- Mensajes de Alerta Personalizados (MEJORADOS) --- */
+/* --- 4. ALERTAS PERSONALIZADAS (MODO OSCURO) --- */
 .alert-custom {
-    padding: 1.2rem 1.8rem;
-    border-radius: var(--borde-redondeado);
-    border: none;
-    margin-bottom: 1.5rem;
+    padding: 1rem 1.5rem 1rem 4rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    margin-bottom: var(--space-lg);
     position: relative;
-    padding-left: 4rem;
-    box-shadow: var(--sombra-suave);
-    transition: var(--transicion-suave);
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--text-primary);
+    font-weight: 500;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition-normal);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
     overflow: hidden;
 }
 
     .alert-custom::before {
         content: '';
         position: absolute;
-        top: 0;
         left: 0;
-        width: 4px;
-        height: 100%;
+        top: 0;
+        bottom: 0;
+        width: 5px;
+        border-radius: var(--radius-sm) 0 0 var(--radius-sm);
     }
 
     .alert-custom::after {
         content: '';
         position: absolute;
+        left: 1.2rem;
         top: 50%;
-        left: 1.5rem;
         transform: translateY(-50%);
-        width: 1.5rem;
-        height: 1.5rem;
+        width: 1.3rem;
+        height: 1.3rem;
         background-size: contain;
+        background-repeat: no-repeat;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
     }
 
     .alert-custom:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--sombra-media);
+        transform: translateX(5px);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--border-color-hover);
     }
 
+/* Variantes de alertas */
 .alert-error {
-    color: #721c24;
-    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
-    text-align: center;
-    font-weight: 500;
+    background: linear-gradient(135deg, rgba(var(--bg-card-rgb), 0.9), var(--accent-red-dark));
+    color: #FECACA;
 }
 
     .alert-error::before {
-        background-color: var(--rojo-coral);
+        background: linear-gradient(135deg, var(--accent-red), #EF4444);
     }
 
     .alert-error::after {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23721c24'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'/%3E%3C/svg%3E");
+        background-image: url("image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FECACA'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'/%3E%3C/svg%3E");
     }
 
 .alert-info {
-    color: #0c5460;
-    background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
-    text-align: center;
+    background: linear-gradient(135deg, rgba(var(--bg-card-rgb), 0.9), var(--accent-blue-dark));
+    color: #BAE6FD;
 }
 
     .alert-info::before {
-        background-color: var(--azul-profesional);
+        background: linear-gradient(135deg, var(--accent-blue), #3B82F6);
     }
 
     .alert-info::after {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230c5460'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z'/%3E%3C/svg%3E");
+        background-image: url("image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23BAE6FD'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z'/%3E%3C/svg%3E");
     }
 
 .alert-success {
-    color: #155724;
-    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
-    text-align: center;
+    background: linear-gradient(135deg, rgba(var(--bg-card-rgb), 0.9), var(--accent-mint-dark));
+    color: #A7F3D0;
 }
 
     .alert-success::before {
-        background-color: var(--verde-whatsapp);
+        background: linear-gradient(135deg, var(--accent-mint), #34D399);
     }
 
     .alert-success::after {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23155724'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+        background-image: url("image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23A7F3D0'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
     }
 
 .alert-warning {
-    color: #856404;
-    background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%);
-    text-align: center;
+    background: linear-gradient(135deg, rgba(var(--bg-card-rgb), 0.9), #4A3720);
+    color: #FDE68A;
 }
 
     .alert-warning::before {
-        background-color: #ffc107;
+        background: linear-gradient(135deg, var(--accent-yellow), #F59E0B);
     }
 
     .alert-warning::after {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23856404'%3E%3Cpath d='M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z'/%3E%3C/svg%3E");
+        background-image: url("image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FDE68A'%3E%3Cpath d='M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z'/%3E%3C/svg%3E");
     }
 
-/* --- Botones de Adición/Edición (MEJORADOS) --- */
-.btn-add-new {
-    background: linear-gradient(45deg, var(--verde-whatsapp), #128C7E);
+/* Botón de cerrar alerta */
+.alert-close {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.1);
     border: none;
-    color: var(--blanco);
-    font-weight: 600;
-    padding: 0.8rem 1.8rem;
-    border-radius: var(--borde-redondeado);
-    transition: var(--transicion-suave);
+    color: var(--text-primary);
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    transition: var(--transition-fast);
+    opacity: 0.8;
+}
+
+    .alert-close:hover {
+        background: rgba(255,255,255,0.2);
+        opacity: 1;
+        transform: translateY(-50%) rotate(90deg);
+    }
+
+/* --- 5. BOTONES PERSONALIZADOS (SISTEMA UNIFICADO) --- */
+.btn-custom {
     position: relative;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-}
-
-    .btn-add-new::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-        transition: left 0.5s;
-    }
-
-    .btn-add-new::after {
-        content: '+';
-        margin-right: 8px;
-        font-size: 1.2rem;
-        font-weight: 700;
-    }
-
-    .btn-add-new:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
-        color: var(--blanco);
-    }
-
-        .btn-add-new:hover::before {
-            left: 100%;
-        }
-
-    .btn-add-new:active {
-        transform: translateY(-1px);
-    }
-
-/* --- Variantes de Botones Personalizados (MEJORADOS) --- */
-.btn-success-custom {
-    background: linear-gradient(45deg, var(--verde-whatsapp), #128C7E);
-    border: none;
-    color: var(--blanco);
-    font-weight: 600;
+    gap: 0.5rem;
     padding: 0.8rem 1.5rem;
-    border-radius: var(--borde-redondeado);
-    transition: var(--transicion-suave);
-    position: relative;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: var(--transition-normal);
+    text-decoration: none;
+    color: var(--text-primary);
+    background: var(--gradient-primary);
+    box-shadow: var(--shadow-md), var(--shadow-glow);
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    will-change: transform;
 }
 
-    .btn-success-custom::before {
+    .btn-custom::before {
         content: '';
         position: absolute;
         top: 0;
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-        transition: left 0.5s;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 0.5s ease;
     }
 
-    .btn-success-custom::after {
-        content: '✓';
-        margin-right: 8px;
-        font-weight: 700;
+    .btn-custom:hover::before {
+        left: 100%;
     }
+
+    .btn-custom:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: var(--shadow-lg), var(--shadow-glow);
+        color: var(--text-primary);
+    }
+
+    .btn-custom:active {
+        transform: translateY(-1px) scale(1);
+        transition: var(--transition-fast);
+    }
+
+    .btn-custom:focus-visible {
+        outline: 2px solid var(--accent-blue);
+        outline-offset: 2px;
+    }
+
+/* Variantes de botones */
+.btn-success-custom {
+    background: var(--gradient-success);
+    box-shadow: var(--shadow-md), var(--shadow-glow-success);
+}
 
     .btn-success-custom:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
-        color: var(--blanco);
+        box-shadow: var(--shadow-lg), var(--shadow-glow-success);
     }
 
-        .btn-success-custom:hover::before {
-            left: 100%;
-        }
-
-.btn-secondary-custom {
-    background: linear-gradient(45deg, #6c757d, #5a6268);
-    border: none;
-    color: var(--blanco);
-    font-weight: 600;
-    padding: 0.8rem 1.5rem;
-    border-radius: var(--borde-redondeado);
-    transition: var(--transicion-suave);
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-    .btn-secondary-custom::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-        transition: left 0.5s;
-    }
-
-    .btn-secondary-custom::after {
-        content: '↺';
-        margin-right: 8px;
-        font-weight: 700;
-    }
-
-    .btn-secondary-custom:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(108, 117, 125, 0.4);
-        color: var(--blanco);
-    }
-
-        .btn-secondary-custom:hover::before {
-            left: 100%;
-        }
-
-/* --- Botón de eliminación personalizado --- */
 .btn-danger-custom {
-    background: linear-gradient(45deg, var(--rojo-coral), #c9302c);
-    border: none;
-    color: var(--blanco);
-    font-weight: 600;
-    padding: 0.8rem 1.5rem;
-    border-radius: var(--borde-redondeado);
-    transition: var(--transicion-suave);
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    background: var(--gradient-danger);
+    box-shadow: var(--shadow-md), var(--shadow-glow-danger);
 }
-
-    .btn-danger-custom::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-        transition: left 0.5s;
-    }
-
-    .btn-danger-custom::after {
-        content: '🗑';
-        margin-right: 8px;
-    }
 
     .btn-danger-custom:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(230, 57, 70, 0.4);
-        color: var(--blanco);
+        box-shadow: var(--shadow-lg), var(--shadow-glow-danger);
     }
 
-        .btn-danger-custom:hover::before {
-            left: 100%;
-        }
+.btn-secondary-custom {
+    background: linear-gradient(135deg, #4B5563, #1F2937);
+    box-shadow: var(--shadow-md);
+}
 
-/* --- Tarjeta de cita --- */
-.appointment-card {
-    background: var(--blanco);
-    border-radius: var(--borde-redondeado-fuerte);
-    overflow: hidden;
-    box-shadow: var(--sombra-media);
-    transition: var(--transicion-suave);
-    margin-bottom: 1.5rem;
+    .btn-secondary-custom:hover {
+        box-shadow: var(--shadow-lg);
+    }
+
+.btn-outline-custom {
+    background: transparent;
+    border: 2px solid var(--accent-blue);
+    color: var(--accent-blue);
+    box-shadow: none;
+}
+
+    .btn-outline-custom::before {
+        background: linear-gradient(90deg, transparent, rgba(110,168,254,0.15), transparent);
+    }
+
+    .btn-outline-custom:hover {
+        background: rgba(110,168,254,0.1);
+        color: var(--text-primary);
+    }
+
+/* Botones con iconos */
+.btn-custom i {
+    font-size: 1rem;
+    transition: var(--transition-fast);
+}
+
+.btn-custom:hover i {
+    transform: scale(1.1);
+}
+
+/* Botón de agregar nuevo (destacado) */
+.btn-add-new {
+    padding: 0.9rem 2rem;
+    font-size: 0.95rem;
+    box-shadow: var(--shadow-lg), 0 0 25px rgba(var(--accent-mint-rgb), 0.4);
+}
+
+    .btn-add-new:hover {
+        box-shadow: var(--shadow-xl), 0 0 35px rgba(var(--accent-mint-rgb), 0.6);
+    }
+
+/* Estado de carga */
+.btn-loading {
     position: relative;
+    color: transparent !important;
+    pointer-events: none;
+}
+
+    .btn-loading::after {
+        content: '';
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        border: 2px solid rgba(255,255,255,0.3);
+        border-top-color: var(--text-primary);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+    }
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Estado deshabilitado */
+.btn-custom:disabled,
+.btn-custom[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+    pointer-events: none;
+}
+
+    .btn-custom:disabled:hover,
+    .btn-custom[disabled]:hover {
+        transform: none !important;
+        box-shadow: var(--shadow-md) !important;
+    }
+
+/* --- 6. TARJETAS DE CITAS (GLASSMORPHISM MEJORADO) --- */
+.appointment-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    transition: var(--transition-normal);
+    margin-bottom: var(--space-lg);
+    position: relative;
+    overflow: hidden;
 }
 
     .appointment-card::before {
@@ -381,9 +507,9 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: 5px;
+        width: 4px;
         height: 100%;
-        background: var(--gradiente-principal);
+        background: var(--gradient-primary);
         transform: scaleY(0);
         transform-origin: top;
         transition: transform 0.3s ease;
@@ -394,53 +520,61 @@
     }
 
     .appointment-card:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--sombra-fuerte);
+        transform: translateY(-6px);
+        box-shadow: var(--shadow-lg), var(--shadow-glow);
+        border-color: var(--border-color-hover);
     }
 
 .appointment-header {
-    padding: 1.5rem;
-    background: linear-gradient(135deg, var(--blanco) 0%, var(--blanco-suave) 100%);
-    border-bottom: 1px solid var(--gris-claro);
+    padding: var(--space-lg);
+    background: rgba(0, 0, 0, 0.15);
+    border-bottom: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
 }
 
 .appointment-title {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--azul-oscuro);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
     margin: 0;
     display: flex;
     align-items: center;
+    gap: 0.5rem;
 }
 
     .appointment-title::before {
         content: '📅';
-        margin-right: 10px;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
+        opacity: 0.9;
     }
 
 .appointment-date {
-    font-size: 0.9rem;
-    color: var(--gris-texto-claro);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
     font-style: italic;
+    background: rgba(0,0,0,0.2);
+    padding: 0.3rem 0.8rem;
+    border-radius: var(--radius-full);
 }
 
 .appointment-body {
-    padding: 1.5rem;
+    padding: var(--space-lg);
 }
 
 .appointment-details {
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--space-lg);
 }
 
 .appointment-detail {
     display: flex;
-    margin-bottom: 0.8rem;
-    padding-bottom: 0.8rem;
-    border-bottom: 1px solid var(--gris-claro);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+    gap: var(--space-md);
 }
 
     .appointment-detail:last-child {
@@ -451,32 +585,34 @@
 
 .appointment-detail-label {
     font-weight: 600;
-    color: var(--azul-oscuro);
-    margin-right: 1rem;
-    min-width: 120px;
+    color: var(--text-secondary);
+    min-width: 110px;
+    font-size: 0.9rem;
 }
 
 .appointment-detail-value {
-    color: var(--gris-texto);
+    color: var(--text-primary);
     flex-grow: 1;
+    font-weight: 500;
 }
 
 .appointment-services {
-    margin-top: 1.5rem;
+    margin-top: var(--space-lg);
 }
 
 .appointment-services-title {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
-    color: var(--azul-oscuro);
-    margin-bottom: 1rem;
+    color: var(--text-primary);
+    margin-bottom: var(--space-md);
     display: flex;
     align-items: center;
+    gap: 0.4rem;
 }
 
     .appointment-services-title::before {
         content: '💉';
-        margin-right: 8px;
+        opacity: 0.9;
     }
 
 .service-list {
@@ -486,134 +622,186 @@
 }
 
 .service-item {
-    padding: 0.8rem 1rem;
-    background: var(--gris-fondo);
-    border-radius: var(--borde-redondeado-suave);
-    margin-bottom: 0.5rem;
+    padding: 0.7rem 1rem;
+    background: rgba(0,0,0,0.2);
+    border-radius: var(--radius-sm);
+    margin-bottom: 0.4rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: var(--transicion-suave);
+    transition: var(--transition-fast);
+    border: 1px solid transparent;
 }
 
     .service-item:hover {
-        background: var(--gris-claro);
-        transform: translateX(5px);
+        background: var(--bg-hover);
+        border-color: var(--border-color-hover);
+        transform: translateX(4px);
     }
 
 .service-name {
     font-weight: 500;
-    color: var(--azul-oscuro);
+    color: var(--text-primary);
 }
 
 .service-price {
     font-weight: 600;
-    color: var(--rosa-vibrante);
+    color: var(--accent-pink);
+    font-size: 0.9rem;
 }
 
 .appointment-footer {
-    padding: 1rem 1.5rem;
-    background: var(--gris-fondo);
+    padding: var(--space-md) var(--space-lg);
+    background: rgba(0, 0, 0, 0.1);
+    border-top: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
 }
 
 .appointment-status {
-    padding: 0.3rem 0.8rem;
-    border-radius: 30px;
-    font-size: 0.8rem;
-    font-weight: 600;
+    padding: 0.35rem 0.9rem;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
 }
 
 .status-confirmed {
-    background: linear-gradient(135deg, var(--verde-whatsapp) 0%, #128C7E 100%);
-    color: var(--blanco);
+    background: rgba(var(--accent-mint-rgb), 0.2);
+    color: #6EE7B7;
+    border: 1px solid rgba(var(--accent-mint-rgb), 0.4);
 }
 
 .status-pending {
-    background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
-    color: var(--blanco);
+    background: rgba(var(--accent-yellow-rgb), 0.2);
+    color: #FCD34D;
+    border: 1px solid rgba(var(--accent-yellow-rgb), 0.4);
 }
 
 .status-cancelled {
-    background: linear-gradient(135deg, var(--rojo-coral) 0%, #c9302c 100%);
-    color: var(--blanco);
+    background: rgba(var(--accent-red-rgb), 0.2);
+    color: #FCA5A5;
+    border: 1px solid rgba(var(--accent-red-rgb), 0.4);
 }
 
 .appointment-actions {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.4rem;
+    flex-wrap: wrap;
 }
 
-/* --- Calendario de citas --- */
+/* Botones de acción compactos */
+.btn-action {
+    padding: 0.45rem 0.8rem;
+    font-size: 0.8rem;
+    border-radius: var(--radius-sm);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-weight: 500;
+}
+
+    .btn-action i {
+        font-size: 0.9rem;
+    }
+
+.btn-action-edit {
+    background: var(--gradient-primary);
+}
+
+.btn-action-view {
+    background: linear-gradient(135deg, #9F7AEA, #6B46C1);
+}
+
+.btn-action-delete {
+    background: var(--gradient-danger);
+}
+
+.btn-action-tratamiento {
+    background: var(--gradient-lavender);
+}
+
+/* --- 7. CALENDARIO DE CITAS (MODO OSCURO) --- */
 .calendar-container {
-    background: var(--blanco);
-    border-radius: var(--borde-redondeado-fuerte);
-    box-shadow: var(--sombra-media);
-    padding: 1.5rem;
-    margin-bottom: 2rem;
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-xl);
 }
 
 .calendar-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--gris-claro);
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--border-color);
+    flex-wrap: wrap;
+    gap: var(--space-sm);
 }
 
 .calendar-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--azul-oscuro);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-primary);
     margin: 0;
 }
 
 .calendar-nav {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.4rem;
 }
 
 .calendar-nav-btn {
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
-    background: var(--gris-fondo);
-    border: none;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--border-color);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: var(--transicion-suave);
+    transition: var(--transition-fast);
+    color: var(--text-primary);
+    font-size: 1rem;
 }
 
     .calendar-nav-btn:hover {
-        background: var(--azul-principal);
-        color: var(--blanco);
+        background: var(--accent-blue);
+        border-color: var(--accent-blue);
+        transform: scale(1.05);
     }
 
 .calendar-weekdays {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
+    gap: 0.4rem;
+    margin-bottom: 0.4rem;
 }
 
 .calendar-weekday {
     text-align: center;
     font-weight: 600;
-    color: var(--azul-oscuro);
-    padding: 0.5rem 0;
+    color: var(--text-secondary);
+    padding: 0.4rem 0;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .calendar-days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 0.5rem;
+    gap: 0.4rem;
 }
 
 .calendar-day {
@@ -621,155 +809,213 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: var(--borde-redondeado-suave);
+    border-radius: var(--radius-sm);
     cursor: pointer;
-    transition: var(--transicion-suave);
+    transition: var(--transition-fast);
     position: relative;
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 0.9rem;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid transparent;
 }
 
     .calendar-day:hover {
-        background: var(--gris-fondo);
+        background: var(--bg-hover);
+        border-color: var(--border-color-hover);
     }
 
     .calendar-day.today {
-        background: var(--azul-principal);
-        color: var(--blanco);
+        background: var(--accent-blue);
+        color: var(--text-primary);
+        font-weight: 700;
+        border-color: var(--accent-blue);
     }
 
     .calendar-day.has-appointments::after {
         content: '';
         position: absolute;
-        bottom: 5px;
+        bottom: 4px;
         width: 6px;
         height: 6px;
         border-radius: 50%;
-        background: var(--rosa-vibrante);
+        background: var(--accent-pink);
+        box-shadow: 0 0 8px rgba(var(--accent-pink-rgb), 0.6);
     }
 
     .calendar-day.selected {
-        background: var(--azul-oscuro);
-        color: var(--blanco);
+        background: var(--gradient-primary);
+        color: var(--text-primary);
+        font-weight: 700;
+        border-color: transparent;
     }
 
     .calendar-day.other-month {
-        color: var(--gris-texto-claro);
+        color: var(--text-muted);
+        opacity: 0.6;
     }
 
-/* --- Filtros de citas --- */
+    .calendar-day:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+    }
+
+/* --- 8. FILTROS DE CITAS (GLASSMORPHISM) --- */
 .appointment-filters {
-    background: var(--blanco);
-    padding: 1.5rem;
-    border-radius: var(--borde-redondeado);
-    box-shadow: var(--sombra-suave);
-    margin-bottom: 2rem;
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-xl);
+    box-shadow: var(--shadow-md);
+    position: relative;
 }
 
+    .appointment-filters::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--gradient-primary);
+        border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    }
+
 .filter-title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--azul-oscuro);
-    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--space-md);
     display: flex;
     align-items: center;
+    gap: 0.4rem;
 }
 
     .filter-title::before {
         content: '🔍';
-        margin-right: 8px;
+        opacity: 0.9;
     }
 
 .filter-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 1rem;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
 }
 
 .filter-group {
     flex: 1;
-    min-width: 200px;
+    min-width: 180px;
 }
 
 .filter-label {
     display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    color: var(--azul-oscuro);
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.filter-input {
-    width: 100%;
-    padding: 0.7rem 1rem;
-    border: 1px solid var(--gris-medio);
-    border-radius: var(--borde-redondeado-suave);
-    font-size: 1rem;
-    transition: var(--transicion-suave);
-}
-
-    .filter-input:focus {
-        outline: none;
-        border-color: var(--azul-principal);
-        box-shadow: 0 0 0 3px rgba(69, 123, 157, 0.1);
-    }
-
+.filter-input,
 .filter-select {
     width: 100%;
     padding: 0.7rem 1rem;
-    border: 1px solid var(--gris-medio);
-    border-radius: var(--borde-redondeado-suave);
-    font-size: 1rem;
-    background-color: var(--blanco);
-    transition: var(--transicion-suave);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: var(--bg-input);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    transition: var(--transition-fast);
 }
 
+    .filter-input::placeholder {
+        color: var(--text-muted);
+    }
+
+    .filter-input:focus,
     .filter-select:focus {
         outline: none;
-        border-color: var(--azul-principal);
-        box-shadow: 0 0 0 3px rgba(69, 123, 157, 0.1);
+        border-color: var(--accent-blue);
+        box-shadow: 0 0 0 3px rgba(var(--accent-blue-rgb), 0.2);
+        background: rgba(15, 23, 42, 0.8);
+    }
+
+    .filter-select option {
+        background: var(--bg-card-solid);
+        color: var(--text-primary);
     }
 
 .filter-actions {
     display: flex;
-    gap: 1rem;
-    justify-content: flex-end;
-    margin-top: 1rem;
+    gap: 0.75rem;
+    margin-top: var(--space-md);
+    flex-wrap: wrap;
 }
 
-/* --- Vista de lista de citas --- */
+/* Badge de resultados */
+.results-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.8rem;
+    background: rgba(var(--accent-blue-rgb), 0.15);
+    border: 1px solid rgba(var(--accent-blue-rgb), 0.3);
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+    .results-badge i {
+        color: var(--accent-blue);
+    }
+
+/* --- 9. LISTA DE CITAS (MODO OSCURO) --- */
 .appointments-list {
-    background: var(--blanco);
-    border-radius: var(--borde-redondeado-fuerte);
-    box-shadow: var(--sombra-media);
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
     overflow: hidden;
 }
 
 .appointments-list-header {
-    padding: 1.5rem;
-    background: linear-gradient(135deg, var(--blanco) 0%, var(--blanco-suave) 100%);
-    border-bottom: 1px solid var(--gris-claro);
+    padding: var(--space-lg);
+    background: rgba(0, 0, 0, 0.15);
+    border-bottom: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
 }
 
 .appointments-list-title {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--azul-oscuro);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
     margin: 0;
     display: flex;
     align-items: center;
+    gap: 0.4rem;
 }
 
     .appointments-list-title::before {
         content: '📋';
-        margin-right: 10px;
-        font-size: 1.2rem;
+        opacity: 0.9;
     }
 
 .appointments-list-actions {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.4rem;
+    flex-wrap: wrap;
 }
 
 .appointments-list-body {
@@ -778,14 +1024,14 @@
 }
 
 .appointment-list-item {
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid var(--gris-claro);
-    transition: var(--transicion-suave);
+    padding: var(--space-md) var(--space-lg);
+    border-bottom: 1px solid var(--border-color);
+    transition: var(--transition-fast);
     position: relative;
 }
 
     .appointment-list-item:hover {
-        background: var(--gris-fondo);
+        background: var(--bg-hover);
     }
 
     .appointment-list-item:last-child {
@@ -799,7 +1045,7 @@
         top: 0;
         height: 100%;
         width: 3px;
-        background: var(--azul-principal);
+        background: var(--accent-blue);
         transform: scaleY(0);
         transform-origin: top;
         transition: transform 0.3s ease;
@@ -813,84 +1059,346 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
+    flex-wrap: wrap;
+    gap: 0.4rem;
 }
 
 .appointment-list-patient {
     font-weight: 600;
-    color: var(--azul-oscuro);
+    color: var(--text-primary);
 }
 
 .appointment-list-time {
-    font-size: 0.9rem;
-    color: var(--gris-texto-claro);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    background: rgba(0,0,0,0.2);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-sm);
 }
 
 .appointment-list-details {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
 }
 
 .appointment-list-services {
     font-size: 0.9rem;
-    color: var(--gris-texto);
+    color: var(--text-secondary);
 }
 
 .appointment-list-status {
     padding: 0.2rem 0.6rem;
-    border-radius: 30px;
-    font-size: 0.75rem;
-    font-weight: 600;
+    border-radius: var(--radius-full);
+    font-size: 0.7rem;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
-/* --- Responsive Design --- */
-@media (max-width: 768px) {
-    .service-checkbox-list {
-        column-count: 1;
-        padding: 1rem;
+/* --- 10. NOTIFICACIONES TOAST (MODO OSCURO) --- */
+#notification-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.notification-item {
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    padding: 1rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border-left: 4px solid;
+    color: var(--text-primary);
+}
+
+    .notification-item.show {
+        opacity: 1;
+        transform: translateX(0);
     }
 
-    .appointment-card {
-        margin-bottom: 1rem;
+    .notification-item .icon {
+        font-size: 1.3rem;
+        flex-shrink: 0;
+    }
+
+    .notification-item .message {
+        font-weight: 500;
+        font-size: 0.9rem;
+        flex-grow: 1;
+    }
+
+    /* Estilos por tipo de notificación */
+    .notification-item.success {
+        border-left-color: var(--accent-mint);
+        background: linear-gradient(135deg, rgba(var(--bg-card-rgb), 0.95), var(--accent-mint-dark));
+    }
+
+        .notification-item.success .icon {
+            color: var(--accent-mint);
+        }
+
+    .notification-item.error {
+        border-left-color: var(--accent-red);
+        background: linear-gradient(135deg, rgba(var(--bg-card-rgb), 0.95), var(--accent-red-dark));
+    }
+
+        .notification-item.error .icon {
+            color: var(--accent-red);
+        }
+
+    .notification-item.warning {
+        border-left-color: var(--accent-yellow);
+        background: linear-gradient(135deg, rgba(var(--bg-card-rgb), 0.95), #4A3720);
+    }
+
+        .notification-item.warning .icon {
+            color: var(--accent-yellow);
+        }
+
+    .notification-item.info {
+        border-left-color: var(--accent-blue);
+        background: linear-gradient(135deg, rgba(var(--bg-card-rgb), 0.95), var(--accent-blue-dark));
+    }
+
+        .notification-item.info .icon {
+            color: var(--accent-blue);
+        }
+
+/* Botón de cerrar notificación */
+.notification-close {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--transition-fast);
+}
+
+    .notification-close:hover {
+        background: rgba(255,255,255,0.1);
+        color: var(--text-primary);
+    }
+
+/* --- 11. FORMULARIOS E INPUTS (MODO OSCURO) --- */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="time"],
+input[type="number"],
+input[type="password"],
+textarea,
+select,
+.form-control {
+    background-color: var(--bg-input) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-sm) !important;
+    padding: 0.75rem 1rem !important;
+    font-size: 0.95rem !important;
+    transition: var(--transition-fast) !important;
+}
+
+    input::placeholder,
+    textarea::placeholder,
+    .form-control::placeholder {
+        color: var(--text-muted) !important;
+        opacity: 1 !important;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus,
+    .form-control:focus {
+        background-color: rgba(15, 23, 42, 0.8) !important;
+        border-color: var(--accent-blue) !important;
+        box-shadow: 0 0 0 3px rgba(var(--accent-blue-rgb), 0.2) !important;
+        color: var(--text-primary) !important;
+        outline: none !important;
+    }
+
+    select option {
+        background-color: var(--bg-card-solid) !important;
+        color: var(--text-primary) !important;
+    }
+
+label {
+    color: var(--text-secondary) !important;
+    font-weight: 500 !important;
+    margin-bottom: 0.4rem !important;
+    font-size: 0.9rem !important;
+}
+
+/* --- 12. ANIMACIONES Y EFECTOS --- */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(var(--accent-blue-rgb), 0.4);
+    }
+
+    50% {
+        box-shadow: 0 0 0 12px rgba(var(--accent-blue-rgb), 0);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* Clases de animación */
+.animate-fade-in {
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.animate-pulse {
+    animation: pulse 2s infinite;
+}
+
+.animate-shimmer {
+    position: relative;
+    overflow: hidden;
+}
+
+    .animate-shimmer::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+        animation: shimmer 1.5s infinite;
+    }
+
+/* Fade in staggered para listas */
+.fade-in-stagger > * {
+    opacity: 0;
+    animation: fadeInUp 0.4s ease-out forwards;
+}
+
+    .fade-in-stagger > *:nth-child(1) {
+        animation-delay: 0.05s;
+    }
+
+    .fade-in-stagger > *:nth-child(2) {
+        animation-delay: 0.1s;
+    }
+
+    .fade-in-stagger > *:nth-child(3) {
+        animation-delay: 0.15s;
+    }
+
+    .fade-in-stagger > *:nth-child(4) {
+        animation-delay: 0.2s;
+    }
+
+    .fade-in-stagger > *:nth-child(n+5) {
+        animation-delay: 0.25s;
+    }
+
+/* --- 13. ACCESIBILIDAD Y PREFERENCIAS --- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .appointment-card:hover,
+    .btn-custom:hover,
+    .alert-custom:hover,
+    .service-item:hover {
+        transform: none !important;
+    }
+}
+
+@media (prefers-contrast: high) {
+    :root {
+        --border-color: rgba(255, 255, 255, 0.5);
+        --text-secondary: #CBD5E1;
+    }
+
+    .btn-custom {
+        border: 2px solid currentColor;
+    }
+}
+
+/* --- 14. RESPONSIVE DESIGN --- */
+@media (max-width: 992px) {
+    .service-checkbox-list {
+        column-count: 1;
     }
 
     .appointment-header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 0.5rem;
     }
 
-    .appointment-detail {
-        flex-direction: column;
-        align-items: flex-start;
+    .calendar-days {
+        gap: 0.3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --space-lg: 1.25rem;
+        --space-xl: 1.5rem;
     }
 
-    .appointment-detail-label {
-        margin-right: 0;
-        margin-bottom: 0.3rem;
-    }
-
-    .appointment-footer {
-        flex-direction: column;
-        gap: 1rem;
-        align-items: flex-start;
-    }
-
-    .appointment-actions {
-        width: 100%;
-        justify-content: space-between;
-    }
-
-    .calendar-container {
-        padding: 1rem;
-    }
-
-    .calendar-header {
-        flex-direction: column;
-        gap: 1rem;
+    .appointment-filters {
+        padding: var(--space-md);
     }
 
     .filter-row {
@@ -902,13 +1410,56 @@
     }
 
     .filter-actions {
+        flex-direction: column;
+    }
+
+        .filter-actions .btn-custom {
+            width: 100%;
+            justify-content: center;
+        }
+
+    .appointment-card {
+        margin-bottom: var(--space-md);
+    }
+
+    .appointment-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-sm);
+    }
+
+    .appointment-footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--space-sm);
+    }
+
+    .appointment-actions {
         justify-content: center;
+        width: 100%;
+    }
+
+    .calendar-container {
+        padding: var(--space-md);
+    }
+
+    .calendar-header {
+        flex-direction: column;
+        gap: var(--space-sm);
+    }
+
+    .calendar-weekday {
+        font-size: 0.75rem;
+    }
+
+    .calendar-day {
+        font-size: 0.8rem;
     }
 
     .appointments-list-header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 1rem;
+        gap: var(--space-sm);
     }
 
     .appointments-list-actions {
@@ -917,238 +1468,968 @@
     }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 480px) {
     .appointment-card {
-        margin-bottom: 0.8rem;
+        margin: 0 var(--space-sm);
     }
 
-    .appointment-header {
-        padding: 1rem;
-    }
-
-    .appointment-body {
-        padding: 1rem;
-    }
-
+    .appointment-header,
+    .appointment-body,
     .appointment-footer {
-        padding: 1rem;
+        padding: var(--space-md);
     }
 
-    .calendar-container {
-        padding: 0.8rem;
-    }
-
-    .calendar-weekdays {
-        font-size: 0.8rem;
-    }
-
-    .calendar-day {
-        font-size: 0.8rem;
-    }
-
-    .filter-actions {
+    .appointment-detail {
         flex-direction: column;
+        align-items: flex-start;
+        gap: 0.2rem;
+    }
+
+    .appointment-detail-label {
+        min-width: auto;
     }
 
     .btn-custom {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.85rem;
+    }
+
+    .btn-add-new {
         width: 100%;
         justify-content: center;
     }
-}
 
-/* --- Animaciones adicionales --- */
-.pulse {
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
+    .alert-custom {
+        padding: 1rem 1.25rem 1rem 3.5rem;
+        font-size: 0.9rem;
     }
 
-    50% {
-        transform: scale(1.05);
+    .calendar-day {
+        font-size: 0.75rem;
     }
 
-    100% {
-        transform: scale(1);
+    .service-checkbox-list {
+        padding: var(--space-md);
     }
+
+        .service-checkbox-list li {
+            padding: 0.7rem 1rem 0.7rem 2.5rem;
+            font-size: 0.9rem;
+        }
 }
 
-.fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-    .fade-in.visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-/* --- Estados de carga --- */
-.btn-loading {
-    position: relative;
-    color: transparent !important;
-    pointer-events: none;
-}
-
-    .btn-loading::after {
-        content: '';
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        top: 50%;
-        left: 50%;
-        margin-left: -10px;
-        margin-top: -10px;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        border-radius: 50%;
-        border-top-color: var(--blanco);
-        animation: spin 1s ease-in-out infinite;
-    }
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-/* --- Estados deshabilitados --- */
-.btn-custom:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none !important;
-}
-
-    .btn-custom:disabled:hover {
-        transform: none !important;
-        box-shadow: none !important;
-    }
-
-
-
-
-
-
-
-/* --- Mejoras para el Botón de Tratamiento y Notificaciones --- */
-
-/* --- Botón Específico para "Registrar Tratamiento" --- */
-/* Usamos una combinación de colores lavanda para diferenciarlo de las otras acciones */
-.btn-action-tratamiento {
-    background: linear-gradient(45deg, var(--tertiary-pastel-lavender), var(--accent-pastel-lavender));
-    color: var(--text-primary);
-    border: none;
-    font-weight: 600;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    transition: var(--transition-smooth);
-    position: relative;
+/* --- 15. UTILIDADES ADICIONALES --- */
+/* Truncar texto con ellipsis */
+.text-truncate {
+    white-space: nowrap;
     overflow: hidden;
-    box-shadow: var(--shadow-soft);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    font-size: 0.85rem;
-    margin: 0.2rem;
+    text-overflow: ellipsis;
 }
 
-    .btn-action-tratamiento::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-        transition: left 0.5s;
-    }
-
-    .btn-action-tratamiento:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-hover);
-        color: var(--text-primary);
-        background: linear-gradient(45deg, var(--accent-pastel-lavender), var(--tertiary-pastel-lavender));
-    }
-
-        .btn-action-tratamiento:hover::before {
-            left: 100%;
-        }
-
-    .btn-action-tratamiento:active {
-        transform: translateY(0);
-    }
-
-/* --- Contenedor de Notificaciones (Toast) --- */
-#notification-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 9999;
-    max-width: 350px;
+/* Flex utilities */
+.d-flex {
+    display: flex !important;
 }
 
-.notification-item {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    padding: 16px;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    opacity: 0;
-    transform: translateX(100%);
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    border-left: 5px solid;
+.flex-column {
+    flex-direction: column !important;
 }
 
-    .notification-item.show {
-        opacity: 1;
-        transform: translateX(0);
+.justify-content-between {
+    justify-content: space-between !important;
+}
+
+.align-items-center {
+    align-items: center !important;
+}
+
+.gap-1 {
+    gap: 0.25rem !important;
+}
+
+.gap-2 {
+    gap: 0.5rem !important;
+}
+
+.gap-3 {
+    gap: 1rem !important;
+}
+
+/* Spacing utilities */
+.mb-2 {
+    margin-bottom: 0.5rem !important;
+}
+
+.mb-3 {
+    margin-bottom: 1rem !important;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem !important;
+}
+
+.mt-3 {
+    margin-top: 1rem !important;
+}
+
+/* Text utilities */
+.text-primary {
+    color: var(--text-primary) !important;
+}
+
+.text-secondary {
+    color: var(--text-secondary) !important;
+}
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.font-weight-bold {
+    font-weight: 700 !important;
+}
+
+.font-weight-medium {
+    font-weight: 500 !important;
+}
+
+/* Display utilities */
+.d-none {
+    display: none !important;
+}
+
+.d-sm-none {
+    display: none !important;
+}
+
+@media (min-width: 576px) {
+    .d-sm-none {
+        display: block !important;
+    }
+}
+
+/* =============================================
+   CORRECCIÓN MODO OSCURO - ELEMENTOS RESTANTES
+   ============================================= */
+
+/* Textos generales en formularios */
+.form-label,
+label,
+.control-label,
+[class*="label"] {
+    color: #94A3B8 !important;
+    font-weight: 500 !important;
+}
+
+/* Textos de valores y totales */
+.total-estimado,
+.duracion-total,
+[class*="total"],
+[class*="duracion"],
+.texto-valor,
+.valor-total {
+    color: #F1F5F9 !important;
+    font-weight: 600 !important;
+}
+
+/* Placeholders en inputs */
+input::placeholder,
+textarea::placeholder,
+select::placeholder,
+.form-control::placeholder,
+input[type="text"]::placeholder,
+input[type="date"]::placeholder,
+input[type="time"]::placeholder {
+    color: #64748B !important;
+    opacity: 1 !important;
+}
+
+/* Textos de ayuda y validación */
+.help-block,
+.help-text,
+.form-text,
+.text-muted,
+.validation-summary-errors,
+.field-validation-valid,
+[class*="help"],
+[class*="validation"] {
+    color: #94A3B8 !important;
+    font-size: 0.85rem !important;
+}
+
+/* Iconos */
+i,
+.icon,
+.fas,
+.far,
+.fab,
+.bi,
+[class*="icon-"] {
+    color: #94A3B8 !important;
+}
+
+/* Iconos en inputs (calendario, reloj, etc.) */
+.input-group-text,
+.input-icon,
+.append-icon,
+.prepend-icon {
+    background-color: rgba(30, 41, 59, 0.5) !important;
+    border-color: #334155 !important;
+    color: #94A3B8 !important;
+}
+
+    .input-group-text i,
+    .input-icon i {
+        color: #94A3B8 !important;
     }
 
-    .notification-item .icon {
-        margin-right: 12px;
-        font-size: 1.5rem;
-        flex-shrink: 0;
+/* Tablas de filtrado */
+.table,
+.grid-view,
+.datagrid,
+[class*="tabla"],
+[class*="grid"] {
+    background-color: rgba(30, 41, 59, 0.5) !important;
+    color: #F1F5F9 !important;
+}
+
+    .table thead th,
+    .grid-view table thead th,
+    .datagrid thead th {
+        background: linear-gradient(135deg, #6EA8FE 0%, #3B82F6 100%) !important;
+        color: #F1F5F9 !important;
+        border-color: #334155 !important;
     }
 
-    .notification-item .message {
-        font-weight: 500;
-        color: #333;
+    .table tbody td,
+    .grid-view table tbody td,
+    .datagrid tbody td {
+        background-color: rgba(30, 41, 59, 0.3) !important;
+        color: #F1F5F9 !important;
+        border-color: #334155 !important;
     }
 
-    /* Estilos por tipo de notificación */
-    .notification-item.success {
-        border-left-color: var(--secondary-pastel-mint);
+    .table tbody tr:hover,
+    .grid-view table tbody tr:hover {
+        background-color: rgba(110, 168, 254, 0.1) !important;
     }
 
-        .notification-item.success .icon {
-            color: var(--secondary-pastel-mint);
+    /* Filas alternas */
+    .table tbody tr:nth-child(even),
+    .grid-view table tbody tr:nth-child(even) {
+        background-color: rgba(30, 41, 59, 0.5) !important;
+    }
+
+/* Panel de filtros */
+.panel,
+.card,
+.filtros-section,
+[class*="filtro"],
+[class*="filter"] {
+    background-color: rgba(30, 41, 59, 0.7) !important;
+    border-color: #334155 !important;
+}
+
+.panel-heading,
+.card-header,
+.panel-title,
+[class*="header"] {
+    background-color: rgba(15, 23, 42, 0.5) !important;
+    color: #F1F5F9 !important;
+    border-color: #334155 !important;
+}
+
+/* Selects y dropdowns */
+select,
+select option,
+.dropdown-menu,
+.form-select {
+    background-color: rgba(30, 41, 59, 0.8) !important;
+    color: #F1F5F9 !important;
+    border-color: #334155 !important;
+}
+
+    select option {
+        background-color: #1E293B !important;
+        color: #F1F5F9 !important;
+    }
+
+.dropdown-menu {
+    background-color: #1E293B !important;
+    border-color: #334155 !important;
+}
+
+.dropdown-item {
+    color: #F1F5F9 !important;
+}
+
+    .dropdown-item:hover {
+        background-color: rgba(110, 168, 254, 0.1) !important;
+        color: #F1F5F9 !important;
+    }
+
+/* Textarea */
+textarea,
+.form-control[type="textarea"],
+.form-control[type="text"] {
+    background-color: rgba(30, 41, 59, 0.5) !important;
+    color: #F1F5F9 !important;
+    border-color: #334155 !important;
+}
+
+/* Botones específicos */
+.btn-primary,
+.btn-success,
+.btn-info {
+    color: #F1F5F9 !important;
+}
+
+/* Mensajes de estado vacío */
+.empty-message,
+.no-results,
+[class*="empty"],
+[class*="no-"] {
+    color: #94A3B8 !important;
+}
+
+/* Mensaje específico que se ve en la imagen */
+div[class*="no hay citas"],
+div[class*="sin registros"],
+.alert-info {
+    color: #BAE6FD !important;
+    background-color: rgba(110, 168, 254, 0.1) !important;
+    border-color: #6EA8FE !important;
+}
+
+/* Fechas y horas específicas */
+.fecha-cita,
+.hora-cita,
+.estado-cita,
+.notas-cita,
+[class*="fecha"],
+[class*="hora"],
+[class*="estado"],
+[class*="notas"] {
+    color: #F1F5F9 !important;
+}
+
+/* Valores monetarios */
+.price,
+.valor,
+.monto,
+.total-amount,
+[class*="price"],
+[class*="monto"] {
+    color: #6EE7B7 !important;
+    font-weight: 600 !important;
+}
+
+/* Duración */
+.duration,
+.duracion,
+.tiempo,
+[class*="duration"] {
+    color: #94A3B8 !important;
+}
+
+/* Secciones específicas del formulario */
+.form-section,
+.section-title,
+.form-group {
+    color: #F1F5F9 !important;
+}
+
+/* Mensajes de error y validación */
+.field-validation-error,
+.validation-error,
+.error-message {
+    color: #FCA5A5 !important;
+}
+
+/* Tooltips y ayudas */
+.tooltip,
+.tooltip-inner,
+.hint-text {
+    background-color: #1E293B !important;
+    color: #F1F5F9 !important;
+    border-color: #334155 !important;
+}
+
+/* Scrollbars en elementos específicos */
+::-webkit-scrollbar {
+    width: 8px !important;
+    height: 8px !important;
+}
+
+::-webkit-scrollbar-track {
+    background: #0F172A !important;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #6EA8FE !important;
+    border-radius: 4px !important;
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #93C5FD !important;
+    }
+
+/* Ajustes específicos para ASP.NET */
+.AspNet-GridView,
+.GridView,
+.DataList,
+.Repeater {
+    color: #F1F5F9 !important;
+}
+
+    .AspNet-GridView table,
+    .GridView table {
+        background-color: rgba(30, 41, 59, 0.5) !important;
+    }
+
+    .AspNet-GridView th,
+    .GridView th {
+        background: linear-gradient(135deg, #6EA8FE 0%, #3B82F6 100%) !important;
+        color: #F1F5F9 !important;
+    }
+
+    .AspNet-GridView td,
+    .GridView td {
+        background-color: rgba(30, 41, 59, 0.3) !important;
+        color: #F1F5F9 !important;
+        border-color: #334155 !important;
+    }
+
+/* Input groups específicos */
+.input-group {
+    background-color: transparent !important;
+}
+
+    .input-group .form-control {
+        background-color: rgba(30, 41, 59, 0.5) !important;
+        color: #F1F5F9 !important;
+        border-color: #334155 !important;
+    }
+
+/* Focus states mejorados */
+.form-control:focus,
+.form-select:focus,
+input:focus,
+textarea:focus,
+select:focus {
+    background-color: rgba(30, 41, 59, 0.9) !important;
+    border-color: #6EA8FE !important;
+    box-shadow: 0 0 0 3px rgba(110, 168, 254, 0.2) !important;
+    color: #F1F5F9 !important;
+}
+
+/* Ajustes para mobile */
+@media (max-width: 768px) {
+    .table-responsive {
+        background-color: rgba(30, 41, 59, 0.5) !important;
+        border-color: #334155 !important;
+    }
+}
+
+/* =============================================
+   CORRECCIÓN ESPECÍFICA - FILTRAR CITAS E ICONOS
+   ============================================= */
+
+/* Títulos de sección "Filtrar Citas" */
+h2, h3, h4, h5, h6,
+[class*="filtrar"],
+[class*="filter"],
+.section-title,
+.panel-title,
+.card-title {
+    color: #F1F5F9 !important;
+}
+
+/* Iconos en general */
+i,
+.icon,
+.fas,
+.far,
+.fab,
+.fal,
+.bi,
+[class*="icon-"],
+[class*="fa-"] {
+    color: #94A3B8 !important;
+}
+
+/* Iconos dentro de botones y enlaces */
+a i,
+button i,
+.btn i,
+.nav-link i {
+    color: #94A3B8 !important;
+}
+
+/* Iconos en inputs (calendario, reloj, etc.) */
+.input-group-text i,
+.append-icon i,
+.prepend-icon i,
+.form-control + i,
+input + i {
+    color: #94A3B8 !important;
+}
+
+/* Labels de formularios */
+label,
+.form-label,
+.control-label {
+    color: #94A3B8 !important;
+}
+
+/* Textos de ayuda */
+.help-block,
+.help-text,
+.form-text,
+.text-muted,
+small,
+.text-help {
+    color: #94A3B8 !important;
+}
+
+/* Placeholders */
+::placeholder {
+    color: #64748B !important;
+    opacity: 1;
+}
+
+/* Tablas - Header */
+table thead th,
+.grid-view th,
+.datagrid th {
+    color: #F1F5F9 !important;
+}
+
+/* Tablas - Body */
+table tbody td,
+.grid-view td,
+.datagrid td {
+    color: #F1F5F9 !important;
+}
+
+/* Mensajes de estado vacío */
+.empty-state,
+.no-results,
+.no-data,
+[class*="no hay"],
+[class*="sin registros"] {
+    color: #94A3B8 !important;
+}
+
+/* Específico para el mensaje que se ve en la imagen */
+div.alert-info,
+div[class*="no hay citas"] {
+    color: #BAE6FD !important;
+    background-color: rgba(110, 168, 254, 0.1) !important;
+    border-color: #6EA8FE !important;
+}
+
+/* Iconos de calendario y reloj en inputs */
+input[type="date"] + .input-group-text i,
+input[type="time"] + .input-group-text i,
+input[type="datetime"] + .input-group-text i,
+.calendar-icon i,
+.clock-icon i,
+.datepicker-icon i {
+    color: #94A3B8 !important;
+}
+
+/* Ajustes específicos para ASP.NET */
+.AspNet-GridView th,
+.GridView th,
+.DataList th {
+    color: #F1F5F9 !important;
+}
+
+.AspNet-GridView td,
+.GridView td,
+.DataList td {
+    color: #F1F5F9 !important;
+}
+
+/* Panel de filtros */
+.filtros-section h3,
+.filtros-section h4,
+.filter-section h3,
+.filter-section h4,
+[class*="filtros"] h3,
+[class*="filtros"] h4 {
+    color: #F1F5F9 !important;
+}
+
+/* Botones de filtro */
+.btn-filtrar,
+.btn-filter,
+.btn-aplicar,
+[class*="filtrar"],
+[class*="aplicar"] {
+    color: #F1F5F9 !important;
+}
+
+/* Selects y opciones */
+select,
+.form-select,
+.dropdown {
+    color: #F1F5F9 !important;
+}
+
+    select option {
+        background-color: #1E293B !important;
+        color: #F1F5F9 !important;
+    }
+
+/* Textos específicos del formulario */
+.total-estimado,
+.duracion-total,
+[class*="total"],
+[class*="duracion"],
+.valor-estimado {
+    color: #6EE7B7 !important;
+}
+
+/* Iconos en estados */
+.estado-icon i,
+.status-icon i,
+.badge i {
+    color: inherit !important;
+}
+
+/* Footer y copyright */
+footer,
+.footer,
+.copyright,
+[class*="footer"] {
+    color: #94A3B8 !important;
+}
+
+/* Ajustes responsive */
+@media (max-width: 768px) {
+    .table-responsive {
+        color: #F1F5F9 !important;
+    }
+}
+
+/* =============================================
+   CORRECCIÓN FINAL - DURACIÓN E ICONOS (CITAS)
+   ============================================= */
+
+/* --- 1. LABELS DE TOTALES Y DURACIÓN --- */
+#<%= lblTotalPrecio.ClientID % >,
+#<%= lblDuracionTotal.ClientID % >,
+.lbl-total,
+.lbl-duracion,
+[class*="total-precio"],
+[class*="duracion-total"] {
+    color: #6EE7B7 !important; /* Verde menta brillante para totales */
+    font-weight: 700 !important;
+    text-shadow: 0 0 10px rgba(110, 231, 183, 0.3);
+}
+
+/* Label de duración específica */
+#<%= lblDuracionTotal.ClientID % > {
+    color: #93C5FD !important; /* Azul claro para duración */
+    text-shadow: 0 0 10px rgba(147, 197, 253, 0.3);
+}
+
+/* --- 2. ICONOS GENERALES (Bootstrap Icons, Font Awesome, etc.) --- */
+i,
+.bi,
+.fas,
+.far,
+.fab,
+.fal,
+.icon,
+[class*="bi-"],
+[class*="fa-"],
+[class*="icon-"] {
+    color: #94A3B8 !important; /* Gris claro para iconos */
+    transition: color 0.2s ease;
+}
+
+/* Iconos dentro de botones */
+.btn i,
+.btn-action i,
+button i,
+a i {
+    color: inherit !important; /* Heredan el color del botón */
+}
+
+/* Iconos específicos de calendario y reloj en inputs */
+input[type="date"] ~ .input-group-text i,
+input[type="time"] ~ .input-group-text i,
+input[type="date"] + i,
+input[type="time"] + i,
+.calendar-icon i,
+.clock-icon i,
+.datepicker-icon i,
+.timepicker-icon i,
+.bi-calendar,
+.bi-calendar-event,
+.bi-clock,
+.bi-clock-fill {
+    color: #94A3B8 !important;
+}
+
+/* Iconos en labels de formulario */
+label i,
+.form-label i,
+.control-label i {
+    color: #94A3B8 !important;
+    margin-right: 0.3rem;
+}
+
+/* --- 3. INPUTS CON ICONOS ADJUNTOS --- */
+.input-group-text {
+    background-color: rgba(30, 41, 59, 0.6) !important;
+    border-color: #334155 !important;
+    color: #94A3B8 !important;
+}
+
+    .input-group-text i {
+        color: #94A3B8 !important;
+    }
+
+/* --- 4. FORMULARIO DE CITAS - ELEMENTOS ESPECÍFICOS --- */
+/* Labels del formulario */
+#<%= txtFecha.ClientID % > ~ .form-label,
+#<%= txtHora.ClientID % > ~ .form-label,
+#<%= ddlEstado.ClientID % > ~ .form-label,
+#<%= txtNotas.ClientID % > ~ .form-label,
+label[for*="txtFecha"],
+label[for*="txtHora"],
+label[for*="ddlEstado"],
+label[for*="txtNotas"],
+label[for*="ddlPaciente"],
+label[for*="cblServicios"] {
+    color: #94A3B8 !important;
+}
+
+/* Textos de ayuda (form-text) */
+.form-text,
+.help-block,
+small.form-text,
+[class*="form-text"] {
+    color: #64748B !important; /* Gris más oscuro para ayuda */
+}
+
+/* Placeholders */
+::placeholder,
+input::placeholder,
+textarea::placeholder {
+    color: #64748B !important;
+    opacity: 1 !important;
+}
+
+/* --- 5. PANEL DE FILTROS "Filtrar Citas" --- */
+/* Título del panel de filtros */
+.card-title,
+.panel-title,
+h5.card-title,
+[class*="filtrar"] h5,
+div[class*="filtros"] h5 {
+    color: #F1F5F9 !important;
+    font-weight: 600 !important;
+}
+
+/* Labels dentro de filtros */
+#<%= txtFiltroFecha.ClientID % > ~ label,
+#<%= ddlFiltroEstado.ClientID % > ~ label,
+label[for*="txtFiltroFecha"],
+label[for*="ddlFiltroEstado"] {
+    color: #94A3B8 !important;
+}
+
+/* --- 6. GRIDVIEW DE CITAS --- */
+/* Header de la tabla */
+#<%= gvCitas.ClientID % > th,
+GridView th,
+table thead th {
+    background: linear-gradient(135deg, #6EA8FE 0%, #3B82F6 100%) !important;
+    color: #F1F5F9 !important;
+    border-color: #334155 !important;
+}
+
+/* Celdas del cuerpo */
+#<%= gvCitas.ClientID % > td,
+GridView td,
+table tbody td {
+    background-color: rgba(30, 41, 59, 0.4) !important;
+    color: #F1F5F9 !important;
+    border-color: #334155 !important;
+}
+
+/* Filas hover */
+#<%= gvCitas.ClientID % > tr:hover,
+GridView tr:hover,
+table tbody tr:hover {
+    background-color: rgba(110, 168, 254, 0.15) !important;
+}
+
+/* Mensaje "No hay citas..." */
+#<%= gvCitas.ClientID % > .alert-info,
+.EmptyDataTemplate .alert-info,
+div[class*="no hay"] {
+    color: #BAE6FD !important;
+    background-color: rgba(110, 168, 254, 0.1) !important;
+    border-color: #6EA8FE !important;
+}
+
+/* --- 7. BOTONES DE ACCIÓN EN TABLA --- */
+.btn-action-edit {
+    background: linear-gradient(135deg, #6EA8FE, #3B82F6) !important;
+    color: #F1F5F9 !important;
+}
+
+.btn-action-tratamiento {
+    background: linear-gradient(135deg, #C4B5FD, #A78BFA) !important;
+    color: #F1F5F9 !important;
+}
+
+.btn-action-complete {
+    background: linear-gradient(135deg, #6ED4B0, #34D399) !important;
+    color: #F1F5F9 !important;
+}
+
+.btn-action-delete {
+    background: linear-gradient(135deg, #F87171, #EF4444) !important;
+    color: #F1F5F9 !important;
+}
+
+/* Iconos dentro de botones de acción */
+.btn-action i {
+    color: inherit !important;
+}
+
+/* --- 8. ALERTAS DEL FORMULARIO --- */
+.alert-warning {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), #4A3720) !important;
+    color: #FDE68A !important;
+    border-color: #FBBF24 !important;
+    border-left: 4px solid #FBBF24 !important;
+}
+
+.alert-info {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), var(--accent-blue-dark)) !important;
+    color: #BAE6FD !important;
+    border-color: #6EA8FE !important;
+    border-left: 4px solid #6EA8FE !important;
+}
+
+    /* Iconos dentro de alertas */
+    .alert i,
+    .alert-warning i,
+    .alert-info i {
+        color: inherit !important;
+    }
+
+/* --- 9. CORRECCIÓN PARA ASP.NET CONTROLS --- */
+/* DropDownList */
+select,
+.form-select,
+#<%= ddlPaciente.ClientID % >,
+#<%= ddlEstado.ClientID % >,
+#<%= ddlFiltroEstado.ClientID % > {
+    background-color: rgba(30, 41, 59, 0.8) !important;
+    color: #F1F5F9 !important;
+    border-color: #334155 !important;
+}
+
+    select option,
+    .form-select option {
+        background-color: #1E293B !important;
+        color: #F1F5F9 !important;
+    }
+
+/* TextBox */
+input[type="text"],
+input[type="date"],
+input[type="time"],
+input[type="number"],
+textarea,
+.form-control,
+#<%= txtFecha.ClientID % >,
+#<%= txtHora.ClientID % >,
+#<%= txtNotas.ClientID % >,
+#<%= txtFiltroFecha.ClientID % > {
+    background-color: rgba(30, 41, 59, 0.6) !important;
+    color: #F1F5F9 !important;
+    border-color: #334155 !important;
+}
+
+    /* Focus states */
+    input:focus,
+    textarea:focus,
+    select:focus,
+    .form-control:focus {
+        background-color: rgba(30, 41, 59, 0.9) !important;
+        border-color: #6EA8FE !important;
+        box-shadow: 0 0 0 3px rgba(110, 168, 254, 0.25) !important;
+        color: #F1F5F9 !important;
+    }
+
+/* --- 10. CHECKBOXLIST DE SERVICIOS --- */
+#<%= cblServicios.ClientID % > label {
+    color: #F1F5F9 !important;
+}
+
+#<%= cblServicios.ClientID % > .service-price {
+    color: #FDA4AF !important; /* Rosa pastel para precios */
+}
+
+#<%= cblServicios.ClientID % > .service-duration {
+    color: #94A3B8 !important;
+}
+
+/* --- 11. NOTIFICACIONES TOAST --- */
+#notification-container .notification-item {
+    background: rgba(30, 41, 59, 0.95) !important;
+    border-color: #334155 !important;
+    color: #F1F5F9 !important;
+}
+
+    #notification-container .notification-item.success {
+        border-left-color: #6ED4B0 !important;
+    }
+
+    #notification-container .notification-item.error {
+        border-left-color: #F87171 !important;
+    }
+
+    #notification-container .notification-item.warning {
+        border-left-color: #FBBF24 !important;
+    }
+
+    #notification-container .notification-item.info {
+        border-left-color: #6EA8FE !important;
+    }
+
+    /* Iconos en notificaciones */
+    #notification-container .notification-item .icon i {
+        color: inherit !important;
+    }
+
+/* --- 12. AJUSTES RESPONSIVE --- */
+@media (max-width: 768px) {
+    #<%= lblTotalPrecio.ClientID % >,
+    #<%= lblDuracionTotal.ClientID % > {
+        font-size: 1.2rem !important;
+    }
+
+    .btn-action {
+        font-size: 0.75rem !important;
+        padding: 0.4rem 0.7rem !important;
+    }
+
+        .btn-action i {
+            font-size: 0.9rem !important;
         }
-
-    .notification-item.error {
-        border-left-color: var(--alert-pastel-red);
-    }
-
-        .notification-item.error .icon {
-            color: var(--alert-pastel-red);
-        }
-
-    .notification-item.warning {
-        border-left-color: var(--warning-pastel-yellow);
-    }
-
-        .notification-item.warning .icon {
-            color: var(--warning-pastel-yellow);
-        }
-
-    .notification-item.info {
-        border-left-color: var(--primary-pastel-blue);
-    }
-
-        .notification-item.info .icon {
-            color: var(--primary-pastel-blue);
-        }
+}

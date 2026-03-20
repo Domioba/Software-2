@@ -1,17 +1,118 @@
-﻿/* --- ARCHIVO: css/estiloVerFactura.css --- */
+﻿/* =============================================
+   ARCHIVO: css/estiloVerFactura.css
+   MODO OSCURO PROFESIONAL - CLÍNICA ESTÉTICA
+   ============================================= */
 
-/* --- Contenedor Principal de la Factura --- */
+/* --- 1. VARIABLES GLOBALES (Consistencia con Dashboard) --- */
+:root {
+    /* Fondos y estructura */
+    --bg-dark: #0F172A;
+    --bg-card: rgba(30, 41, 59, 0.7);
+    --bg-card-solid: #1E293B;
+    --bg-card-rgb: 30, 41, 59;
+    --bg-input: rgba(15, 23, 42, 0.6);
+    --bg-hover: rgba(110, 168, 254, 0.08);
+    /* Texto */
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+    --text-primary-rgb: 241, 245, 249;
+    /* Bordes */
+    --border-color: rgba(51, 65, 85, 0.6);
+    --border-color-hover: rgba(110, 168, 254, 0.4);
+    --border-color-rgb: 51, 65, 85;
+    /* Acentos pastel (coherentes con dashboard) */
+    --accent-blue: #6EA8FE;
+    --accent-blue-rgb: 110, 168, 254;
+    --accent-blue-dark: #2A3A4F;
+    --accent-mint: #6ED4B0;
+    --accent-mint-rgb: 110, 212, 176;
+    --accent-mint-dark: #1F3A33;
+    --accent-lavender: #C4B5FD;
+    --accent-lavender-rgb: 196, 181, 253;
+    --accent-lavender-dark: #2E2A4A;
+    --accent-pink: #FDA4AF;
+    --accent-pink-rgb: 253, 164, 175;
+    --accent-pink-dark: #442A36;
+    --accent-red: #F87171;
+    --accent-red-rgb: 248, 113, 113;
+    --accent-red-dark: #4A2A2A;
+    --accent-yellow: #FBBF24;
+    --accent-yellow-rgb: 251, 191, 36;
+    /* Gradientes profesionales */
+    --gradient-primary: linear-gradient(135deg, #6EA8FE 0%, #A78BFA 100%);
+    --gradient-success: linear-gradient(135deg, #6ED4B0 0%, #34D399 100%);
+    --gradient-warning: linear-gradient(135deg, #FBBF24 0%, #F87171 100%);
+    --gradient-danger: linear-gradient(135deg, #F87171 0%, #FB7185 100%);
+    --gradient-pink: linear-gradient(135deg, #FDA4AF 0%, #FB7185 100%);
+    /* Sombras y efectos */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 15px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.7);
+    --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.9);
+    --shadow-glow: 0 0 20px rgba(var(--accent-blue-rgb), 0.25);
+    --shadow-glow-pink: 0 0 20px rgba(var(--accent-pink-rgb), 0.25);
+    /* Transiciones */
+    --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* Bordes redondeados */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-full: 9999px;
+    /* Espaciado */
+    --space-xs: 0.5rem;
+    --space-sm: 0.75rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-xxl: 3rem;
+}
+
+/* --- 2. BASE Y RESET --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+    border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-blue);
+    border-radius: var(--radius-sm);
+    border: 2px solid var(--bg-dark);
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--accent-lavender);
+    }
+
+/* --- 3. CONTENEDOR PRINCIPAL DE FACTURA (GLASSMORPHISM) --- */
 .invoice-container {
     max-width: 800px;
     margin: 2rem auto;
     padding: 2.5rem;
-    background-color: var(--blanco);
-    border-radius: var(--borde-redondeado-fuerte);
-    box-shadow: var(--sombra-fuerte);
-    border: 1px solid rgba(255, 255, 255, 0.8);
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
     position: relative;
     overflow: hidden;
-    transition: var(--transicion-suave);
+    transition: var(--transition-normal);
 }
 
     .invoice-container::before {
@@ -19,25 +120,51 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 5px;
-        background: var(--gradiente-principal);
+        right: 0;
+        height: 4px;
+        background: var(--gradient-primary);
+    }
+
+    .invoice-container::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, rgba(var(--accent-pink-rgb), 0.15), transparent 70%);
+        border-radius: 50%;
+        pointer-events: none;
+        animation: float 20s ease-in-out infinite;
     }
 
     .invoice-container:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        transform: translateY(-6px);
+        box-shadow: var(--shadow-xl), var(--shadow-glow);
+        border-color: var(--border-color-hover);
     }
 
-/* --- Cabecera de la Factura --- */
+@keyframes float {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    50% {
+        transform: translate(-20px, 20px) rotate(180deg);
+    }
+}
+
+/* --- 4. CABECERA DE FACTURA --- */
 .invoice-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid var(--azul-claro);
+    border-bottom: 2px solid var(--border-color);
     padding-bottom: 1.5rem;
     margin-bottom: 2rem;
     position: relative;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
 
     .invoice-header::after {
@@ -47,78 +174,96 @@
         left: 0;
         width: 80px;
         height: 2px;
-        background: var(--gradiente-rosa);
+        background: var(--gradient-pink);
+        border-radius: var(--radius-full);
     }
 
     .invoice-header h3 {
         margin: 0;
-        color: var(--azul-oscuro);
+        color: var(--text-primary);
         font-weight: 700;
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         display: flex;
         align-items: center;
+        gap: 0.5rem;
     }
 
         .invoice-header h3::before {
             content: '📄';
-            margin-right: 10px;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
+            opacity: 0.9;
         }
 
     .invoice-header .invoice-id {
-        font-size: 1.2rem;
+        font-size: 1rem;
         font-weight: 600;
-        color: var(--gris-texto);
-        background: var(--gris-fondo);
+        color: var(--text-primary);
+        background: rgba(110, 168, 254, 0.15);
         padding: 0.5rem 1rem;
-        border-radius: var(--borde-redondeado);
-        border-left: 3px solid var(--azul-principal);
+        border-radius: var(--radius-md);
+        border-left: 3px solid var(--accent-blue);
+        font-family: monospace;
+        letter-spacing: 0.5px;
     }
 
-/* --- Sección de Detalles (Paciente y Pago) --- */
-.invoice-details .row {
-    margin-bottom: 1.5rem;
-    padding: 1rem;
-    background: var(--gris-fondo);
-    border-radius: var(--borde-redondeado);
-    transition: var(--transicion-suave);
+/* --- 5. DETALLES DE FACTURA (Paciente y Pago) --- */
+.invoice-details {
+    margin-bottom: 2rem;
 }
 
-    .invoice-details .row:hover {
-        background: var(--gris-claro);
-        transform: translateX(5px);
+    .invoice-details .row {
+        margin-bottom: 1rem;
+        padding: 1.2rem;
+        background: rgba(30, 41, 59, 0.5);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        transition: var(--transition-normal);
     }
 
-.invoice-details strong {
-    color: var(--azul-oscuro);
-    font-weight: 600;
-    display: block;
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
+        .invoice-details .row:hover {
+            background: var(--bg-hover);
+            border-color: var(--border-color-hover);
+            transform: translateX(4px);
+        }
 
-.invoice-details .col-md-6 {
-    padding-bottom: 1rem;
-    position: relative;
-}
+    .invoice-details strong {
+        color: var(--text-secondary);
+        font-weight: 600;
+        display: block;
+        margin-bottom: 0.4rem;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+    }
 
+    .invoice-details .col-md-6 {
+        padding-bottom: 0.8rem;
+        position: relative;
+        color: var(--text-primary);
+        font-weight: 500;
+    }
+
+        .invoice-details .col-md-6:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 20%;
+            height: 60%;
+            width: 1px;
+            background: var(--border-color);
+        }
+
+@media (max-width: 768px) {
     .invoice-details .col-md-6:not(:last-child)::after {
-        content: '';
-        position: absolute;
-        right: 0;
-        top: 10%;
-        height: 80%;
-        width: 1px;
-        background: var(--gris-medio);
+        display: none;
     }
+}
 
-/* --- Secciones de Servicios y Total --- */
+/* --- 6. SECCIONES DE SERVICIOS Y TOTAL --- */
 .invoice-section {
     margin-top: 2rem;
     padding-top: 1.5rem;
-    border-top: 1px solid var(--gris-medio);
+    border-top: 1px solid var(--border-color);
     position: relative;
 }
 
@@ -128,35 +273,40 @@
         top: -1px;
         left: 0;
         width: 60px;
-        height: 1px;
-        background: var(--gradiente-rosa);
+        height: 2px;
+        background: var(--gradient-pink);
+        border-radius: var(--radius-full);
     }
 
     .invoice-section h5 {
-        color: var(--azul-oscuro);
-        font-weight: 600;
-        margin-bottom: 1.5rem;
-        font-size: 1.3rem;
+        color: var(--text-primary);
+        font-weight: 700;
+        margin-bottom: 1.2rem;
+        font-size: 1.2rem;
         display: flex;
         align-items: center;
+        gap: 0.4rem;
     }
 
         .invoice-section h5::before {
             content: '💆‍♀️';
-            margin-right: 10px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
+            opacity: 0.9;
         }
 
-/* --- Lista de Servicios --- */
+/* --- 7. LISTA DE SERVICIOS (GLASSMORPHISM) --- */
 .invoice-services-list {
-    background: linear-gradient(135deg, var(--gris-fondo) 0%, var(--blanco-suave) 100%);
+    background: rgba(30, 41, 59, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     padding: 1.5rem;
-    border-radius: var(--borde-redondeado);
-    border-left: 4px solid var(--azul-principal);
-    font-size: 1rem;
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--accent-blue);
+    border: 1px solid var(--border-color);
+    font-size: 0.95rem;
     line-height: 1.8;
-    color: var(--gris-texto);
-    box-shadow: var(--sombra-suave);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-sm);
     position: relative;
     overflow: hidden;
 }
@@ -168,14 +318,12 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none"/><circle cx="50" cy="50" r="40" stroke="%23457b9d" stroke-width="0.5" fill="none" opacity="0.1"/></svg>');
-        background-size: 100px 100px;
-        opacity: 0.3;
-        z-index: 0;
+        background: radial-gradient(circle at 20% 80%, rgba(var(--accent-blue-rgb), 0.08), transparent 50%), radial-gradient(circle at 80% 20%, rgba(var(--accent-pink-rgb), 0.08), transparent 50%);
+        pointer-events: none;
     }
 
     .invoice-services-list ul {
-        list-style-type: none;
+        list-style: none;
         padding-left: 0;
         margin: 0;
         position: relative;
@@ -183,33 +331,42 @@
     }
 
     .invoice-services-list li {
-        padding: 0.5rem 0;
-        padding-left: 2rem;
+        padding: 0.5rem 0 0.5rem 2rem;
         position: relative;
-        transition: var(--transicion-suave);
+        transition: var(--transition-fast);
+        color: var(--text-primary);
+        border-bottom: 1px dashed var(--border-color);
     }
+
+        .invoice-services-list li:last-child {
+            border-bottom: none;
+        }
 
         .invoice-services-list li::before {
             content: '✓';
             position: absolute;
             left: 0;
-            color: var(--azul-principal);
-            font-weight: bold;
+            color: var(--accent-mint);
+            font-weight: 700;
+            font-size: 0.9rem;
         }
 
         .invoice-services-list li:hover {
-            color: var(--azul-oscuro);
-            transform: translateX(5px);
+            color: var(--accent-blue);
+            transform: translateX(4px);
+            background: rgba(110, 168, 254, 0.05);
+            border-radius: var(--radius-sm);
         }
 
-/* --- Total de la Factura --- */
+/* --- 8. TOTAL DE FACTURA (DESTACADO) --- */
 .invoice-total {
     text-align: right;
     margin-top: 2rem;
     padding: 1.5rem;
-    background: linear-gradient(135deg, var(--blanco) 0%, var(--blanco-suave) 100%);
-    border-radius: var(--borde-redondeado);
-    box-shadow: var(--sombra-media);
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
     position: relative;
     overflow: hidden;
 }
@@ -217,64 +374,76 @@
     .invoice-total::before {
         content: '';
         position: absolute;
-        top: 0;
-        right: 0;
-        width: 150px;
-        height: 150px;
-        background: radial-gradient(circle, var(--rosa-pálido) 0%, transparent 70%);
-        z-index: 0;
+        top: -50%;
+        right: -20%;
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(circle, rgba(var(--accent-pink-rgb), 0.2), transparent 70%);
+        border-radius: 50%;
+        pointer-events: none;
+        animation: pulse-glow 3s ease-in-out infinite;
     }
 
-    .invoice-total h4 {
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: var(--gris-texto);
-        margin-bottom: 0.5rem;
-        position: relative;
-        z-index: 1;
-    }
-
-    .invoice-total .total-amount {
-        font-size: 2.2rem;
-        font-weight: 800;
-        background: var(--gradiente-rosa);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        display: inline-block;
-        position: relative;
-        z-index: 1;
-        animation: pulse 2s infinite;
-    }
-
-@keyframes pulse {
-    0% {
+@keyframes pulse-glow {
+    0%, 100% {
+        opacity: 0.5;
         transform: scale(1);
     }
 
     50% {
-        transform: scale(1.05);
-    }
-
-    100% {
-        transform: scale(1);
+        opacity: 0.8;
+        transform: scale(1.1);
     }
 }
 
-/* --- Insignia de Estado de Pago (Reutilizable) --- */
-.badge-payment-status {
-    padding: 0.6em 1.2em;
-    font-size: 0.9rem;
+.invoice-total h4 {
+    font-size: 1.1rem;
     font-weight: 600;
-    border-radius: 30px;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.invoice-total .total-amount {
+    font-size: 2rem;
+    font-weight: 800;
+    background: var(--gradient-pink);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    animation: pulse-amount 2s ease-in-out infinite;
+    text-shadow: 0 0 20px rgba(var(--accent-pink-rgb), 0.3);
+}
+
+@keyframes pulse-amount {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.03);
+    }
+}
+
+/* --- 9. BADGE DE ESTADO DE PAGO (MEJORADO) --- */
+.badge-payment-status {
+    padding: 0.5rem 1.2rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: var(--radius-full);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
     position: relative;
     overflow: hidden;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: var(--transicion-suave);
+    transition: var(--transition-normal);
+    border: 1px solid transparent;
 }
 
     .badge-payment-status::before {
@@ -284,53 +453,88 @@
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-        transition: left 0.5s;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+        transition: left 0.5s ease;
     }
 
     .badge-payment-status:hover::before {
         left: 100%;
     }
 
+    /* Estado: Pagado */
     .badge-payment-status.pagado {
-        background: linear-gradient(45deg, var(--verde-whatsapp), #128C7E);
-        color: var(--blanco);
-        box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+        background: rgba(var(--accent-mint-rgb), 0.2);
+        color: #6EE7B7;
+        border-color: rgba(var(--accent-mint-rgb), 0.4);
+        box-shadow: 0 0 15px rgba(var(--accent-mint-rgb), 0.2);
     }
 
         .badge-payment-status.pagado::after {
             content: '✓';
-            margin-left: 5px;
+            margin-left: 0.4rem;
+            font-weight: 700;
         }
 
+        .badge-payment-status.pagado:hover {
+            background: rgba(var(--accent-mint-rgb), 0.3);
+            transform: translateY(-2px);
+        }
+
+    /* Estado: Pendiente */
     .badge-payment-status.pendiente {
-        background: linear-gradient(45deg, #f0ad4e, #ec971f);
-        color: var(--blanco);
-        box-shadow: 0 4px 10px rgba(240, 173, 78, 0.3);
+        background: rgba(var(--accent-yellow-rgb), 0.2);
+        color: #FCD34D;
+        border-color: rgba(var(--accent-yellow-rgb), 0.4);
+        box-shadow: 0 0 15px rgba(var(--accent-yellow-rgb), 0.2);
     }
 
         .badge-payment-status.pendiente::after {
             content: '⏱';
-            margin-left: 5px;
+            margin-left: 0.4rem;
         }
 
-/* --- Botón de Volver --- */
+        .badge-payment-status.pendiente:hover {
+            background: rgba(var(--accent-yellow-rgb), 0.3);
+            transform: translateY(-2px);
+        }
+
+    /* Estado: Cancelado */
+    .badge-payment-status.cancelado {
+        background: rgba(var(--accent-red-rgb), 0.2);
+        color: #FCA5A5;
+        border-color: rgba(var(--accent-red-rgb), 0.4);
+        box-shadow: 0 0 15px rgba(var(--accent-red-rgb), 0.2);
+    }
+
+        .badge-payment-status.cancelado::after {
+            content: '✕';
+            margin-left: 0.4rem;
+            font-weight: 700;
+        }
+
+        .badge-payment-status.cancelado:hover {
+            background: rgba(var(--accent-red-rgb), 0.3);
+            transform: translateY(-2px);
+        }
+
+/* --- 10. BOTÓN DE VOLVER (MEJORADO) --- */
 .btn-back {
-    background: var(--gradiente-principal);
+    background: var(--gradient-primary);
     border: none;
-    color: var(--blanco);
+    color: var(--text-primary);
     font-weight: 600;
     padding: 0.8rem 2rem;
-    border-radius: 30px;
-    transition: var(--transicion-suave);
+    border-radius: var(--radius-full);
+    transition: var(--transition-normal);
     text-decoration: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(29, 53, 87, 0.3);
+    box-shadow: var(--shadow-md), var(--shadow-glow);
     margin-top: 2rem;
+    font-size: 0.95rem;
 }
 
     .btn-back::before {
@@ -340,20 +544,21 @@
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-        transition: left 0.5s;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 0.5s ease;
     }
 
     .btn-back::after {
         content: '←';
-        margin-right: 8px;
-        font-size: 1.2rem;
+        margin-right: 0.5rem;
+        font-size: 1.1rem;
+        transition: transform 0.3s ease;
     }
 
     .btn-back:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(29, 53, 87, 0.4);
-        color: var(--blanco);
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: var(--shadow-lg), var(--shadow-glow);
+        color: var(--text-primary);
         text-decoration: none;
     }
 
@@ -361,87 +566,277 @@
             left: 100%;
         }
 
+        .btn-back:hover::after {
+            transform: translateX(-3px);
+        }
+
     .btn-back:active {
-        transform: translateY(-1px);
+        transform: translateY(-1px) scale(1);
+        transition: var(--transition-fast);
     }
 
-/* --- Sección de información adicional --- */
+    .btn-back:focus-visible {
+        outline: 2px solid var(--accent-blue);
+        outline-offset: 2px;
+    }
+
+/* --- 11. FOOTER DE FACTURA --- */
 .invoice-footer {
-    margin-top: 3rem;
+    margin-top: 2.5rem;
     padding-top: 1.5rem;
-    border-top: 1px solid var(--gris-medio);
+    border-top: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
 
 .invoice-footer-info {
-    font-size: 0.9rem;
-    color: var(--gris-texto-claro);
+    font-size: 0.85rem;
+    color: var(--text-muted);
 }
 
     .invoice-footer-info p {
         margin: 0.3rem 0;
         display: flex;
         align-items: center;
+        gap: 0.4rem;
+        color: var(--text-secondary);
     }
 
         .invoice-footer-info p::before {
             content: 'ℹ️';
-            margin-right: 8px;
+            opacity: 0.8;
         }
 
+/* --- 12. BOTONES DE ACCIÓN (Imprimir/Email) --- */
 .invoice-actions {
     display: flex;
-    gap: 1rem;
+    gap: 0.75rem;
+    flex-wrap: wrap;
 }
 
 .btn-action {
     padding: 0.6rem 1.2rem;
-    border-radius: var(--borde-redondeado);
-    font-weight: 500;
+    border-radius: var(--radius-md);
+    font-weight: 600;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: var(--transicion-suave);
+    gap: 0.4rem;
+    transition: var(--transition-normal);
     border: none;
     cursor: pointer;
+    font-size: 0.9rem;
+    position: relative;
+    overflow: hidden;
 }
 
+    .btn-action::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+        transition: left 0.4s ease;
+    }
+
+    .btn-action:hover::before {
+        left: 100%;
+    }
+
+/* Botón Imprimir */
 .btn-print {
-    background-color: var(--azul-profesional);
-    color: var(--blanco);
+    background: linear-gradient(135deg, #6EA8FE, #3B82F6);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-sm), 0 0 15px rgba(var(--accent-blue-rgb), 0.3);
 }
 
     .btn-print::before {
         content: '🖨️';
-        margin-right: 8px;
     }
 
     .btn-print:hover {
-        background-color: var(--azul-principal);
+        background: linear-gradient(135deg, #93C5FD, #60A5FA);
         transform: translateY(-2px);
-        box-shadow: 0 4px 10px rgba(102, 179, 255, 0.3);
+        box-shadow: var(--shadow-md), 0 0 20px rgba(var(--accent-blue-rgb), 0.5);
+        color: var(--text-primary);
     }
 
+/* Botón Email */
 .btn-email {
-    background-color: var(--verde-whatsapp);
-    color: var(--blanco);
+    background: linear-gradient(135deg, #6ED4B0, #34D399);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-sm), 0 0 15px rgba(var(--accent-mint-rgb), 0.3);
 }
 
     .btn-email::before {
         content: '📧';
-        margin-right: 8px;
     }
 
     .btn-email:hover {
-        background-color: #128C7E;
+        background: linear-gradient(135deg, #6EE7B7, #10B981);
         transform: translateY(-2px);
-        box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+        box-shadow: var(--shadow-md), 0 0 20px rgba(var(--accent-mint-rgb), 0.5);
+        color: var(--text-primary);
     }
 
-/* --- Responsive Design --- */
+/* --- 13. FORMULARIOS E INPUTS (MODO OSCURO) --- */
+input[type="text"],
+input[type="email"],
+input[type="date"],
+input[type="number"],
+textarea,
+select,
+.form-control {
+    background-color: var(--bg-input) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-sm) !important;
+    padding: 0.75rem 1rem !important;
+    font-size: 0.95rem !important;
+    transition: var(--transition-fast) !important;
+}
+
+    input::placeholder,
+    textarea::placeholder {
+        color: var(--text-muted) !important;
+        opacity: 1 !important;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus,
+    .form-control:focus {
+        background-color: rgba(15, 23, 42, 0.8) !important;
+        border-color: var(--accent-blue) !important;
+        box-shadow: 0 0 0 3px rgba(var(--accent-blue-rgb), 0.2) !important;
+        color: var(--text-primary) !important;
+        outline: none !important;
+    }
+
+    select option {
+        background-color: var(--bg-card-solid) !important;
+        color: var(--text-primary) !important;
+    }
+
+label {
+    color: var(--text-secondary) !important;
+    font-weight: 500 !important;
+    margin-bottom: 0.4rem !important;
+    font-size: 0.9rem !important;
+}
+
+/* --- 14. ANIMACIONES Y EFECTOS --- */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* Clases de animación */
+.animate-fade-in {
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.animate-shimmer {
+    position: relative;
+    overflow: hidden;
+}
+
+    .animate-shimmer::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+        animation: shimmer 1.5s infinite;
+    }
+
+/* Fade in staggered para elementos de lista */
+.fade-in-stagger > * {
+    opacity: 0;
+    animation: fadeInUp 0.4s ease-out forwards;
+}
+
+    .fade-in-stagger > *:nth-child(1) {
+        animation-delay: 0.05s;
+    }
+
+    .fade-in-stagger > *:nth-child(2) {
+        animation-delay: 0.1s;
+    }
+
+    .fade-in-stagger > *:nth-child(3) {
+        animation-delay: 0.15s;
+    }
+
+    .fade-in-stagger > *:nth-child(n+4) {
+        animation-delay: 0.2s;
+    }
+
+/* --- 15. ACCESIBILIDAD Y PREFERENCIAS --- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .invoice-container:hover,
+    .btn-back:hover,
+    .btn-action:hover,
+    .invoice-services-list li:hover {
+        transform: none !important;
+    }
+}
+
+@media (prefers-contrast: high) {
+    :root {
+        --border-color: rgba(255, 255, 255, 0.5);
+        --text-secondary: #CBD5E1;
+    }
+
+    .btn-back,
+    .btn-action {
+        border: 2px solid currentColor;
+    }
+}
+
+/* --- 16. RESPONSIVE DESIGN --- */
 @media (max-width: 768px) {
     .invoice-container {
         margin: 1rem;
@@ -455,45 +850,47 @@
     }
 
         .invoice-header h3 {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
         }
 
-    .invoice-details .col-md-6:not(:last-child)::after {
-        display: none;
-    }
-
     .invoice-total .total-amount {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
     }
 
     .invoice-footer {
         flex-direction: column;
-        gap: 1rem;
         align-items: flex-start;
+        gap: 1rem;
     }
 
     .invoice-actions {
         width: 100%;
-        justify-content: space-between;
+        justify-content: center;
+    }
+
+    .btn-back {
+        width: 100%;
+        justify-content: center;
     }
 }
 
 @media (max-width: 480px) {
     .invoice-container {
-        padding: 1rem;
+        padding: 1.2rem;
+        margin: 0.5rem;
     }
 
     .invoice-header h3 {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
     }
 
     .invoice-header .invoice-id {
-        font-size: 1rem;
+        font-size: 0.9rem;
         padding: 0.4rem 0.8rem;
     }
 
     .invoice-total .total-amount {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
 
     .invoice-actions {
@@ -503,55 +900,378 @@
 
     .btn-action {
         width: 100%;
-    }
-}
-
-/* --- Animaciones adicionales --- */
-.fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-    .fade-in.visible {
-        opacity: 1;
-        transform: translateY(0);
+        justify-content: center;
     }
 
-.slide-in-right {
-    opacity: 0;
-    transform: translateX(30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-    .slide-in-right.visible {
-        opacity: 1;
-        transform: translateX(0);
-    }
-
-/* --- Efectos de impresión --- */
-@media print {
-    .invoice-container {
-        box-shadow: none;
-        border: 1px solid #ddd;
-        margin: 0;
+    .invoice-services-list {
         padding: 1rem;
+        font-size: 0.9rem;
     }
+
+        .invoice-services-list li {
+            padding-left: 1.8rem;
+            font-size: 0.9rem;
+        }
+}
+
+/* --- 17. ESTILOS DE IMPRESIÓN (MODO OSCURO COMPATIBLE) --- */
+@media print {
+    body {
+        background: #fff !important;
+        color: #000 !important;
+    }
+
+    .invoice-container {
+        background: #fff !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        border: 2px solid #000 !important;
+        margin: 0 !important;
+        padding: 1rem !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+
+        .invoice-container::before,
+        .invoice-container::after {
+            display: none !important;
+        }
 
     .btn-back,
-    .invoice-actions {
-        display: none;
+    .invoice-actions,
+    .badge-payment-status::before {
+        display: none !important;
     }
 
     .invoice-header {
-        border-bottom: 1px solid #ddd;
+        border-bottom: 2px solid #000 !important;
     }
 
     .invoice-section {
-        border-top: 1px solid #ddd;
+        border-top: 1px solid #000 !important;
     }
 
     .invoice-footer {
-        border-top: 1px solid #ddd;
+        border-top: 1px solid #000 !important;
     }
+
+    .invoice-services-list {
+        background: #f9f9f9 !important;
+        border-left: 4px solid #000 !important;
+        color: #000 !important;
+    }
+
+    .invoice-total {
+        background: #f0f0f0 !important;
+        border: 1px solid #000 !important;
+    }
+
+        .invoice-total .total-amount {
+            color: #000 !important;
+            -webkit-text-fill-color: #000 !important;
+            background: none !important;
+            text-shadow: none !important;
+        }
+
+    .badge-payment-status {
+        border: 2px solid #000 !important;
+        color: #000 !important;
+        background: #fff !important;
+    }
+
+    /* Forzar texto negro para impresión */
+    *, *::before, *::after {
+        color: #000 !important;
+        text-shadow: none !important;
+        box-shadow: none !important;
+    }
+}
+
+/* --- 18. UTILIDADES ADICIONALES --- */
+/* Truncar texto con ellipsis */
+.text-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Flex utilities */
+.d-flex {
+    display: flex !important;
+}
+
+.flex-column {
+    flex-direction: column !important;
+}
+
+.justify-content-between {
+    justify-content: space-between !important;
+}
+
+.align-items-center {
+    align-items: center !important;
+}
+
+.gap-1 {
+    gap: 0.25rem !important;
+}
+
+.gap-2 {
+    gap: 0.5rem !important;
+}
+
+.gap-3 {
+    gap: 1rem !important;
+}
+
+/* Spacing utilities */
+.mb-2 {
+    margin-bottom: 0.5rem !important;
+}
+
+.mb-3 {
+    margin-bottom: 1rem !important;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem !important;
+}
+
+.mt-3 {
+    margin-top: 1rem !important;
+}
+
+/* Text utilities */
+.text-primary {
+    color: var(--text-primary) !important;
+}
+
+.text-secondary {
+    color: var(--text-secondary) !important;
+}
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.font-weight-bold {
+    font-weight: 700 !important;
+}
+
+.font-weight-medium {
+    font-weight: 500 !important;
+}
+
+/* Display utilities */
+.d-none {
+    display: none !important;
+}
+
+.d-print-none {
+    display: none !important;
+}
+
+@media print {
+    .d-print-none {
+        display: none !important;
+    }
+}
+
+/* =============================================
+   TABLA DE NUEVA FACTURA - MODO OSCURO
+   ============================================= */
+
+/* Tabla de servicios en nueva factura */
+.invoice-table,
+.table-factura,
+.nueva-factura-table,
+#<%= gvServiciosFactura.ClientID % >,
+[class*="factura"] table,
+[class*="invoice"] table {
+    background-color: rgba(30, 41, 59, 0.5) !important;
+    color: #F1F5F9 !important;
+    border: 1px solid #334155 !important;
+}
+
+    /* Header de la tabla de factura */
+    .invoice-table thead th,
+    .table-factura thead th,
+    .nueva-factura-table thead th,
+    #<%= gvServiciosFactura.ClientID % > thead th,
+    [class*="factura"] table thead th,
+    [class*="invoice"] table thead th {
+        background: linear-gradient(135deg, #6EA8FE 0%, #3B82F6 100%) !important;
+        color: #F1F5F9 !important;
+        border-color: #334155 !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+    }
+
+    /* Celdas del cuerpo de la tabla de factura */
+    .invoice-table tbody td,
+    .table-factura tbody td,
+    .nueva-factura-table tbody td,
+    #<%= gvServiciosFactura.ClientID % > tbody td,
+    [class*="factura"] table tbody td,
+    [class*="invoice"] table tbody td {
+        background-color: rgba(30, 41, 59, 0.3) !important;
+        color: #F1F5F9 !important;
+        border-color: #334155 !important;
+        padding: 0.9rem 1rem !important;
+    }
+
+    /* Filas hover en tabla de factura */
+    .invoice-table tbody tr:hover,
+    .table-factura tbody tr:hover,
+    .nueva-factura-table tbody tr:hover,
+    #<%= gvServiciosFactura.ClientID % > tbody tr:hover,
+    [class*="factura"] table tbody tr:hover,
+    [class*="invoice"] table tbody tr:hover {
+        background-color: rgba(110, 168, 254, 0.15) !important;
+    }
+
+    /* Filas alternas */
+    .invoice-table tbody tr:nth-child(even),
+    .table-factura tbody tr:nth-child(even),
+    .nueva-factura-table tbody tr:nth-child(even),
+    [class*="factura"] table tbody tr:nth-child(even),
+    [class*="invoice"] table tbody tr:nth-child(even) {
+        background-color: rgba(30, 41, 59, 0.5) !important;
+    }
+
+/* Labels en formulario de nueva factura */
+.nueva-factura label,
+.invoice-form label,
+[class*="factura"] label,
+label[for*="factura"] {
+    color: #94A3B8 !important;
+    font-weight: 500 !important;
+}
+
+/* Inputs en formulario de factura */
+.nueva-factura input,
+.nueva-factura select,
+.nueva-factura textarea,
+.invoice-form input,
+.invoice-form select,
+.invoice-form textarea,
+[class*="factura"] input,
+[class*="factura"] select,
+[class*="factura"] textarea {
+    background-color: rgba(30, 41, 59, 0.6) !important;
+    color: #F1F5F9 !important;
+    border-color: #334155 !important;
+}
+
+    .nueva-factura input:focus,
+    .nueva-factura select:focus,
+    .nueva-factura textarea:focus,
+    .invoice-form input:focus,
+    .invoice-form select:focus,
+    .invoice-form textarea:focus {
+        background-color: rgba(30, 41, 59, 0.9) !important;
+        border-color: #6EA8FE !important;
+        box-shadow: 0 0 0 3px rgba(110, 168, 254, 0.2) !important;
+        color: #F1F5F9 !important;
+    }
+
+/* Totales de factura */
+.total-factura,
+.invoice-total-amount,
+[class*="total"] strong,
+.monto-total {
+    color: #6EE7B7 !important;
+    font-weight: 700 !important;
+    font-size: 1.2rem !important;
+}
+
+/* Secciones del formulario de factura */
+.factura-section,
+.invoice-section-form,
+[class*="factura"] .card,
+[class*="invoice"] .card {
+    background-color: rgba(30, 41, 59, 0.7) !important;
+    border-color: #334155 !important;
+}
+
+    .factura-section h4,
+    .invoice-section-form h4,
+    [class*="factura"] .card-header,
+    [class*="invoice"] .card-header {
+        background-color: rgba(15, 23, 42, 0.5) !important;
+        color: #F1F5F9 !important;
+        border-color: #334155 !important;
+    }
+
+/* Botones en tabla de factura */
+.invoice-table .btn-action,
+.table-factura .btn-action,
+[class*="factura"] .btn-action {
+    color: #F1F5F9 !important;
+}
+
+/* Placeholders en inputs de factura */
+.nueva-factura input::placeholder,
+.invoice-form input::placeholder,
+[class*="factura"] input::placeholder {
+    color: #64748B !important;
+}
+
+/* Textos de ayuda en factura */
+.form-text,
+.help-block,
+[class*="factura"] small,
+.invoice-help {
+    color: #64748B !important;
+}
+
+/* Panel de resumen de factura */
+.factura-resumen,
+.invoice-summary,
+[class*="resumen"] {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9)) !important;
+    border-color: #6EA8FE !important;
+    color: #F1F5F9 !important;
+}
+
+/* Items de servicio en factura */
+.servicio-item,
+.invoice-service-item,
+[class*="servicio"] {
+    background-color: rgba(30, 41, 59, 0.4) !important;
+    border-color: #334155 !important;
+    color: #F1F5F9 !important;
+}
+
+/* Precios en tabla de factura */
+.precio-servicio,
+.service-price-table,
+[class*="precio"] {
+    color: #FDA4AF !important;
+    font-weight: 600 !important;
+}
+
+/* Responsive para tabla de factura */
+@media (max-width: 768px) {
+    .invoice-table,
+    .table-factura,
+    [class*="factura"] table {
+        font-size: 0.85rem !important;
+    }
+
+        .invoice-table thead th,
+        .table-factura thead th {
+            font-size: 0.8rem !important;
+            padding: 0.6rem !important;
+        }
+
+        .invoice-table tbody td,
+        .table-factura tbody td {
+            padding: 0.6rem !important;
+        }
 }
