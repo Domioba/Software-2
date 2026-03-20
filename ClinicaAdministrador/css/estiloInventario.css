@@ -1,6 +1,49 @@
 ﻿/* --- ARCHIVO: css/estiloInventario.css --- */
+/* --- MODO OSCURO --- */
 
-/* --- Insignias (Badges) para Estado del Producto (MEJORADAS) --- */
+/* ========================================
+   VARIABLES DE TEMA OSCURO
+   ======================================== */
+:root {
+    /* Colores base oscuro */
+    --fondo-principal: #1a1d24;
+    --fondo-secundario: #232730;
+    --fondo-terciario: #2d323d;
+    --fondo-input: #343a45;
+    /* Texto */
+    --texto-principal: #f1f3f5;
+    --texto-secundario: #adb5bd;
+    --texto-terciario: #6c757d;
+    --texto-enlace: #74c0fc;
+    /* Bordes */
+    --borde-suave: rgba(255, 255, 255, 0.1);
+    --borde-medio: rgba(255, 255, 255, 0.15);
+    --borde-fuerte: rgba(255, 255, 255, 0.25);
+    /* Sombras para modo oscuro */
+    --sombra-suave: 0 2px 10px rgba(0, 0, 0, 0.3);
+    --sombra-media: 0 4px 20px rgba(0, 0, 0, 0.4);
+    --sombra-fuerte: 0 8px 30px rgba(0, 0, 0, 0.5);
+    /* Colores de estado (ajustados para dark mode) */
+    --verde-whatsapp: #2ecc71;
+    --verde-whatsapp-hover: #27ae60;
+    --rojo-coral: #e74c3c;
+    --rojo-coral-hover: #c0392b;
+    --azul-profesional: #4a90e2;
+    --azul-principal: #3498db;
+    --amarillo-alerta: #f39c12;
+    /* Gradientes */
+    --gradiente-principal: linear-gradient(135deg, #4a90e2 0%, #3498db 100%);
+    /* Bordes */
+    --borde-redondeado: 12px;
+    --borde-redondeado-fuerte: 16px;
+    --borde-redondeado-suave: 8px;
+    /* Transiciones */
+    --transicion-suave: all 0.3s ease;
+}
+
+/* ========================================
+   INSIGNIAS (BADGES) - ESTADO DEL PRODUCTO
+   ======================================== */
 .badge-status {
     padding: 0.5em 1em;
     font-size: 0.85em;
@@ -13,7 +56,10 @@
     transition: var(--transicion-suave);
     display: inline-flex;
     align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--sombra-suave);
+    background: var(--fondo-terciario);
+    color: var(--texto-principal);
+    border: 1px solid var(--borde-medio);
 }
 
     .badge-status::before {
@@ -23,7 +69,7 @@
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
         transition: left 0.5s;
     }
 
@@ -33,32 +79,38 @@
 
     .badge-status:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        box-shadow: var(--sombra-media);
     }
 
     .badge-status.activo {
-        background: linear-gradient(135deg, var(--verde-whatsapp) 0%, #128C7E 100%);
-        color: var(--blanco);
-        border-left: 3px solid #0a6e5f;
+        background: linear-gradient(135deg, var(--verde-whatsapp) 0%, var(--verde-whatsapp-hover) 100%);
+        color: #ffffff;
+        border: none;
+        box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
     }
 
         .badge-status.activo::after {
             content: '✓';
             margin-left: 5px;
+            font-weight: bold;
         }
 
     .badge-status.inactivo {
-        background: linear-gradient(135deg, var(--rojo-coral) 0%, #c9302c 100%);
-        color: var(--blanco);
-        border-left: 3px solid #a02622;
+        background: linear-gradient(135deg, var(--rojo-coral) 0%, var(--rojo-coral-hover) 100%);
+        color: #ffffff;
+        border: none;
+        box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
     }
 
         .badge-status.inactivo::after {
             content: '✕';
             margin-left: 5px;
+            font-weight: bold;
         }
 
-/* --- Insignias (Badges) para Alertas de Inventario (MEJORADAS) --- */
+/* ========================================
+   INSIGNIAS (BADGES) - ALERTAS DE INVENTARIO
+   ======================================== */
 .badge-inventory {
     padding: 0.5em 1em;
     font-size: 0.85em;
@@ -71,7 +123,10 @@
     transition: var(--transicion-suave);
     display: inline-flex;
     align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--sombra-suave);
+    background: var(--fondo-terciario);
+    color: var(--texto-principal);
+    border: 1px solid var(--borde-medio);
 }
 
     .badge-inventory::before {
@@ -81,7 +136,7 @@
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
         transition: left 0.5s;
     }
 
@@ -91,53 +146,63 @@
 
     .badge-inventory:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        box-shadow: var(--sombra-media);
     }
 
     .badge-inventory.alert-stock-low {
-        background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
-        color: #212529;
-        border-left: 3px solid #d39e00;
+        background: linear-gradient(135deg, #f39c12 0%, #d68910 100%);
+        color: #1a1d24;
+        border: none;
+        font-weight: 700;
+        box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
     }
 
         .badge-inventory.alert-stock-low::after {
             content: '⚠';
             margin-left: 5px;
+            font-weight: bold;
         }
 
     .badge-inventory.alert-expired {
-        background: linear-gradient(135deg, var(--rojo-coral) 0%, #c9302c 100%);
-        color: var(--blanco);
-        border-left: 3px solid #a02622;
+        background: linear-gradient(135deg, var(--rojo-coral) 0%, var(--rojo-coral-hover) 100%);
+        color: #ffffff;
+        border: none;
+        box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
     }
 
         .badge-inventory.alert-expired::after {
             content: '⏰';
             margin-left: 5px;
+            font-weight: bold;
         }
 
     .badge-inventory.alert-ok {
-        background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
-        color: #0c5460;
-        border-left: 3px solid #0c5460;
+        background: linear-gradient(135deg, #1a5f7a 0%, #154d5f 100%);
+        color: #74c0fc;
+        border: 1px solid #3a8bc4;
     }
 
         .badge-inventory.alert-ok::after {
             content: '✓';
             margin-left: 5px;
+            font-weight: bold;
         }
 
-/* --- Mensajes de Alerta Personalizados (MEJORADOS) --- */
+/* ========================================
+   MENSAJES DE ALERTA PERSONALIZADOS
+   ======================================== */
 .alert-custom {
     padding: 1.2rem 1.8rem;
     border-radius: var(--borde-redondeado);
-    border: none;
+    border: 1px solid var(--borde-medio);
     margin-bottom: 1.5rem;
     position: relative;
     padding-left: 4rem;
     box-shadow: var(--sombra-suave);
     transition: var(--transicion-suave);
     overflow: hidden;
+    background: var(--fondo-secundario);
+    color: var(--texto-principal);
 }
 
     .alert-custom::before {
@@ -158,82 +223,99 @@
         width: 1.5rem;
         height: 1.5rem;
         background-size: contain;
+        background-repeat: no-repeat;
+        filter: brightness(0) saturate(100%) invert(70%);
     }
 
     .alert-custom:hover {
         transform: translateY(-2px);
         box-shadow: var(--sombra-media);
+        border-color: var(--borde-fuerte);
     }
 
 .alert-error {
-    color: #721c24;
-    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+    color: #ffcccc;
+    background: linear-gradient(135deg, #3d2326 0%, #4a2a2d 100%);
+    border-color: var(--rojo-coral);
     text-align: center;
     font-weight: 500;
 }
 
     .alert-error::before {
         background-color: var(--rojo-coral);
+        box-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
     }
 
     .alert-error::after {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23721c24'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'/%3E%3C/svg%3E");
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffcccc'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'/%3E%3C/svg%3E");
+        filter: none;
     }
 
 .alert-info {
-    color: #0c5460;
-    background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+    color: #74c0fc;
+    background: linear-gradient(135deg, #1a3a4a 0%, #1f4557 100%);
+    border-color: var(--azul-profesional);
     text-align: center;
 }
 
     .alert-info::before {
         background-color: var(--azul-profesional);
+        box-shadow: 0 0 10px rgba(74, 144, 226, 0.5);
     }
 
     .alert-info::after {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230c5460'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z'/%3E%3C/svg%3E");
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2374c0fc'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z'/%3E%3C/svg%3E");
+        filter: none;
     }
 
 .alert-success {
-    color: #155724;
-    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    color: #a5d6a7;
+    background: linear-gradient(135deg, #1e3a2a 0%, #234532 100%);
+    border-color: var(--verde-whatsapp);
     text-align: center;
 }
 
     .alert-success::before {
         background-color: var(--verde-whatsapp);
+        box-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
     }
 
     .alert-success::after {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23155724'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23a5d6a7'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+        filter: none;
     }
 
 .alert-warning {
-    color: #856404;
-    background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%);
+    color: #ffd54f;
+    background: linear-gradient(135deg, #4a3a1a 0%, #57451f 100%);
+    border-color: var(--amarillo-alerta);
     text-align: center;
 }
 
     .alert-warning::before {
-        background-color: #ffc107;
+        background-color: var(--amarillo-alerta);
+        box-shadow: 0 0 10px rgba(243, 156, 18, 0.5);
     }
 
     .alert-warning::after {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23856404'%3E%3Cpath d='M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z'/%3E%3C/svg%3E");
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffd54f'%3E%3Cpath d='M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z'/%3E%3C/svg%3E");
+        filter: none;
     }
 
-/* --- Botones de Adición/Edición (MEJORADOS) --- */
+/* ========================================
+   BOTONES DE ADICIÓN/EDICIÓN
+   ======================================== */
 .btn-add-new {
     background: var(--gradiente-principal);
     border: none;
-    color: var(--blanco);
+    color: #ffffff;
     font-weight: 600;
     padding: 0.8rem 1.8rem;
     border-radius: var(--borde-redondeado);
     transition: var(--transicion-suave);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(29, 53, 87, 0.3);
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -246,7 +328,7 @@
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
         transition: left 0.5s;
     }
 
@@ -259,8 +341,8 @@
 
     .btn-add-new:hover {
         transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(29, 53, 87, 0.4);
-        color: var(--blanco);
+        box-shadow: 0 8px 25px rgba(52, 152, 219, 0.6);
+        color: #ffffff;
     }
 
         .btn-add-new:hover::before {
@@ -271,18 +353,20 @@
         transform: translateY(-1px);
     }
 
-/* --- Variantes de Botones Personalizados (MEJORADOS) --- */
+/* ========================================
+   VARIANTES DE BOTONES PERSONALIZADOS
+   ======================================== */
 .btn-success-custom {
-    background: linear-gradient(45deg, var(--verde-whatsapp), #128C7E);
+    background: linear-gradient(45deg, var(--verde-whatsapp), var(--verde-whatsapp-hover));
     border: none;
-    color: var(--blanco);
+    color: #ffffff;
     font-weight: 600;
     padding: 0.8rem 1.5rem;
     border-radius: var(--borde-redondeado);
     transition: var(--transicion-suave);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -295,7 +379,7 @@
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
         transition: left 0.5s;
     }
 
@@ -307,8 +391,8 @@
 
     .btn-success-custom:hover {
         transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
-        color: var(--blanco);
+        box-shadow: 0 8px 25px rgba(46, 204, 113, 0.6);
+        color: #ffffff;
     }
 
         .btn-success-custom:hover::before {
@@ -316,16 +400,16 @@
         }
 
 .btn-secondary-custom {
-    background: linear-gradient(45deg, #6c757d, #5a6268);
-    border: none;
-    color: var(--blanco);
+    background: linear-gradient(45deg, #495057, #343a40);
+    border: 1px solid var(--borde-medio);
+    color: var(--texto-principal);
     font-weight: 600;
     padding: 0.8rem 1.5rem;
     border-radius: var(--borde-redondeado);
     transition: var(--transicion-suave);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+    box-shadow: var(--sombra-suave);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -338,7 +422,7 @@
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
         transition: left 0.5s;
     }
 
@@ -350,26 +434,27 @@
 
     .btn-secondary-custom:hover {
         transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(108, 117, 125, 0.4);
-        color: var(--blanco);
+        box-shadow: var(--sombra-media);
+        background: linear-gradient(45deg, #5a6268, #495057);
+        color: #ffffff;
+        border-color: var(--borde-fuerte);
     }
 
         .btn-secondary-custom:hover::before {
             left: 100%;
         }
 
-/* --- Botón de eliminación personalizado --- */
 .btn-danger-custom {
-    background: linear-gradient(45deg, var(--rojo-coral), #c9302c);
+    background: linear-gradient(45deg, var(--rojo-coral), var(--rojo-coral-hover));
     border: none;
-    color: var(--blanco);
+    color: #ffffff;
     font-weight: 600;
     padding: 0.8rem 1.5rem;
     border-radius: var(--borde-redondeado);
     transition: var(--transicion-suave);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -382,7 +467,7 @@
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
         transition: left 0.5s;
     }
 
@@ -393,26 +478,25 @@
 
     .btn-danger-custom:hover {
         transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(230, 57, 70, 0.4);
-        color: var(--blanco);
+        box-shadow: 0 8px 25px rgba(231, 76, 60, 0.6);
+        color: #ffffff;
     }
 
         .btn-danger-custom:hover::before {
             left: 100%;
         }
 
-/* --- Botón de edición personalizado --- */
 .btn-edit-custom {
     background: linear-gradient(45deg, var(--azul-profesional), var(--azul-principal));
     border: none;
-    color: var(--blanco);
+    color: #ffffff;
     font-weight: 600;
     padding: 0.8rem 1.5rem;
     border-radius: var(--borde-redondeado);
     transition: var(--transicion-suave);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(102, 179, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -425,7 +509,7 @@
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
         transition: left 0.5s;
     }
 
@@ -436,17 +520,19 @@
 
     .btn-edit-custom:hover {
         transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(102, 179, 255, 0.4);
-        color: var(--blanco);
+        box-shadow: 0 8px 25px rgba(74, 144, 226, 0.6);
+        color: #ffffff;
     }
 
         .btn-edit-custom:hover::before {
             left: 100%;
         }
 
-/* --- Tarjeta de producto de inventario --- */
+/* ========================================
+   TARJETA DE PRODUCTO DE INVENTARIO
+   ======================================== */
 .inventory-card {
-    background: var(--blanco);
+    background: var(--fondo-secundario);
     border-radius: var(--borde-redondeado-fuerte);
     overflow: hidden;
     box-shadow: var(--sombra-media);
@@ -455,6 +541,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
+    border: 1px solid var(--borde-suave);
 }
 
     .inventory-card::before {
@@ -463,7 +550,7 @@
         top: 0;
         left: 0;
         width: 100%;
-        height: 5px;
+        height: 4px;
         background: var(--gradiente-principal);
         transform: scaleX(0);
         transform-origin: left;
@@ -477,12 +564,14 @@
     .inventory-card:hover {
         transform: translateY(-10px);
         box-shadow: var(--sombra-fuerte);
+        border-color: var(--borde-fuerte);
     }
 
 .inventory-image {
     height: 180px;
     overflow: hidden;
     position: relative;
+    background: var(--fondo-terciario);
 }
 
     .inventory-image img {
@@ -493,13 +582,14 @@
     }
 
 .inventory-card:hover .inventory-image img {
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 .inventory-status {
     position: absolute;
     top: 10px;
     right: 10px;
+    z-index: 2;
 }
 
 .inventory-content {
@@ -512,19 +602,20 @@
 .inventory-name {
     font-size: 1.3rem;
     font-weight: 600;
-    color: var(--azul-oscuro);
+    color: var(--texto-principal);
     margin-bottom: 0.8rem;
 }
 
 .inventory-code {
     font-size: 0.9rem;
-    color: var(--gris-texto-claro);
+    color: var(--texto-terciario);
     margin-bottom: 1rem;
-    font-family: monospace;
-    background: var(--gris-fondo);
+    font-family: 'Fira Code', monospace;
+    background: var(--fondo-input);
     padding: 0.3rem 0.6rem;
     border-radius: var(--borde-redondeado-suave);
     display: inline-block;
+    border: 1px solid var(--borde-suave);
 }
 
 .inventory-details {
@@ -537,7 +628,7 @@
     justify-content: space-between;
     margin-bottom: 0.5rem;
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--gris-claro);
+    border-bottom: 1px solid var(--borde-suave);
 }
 
     .inventory-detail:last-child {
@@ -546,12 +637,12 @@
 
 .inventory-detail-label {
     font-weight: 500;
-    color: var(--gris-texto);
+    color: var(--texto-secundario);
 }
 
 .inventory-detail-value {
     font-weight: 600;
-    color: var(--azul-oscuro);
+    color: var(--texto-principal);
 }
 
 .inventory-stock {
@@ -565,18 +656,22 @@
     height: 12px;
     border-radius: 50%;
     margin-right: 0.5rem;
+    border: 2px solid var(--fondo-secundario);
 }
 
 .stock-high {
     background-color: var(--verde-whatsapp);
+    box-shadow: 0 0 8px rgba(46, 204, 113, 0.5);
 }
 
 .stock-medium {
-    background-color: #ffc107;
+    background-color: var(--amarillo-alerta);
+    box-shadow: 0 0 8px rgba(243, 156, 18, 0.5);
 }
 
 .stock-low {
     background-color: var(--rojo-coral);
+    box-shadow: 0 0 8px rgba(231, 76, 60, 0.5);
 }
 
 .inventory-footer {
@@ -585,13 +680,13 @@
     align-items: center;
     margin-top: auto;
     padding-top: 1rem;
-    border-top: 1px solid var(--gris-claro);
+    border-top: 1px solid var(--borde-suave);
 }
 
 .inventory-price {
     font-size: 1.2rem;
     font-weight: 700;
-    color: var(--azul-oscuro);
+    color: var(--texto-principal);
 }
 
 .inventory-actions {
@@ -599,19 +694,22 @@
     gap: 0.5rem;
 }
 
-/* --- Filtros de inventario --- */
+/* ========================================
+   FILTROS DE INVENTARIO
+   ======================================== */
 .inventory-filters {
-    background: var(--blanco);
+    background: var(--fondo-secundario);
     padding: 1.5rem;
     border-radius: var(--borde-redondeado);
     box-shadow: var(--sombra-suave);
     margin-bottom: 2rem;
+    border: 1px solid var(--borde-suave);
 }
 
 .filter-title {
     font-size: 1.2rem;
     font-weight: 600;
-    color: var(--azul-oscuro);
+    color: var(--texto-principal);
     margin-bottom: 1rem;
     display: flex;
     align-items: center;
@@ -620,6 +718,7 @@
     .filter-title::before {
         content: '🔍';
         margin-right: 8px;
+        filter: brightness(1.2);
     }
 
 .filter-group {
@@ -630,37 +729,36 @@
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 500;
-    color: var(--gris-oscuro);
+    color: var(--texto-secundario);
 }
 
-.filter-input {
-    width: 100%;
-    padding: 0.6rem 1rem;
-    border: 1px solid var(--gris-medio);
-    border-radius: var(--borde-redondeado-suave);
-    background-color: var(--blanco);
-    transition: var(--transicion-suave);
-}
-
-    .filter-input:focus {
-        outline: none;
-        border-color: var(--azul-principal);
-        box-shadow: 0 0 0 3px rgba(69, 123, 157, 0.1);
-    }
-
+.filter-input,
 .filter-select {
     width: 100%;
     padding: 0.6rem 1rem;
-    border: 1px solid var(--gris-medio);
+    border: 1px solid var(--borde-medio);
     border-radius: var(--borde-redondeado-suave);
-    background-color: var(--blanco);
+    background-color: var(--fondo-input);
+    color: var(--texto-principal);
     transition: var(--transicion-suave);
 }
 
+    .filter-input::placeholder,
+    .filter-select::placeholder {
+        color: var(--texto-terciario);
+    }
+
+    .filter-input:focus,
     .filter-select:focus {
         outline: none;
         border-color: var(--azul-principal);
-        box-shadow: 0 0 0 3px rgba(69, 123, 157, 0.1);
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25);
+        background-color: var(--fondo-terciario);
+    }
+
+    .filter-select option {
+        background-color: var(--fondo-secundario);
+        color: var(--texto-principal);
     }
 
 .filter-actions {
@@ -669,7 +767,9 @@
     margin-top: 1rem;
 }
 
-/* --- Grupo de botones --- */
+/* ========================================
+   GRUPO DE BOTONES & BOTONES CON ICONOS
+   ======================================== */
 .btn-group-custom {
     display: flex;
     gap: 0.5rem;
@@ -682,7 +782,6 @@
         min-width: 120px;
     }
 
-/* --- Botones con iconos --- */
 .btn-icon-custom {
     width: 40px;
     height: 40px;
@@ -692,13 +791,26 @@
     align-items: center;
     justify-content: center;
     font-size: 1.2rem;
+    background: var(--fondo-terciario);
+    border: 1px solid var(--borde-medio);
+    color: var(--texto-principal);
+    transition: var(--transicion-suave);
 }
 
     .btn-icon-custom::after {
         margin: 0;
     }
 
-/* --- Responsive Design --- */
+    .btn-icon-custom:hover {
+        background: var(--fondo-input);
+        border-color: var(--borde-fuerte);
+        transform: translateY(-2px);
+        box-shadow: var(--sombra-media);
+    }
+
+/* ========================================
+   RESPONSIVE DESIGN - MODO OSCURO
+   ======================================== */
 @media (max-width: 768px) {
     .inventory-card {
         margin-bottom: 2rem;
@@ -717,6 +829,7 @@
 
     .inventory-filters {
         margin-bottom: 1.5rem;
+        padding: 1.2rem;
     }
 
     .filter-actions {
@@ -753,10 +866,11 @@
     .inventory-detail {
         flex-direction: column;
         align-items: flex-start;
+        gap: 0.3rem;
     }
 
     .inventory-detail-value {
-        margin-top: 0.3rem;
+        margin-top: 0;
     }
 
     .btn-custom {
@@ -764,7 +878,8 @@
         font-size: 0.85rem;
     }
 
-    .badge-status, .badge-inventory {
+    .badge-status,
+    .badge-inventory {
         padding: 0.4em 0.8em;
         font-size: 0.75em;
     }
@@ -772,10 +887,13 @@
     .alert-custom {
         padding: 1rem 1.2rem;
         padding-left: 3.5rem;
+        font-size: 0.9rem;
     }
 }
 
-/* --- Animaciones adicionales --- */
+/* ========================================
+   ANIMACIONES ADICIONALES - MODO OSCURO
+   ======================================== */
 .pulse {
     animation: pulse 2s infinite;
 }
@@ -783,14 +901,17 @@
 @keyframes pulse {
     0% {
         transform: scale(1);
+        box-shadow: var(--sombra-suave);
     }
 
     50% {
-        transform: scale(1.05);
+        transform: scale(1.03);
+        box-shadow: var(--sombra-media);
     }
 
     100% {
         transform: scale(1);
+        box-shadow: var(--sombra-suave);
     }
 }
 
@@ -805,7 +926,9 @@
         transform: translateY(0);
     }
 
-/* --- Estados de carga --- */
+/* ========================================
+   ESTADOS DE CARGA & DESHABILITADOS
+   ======================================== */
 .btn-loading {
     position: relative;
     color: transparent !important;
@@ -821,9 +944,9 @@
         left: 50%;
         margin-left: -10px;
         margin-top: -10px;
-        border: 2px solid rgba(255, 255, 255, 0.3);
+        border: 2px solid rgba(255, 255, 255, 0.2);
         border-radius: 50%;
-        border-top-color: var(--blanco);
+        border-top-color: #ffffff;
         animation: spin 1s ease-in-out infinite;
     }
 
@@ -833,14 +956,156 @@
     }
 }
 
-/* --- Estados deshabilitados --- */
-.btn-custom:disabled {
-    opacity: 0.6;
+.btn-custom:disabled,
+button:disabled,
+input:disabled,
+select:disabled {
+    opacity: 0.5;
     cursor: not-allowed;
     transform: none !important;
+    filter: grayscale(0.3);
 }
 
-    .btn-custom:disabled:hover {
+    .btn-custom:disabled:hover,
+    button:disabled:hover {
         transform: none !important;
         box-shadow: none !important;
     }
+
+/* ========================================
+   SCROLLBAR PERSONALIZADO PARA MODO OSCURO
+   ======================================== */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--fondo-principal);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--fondo-terciario);
+    border-radius: 5px;
+    border: 2px solid var(--fondo-principal);
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--borde-fuerte);
+    }
+
+/* ========================================
+   UTILIDADES ADICIONALES PARA MODO OSCURO
+   ======================================== */
+.text-muted-dark {
+    color: var(--texto-terciario) !important;
+}
+
+.bg-card-dark {
+    background: var(--fondo-secundario) !important;
+    border: 1px solid var(--borde-suave) !important;
+}
+
+.border-dark {
+    border-color: var(--borde-medio) !important;
+}
+
+.hover-lift-dark:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: var(--sombra-fuerte) !important;
+    border-color: var(--borde-fuerte) !important;
+}
+
+/* Efecto de foco accesible para modo oscuro */
+:focus-visible {
+    outline: 2px solid var(--azul-principal);
+    outline-offset: 2px;
+}
+
+/* Transición suave al cambiar de tema */
+*, *::before, *::after {
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+/* --- TABLA DE INVENTARIO - MODO OSCURO --- */
+.table-inventario,
+.tabla-inventario,
+table {
+    background: var(--fondo-secundario) !important;
+    color: var(--texto-principal) !important;
+    border: 1px solid var(--borde-suave) !important;
+}
+
+    .table-inventario thead,
+    .tabla-inventario thead,
+    table thead {
+        background: var(--fondo-terciario) !important;
+        color: var(--texto-principal) !important;
+        border-bottom: 2px solid var(--borde-medio) !important;
+    }
+
+    .table-inventario th,
+    .tabla-inventario th,
+    table th {
+        background: var(--fondo-terciario) !important;
+        color: var(--texto-principal) !important;
+        border-color: var(--borde-suave) !important;
+        font-weight: 600;
+    }
+
+    .table-inventario td,
+    .tabla-inventario td,
+    table td {
+        background: var(--fondo-secundario) !important;
+        color: var(--texto-principal) !important;
+        border-color: var(--borde-suave) !important;
+        vertical-align: middle;
+    }
+
+    .table-inventario tbody tr,
+    .tabla-inventario tbody tr,
+    table tbody tr {
+        background: var(--fondo-secundario) !important;
+        transition: var(--transicion-suave);
+    }
+
+        .table-inventario tbody tr:hover,
+        .tabla-inventario tbody tr:hover,
+        table tbody tr:hover {
+            background: var(--fondo-terciario) !important;
+        }
+
+/* Si usas Bootstrap */
+.table {
+    color: var(--texto-principal) !important;
+}
+
+.table-dark {
+    background: var(--fondo-secundario) !important;
+    color: var(--texto-principal) !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background: rgba(255, 255, 255, 0.02) !important;
+}
+
+/* Headers de tabla */
+th {
+    background: var(--fondo-terciario) !important;
+    color: var(--texto-principal) !important;
+    border-color: var(--borde-medio) !important;
+}
+
+/* Celdas de tabla */
+td {
+    color: var(--texto-principal) !important;
+    border-color: var(--borde-suave) !important;
+}
+
+/* Ajuste específico para badges en tablas */
+.table .badge,
+table .badge {
+    color: #fff !important;
+}

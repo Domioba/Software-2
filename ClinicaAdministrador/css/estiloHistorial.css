@@ -1,16 +1,70 @@
 ﻿/* --- ARCHIVO: css/estiloHistorial.css --- */
+/* --- MODO OSCURO PROFESIONAL --- */
 
-/* --- Mensajes de Alerta Personalizados (MEJORADOS) --- */
+/* ========================================
+   VARIABLES DE TEMA OSCURO
+   ======================================== */
+:root {
+    /* Fondos base */
+    --fondo-principal: #0F172A;
+    --fondo-secundario: #1E293B;
+    --fondo-terciario: #334155;
+    --fondo-input: #1a2231;
+    --fondo-hover: rgba(110, 168, 254, 0.1);
+    /* Texto */
+    --texto-principal: #F1F5F9;
+    --texto-secundario: #94A3B8;
+    --texto-terciario: #64748B;
+    --texto-enlace: #7DD3FC;
+    /* Bordes */
+    --borde-suave: rgba(51, 65, 85, 0.6);
+    --borde-medio: rgba(51, 65, 85, 0.9);
+    --borde-fuerte: rgba(110, 168, 254, 0.5);
+    /* Sombras para dark mode */
+    --sombra-suave: 0 2px 10px rgba(0, 0, 0, 0.4);
+    --sombra-media: 0 4px 20px rgba(0, 0, 0, 0.5);
+    --sombra-fuerte: 0 8px 30px rgba(0, 0, 0, 0.7);
+    /* Colores de estado (ajustados para dark) */
+    --verde-whatsapp: #22C55E;
+    --verde-whatsapp-hover: #16A34A;
+    --rojo-coral: #EF4444;
+    --rojo-coral-hover: #DC2626;
+    --azul-profesional: #3B82F6;
+    --azul-principal: #60A5FA;
+    --azul-suave: #93C5FD;
+    --azul-medio: #60A5FA;
+    --azul-oscuro: #1E3A8A;
+    --amarillo-alerta: #F59E0B;
+    /* Gradientes oscuros profesionales */
+    --gradiente-principal: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%);
+    --gradiente-success: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
+    --gradiente-danger: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+    --gradiente-warning: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+    --gradiente-info: linear-gradient(135deg, #3B82F6 0%, #0EA5E9 100%);
+    /* Bordes y transiciones */
+    --borde-redondeado: 12px;
+    --borde-redondeado-suave: 8px;
+    --borde-redondeado-fuerte: 16px;
+    --transicion-suave: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ========================================
+   MENSAJES DE ALERTA PERSONALIZADOS - DARK
+   ======================================== */
 .alert-custom {
     padding: 1.2rem 1.8rem;
     border-radius: var(--borde-redondeado);
-    border: none;
+    border: 1px solid var(--borde-suave);
     margin-bottom: 1.5rem;
     position: relative;
     padding-left: 4rem;
     box-shadow: var(--sombra-suave);
     transition: var(--transicion-suave);
     overflow: hidden;
+    background: var(--fondo-secundario);
+    color: var(--texto-principal);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
     .alert-custom::before {
@@ -20,6 +74,7 @@
         left: 0;
         width: 4px;
         height: 100%;
+        border-radius: var(--borde-redondeado-suave) 0 0 var(--borde-redondeado-suave);
     }
 
     .alert-custom::after {
@@ -31,81 +86,102 @@
         width: 1.5rem;
         height: 1.5rem;
         background-size: contain;
+        background-repeat: no-repeat;
+        filter: brightness(1.1);
     }
 
     .alert-custom:hover {
         transform: translateY(-2px);
         box-shadow: var(--sombra-media);
+        border-color: var(--borde-fuerte);
     }
 
+/* Alerta INFO - Dark Mode */
 .alert-info {
-    color: #0c5460;
-    background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+    color: #BAE6FD;
+    background: linear-gradient(135deg, #1E3A5F 0%, #162E45 100%);
+    border-color: var(--azul-profesional);
     text-align: center;
 }
 
     .alert-info::before {
-        background-color: var(--azul-profesional);
+        background: linear-gradient(180deg, var(--azul-profesional), #2563EB);
+        box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
     }
 
     .alert-info::after {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230c5460'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z'/%3E%3C/svg%3E");
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23BAE6FD'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z'/%3E%3C/svg%3E");
+        filter: none;
     }
 
+/* Alerta SUCCESS - Dark Mode */
 .alert-success {
-    color: #155724;
-    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    color: #BBF7D0;
+    background: linear-gradient(135deg, #1A3D2E 0%, #144533 100%);
+    border-color: var(--verde-whatsapp);
     text-align: center;
 }
 
     .alert-success::before {
-        background-color: var(--verde-whatsapp);
+        background: linear-gradient(180deg, var(--verde-whatsapp), var(--verde-whatsapp-hover));
+        box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
     }
 
     .alert-success::after {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23155724'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23BBF7D0'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+        filter: none;
     }
 
+/* Alerta WARNING - Dark Mode */
 .alert-warning {
-    color: #856404;
-    background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%);
+    color: #FDE68A;
+    background: linear-gradient(135deg, #4A3618 0%, #57411D 100%);
+    border-color: var(--amarillo-alerta);
     text-align: center;
 }
 
     .alert-warning::before {
-        background-color: #ffc107;
+        background: linear-gradient(180deg, var(--amarillo-alerta), #D97706);
+        box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
     }
 
     .alert-warning::after {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23856404'%3E%3Cpath d='M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z'/%3E%3C/svg%3E");
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FDE68A'%3E%3Cpath d='M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z'/%3E%3C/svg%3E");
+        filter: none;
     }
 
+/* Alerta ERROR - Dark Mode */
 .alert-error {
-    color: #721c24;
-    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+    color: #FECACA;
+    background: linear-gradient(135deg, #3D1F23 0%, #4A2328 100%);
+    border-color: var(--rojo-coral);
     text-align: center;
 }
 
     .alert-error::before {
-        background-color: var(--rojo-coral);
+        background: linear-gradient(180deg, var(--rojo-coral), var(--rojo-coral-hover));
+        box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
     }
 
     .alert-error::after {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23721c24'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'/%3E%3C/svg%3E");
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FECACA'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'/%3E%3C/svg%3E");
+        filter: none;
     }
 
-/* --- Botón de Consulta (MEJORADO) --- */
+/* ========================================
+   BOTÓN DE CONSULTA - DARK MODE
+   ======================================== */
 .btn-consult {
     background: var(--gradiente-principal);
     border: none;
-    color: var(--blanco);
+    color: #FFFFFF;
     font-weight: 600;
     padding: 0.8rem 1.8rem;
     border-radius: var(--borde-redondeado);
     transition: var(--transicion-suave);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(29, 53, 87, 0.3);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -119,7 +195,7 @@
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
         transition: left 0.5s;
     }
 
@@ -131,8 +207,8 @@
 
     .btn-consult:hover {
         transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(29, 53, 87, 0.4);
-        color: var(--blanco);
+        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6);
+        color: #FFFFFF;
     }
 
         .btn-consult:hover::before {
@@ -143,11 +219,19 @@
         transform: translateY(-1px);
     }
 
-/* --- Contenedor principal de historial --- */
+    .btn-consult:focus-visible {
+        outline: 2px solid var(--azul-principal);
+        outline-offset: 2px;
+    }
+
+/* ========================================
+   CONTENEDOR PRINCIPAL DE HISTORIAL - DARK
+   ======================================== */
 .history-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
+    background: transparent;
 }
 
 .history-header {
@@ -158,7 +242,7 @@
 .history-title {
     font-size: 2.5rem;
     font-weight: 700;
-    color: var(--azul-oscuro);
+    color: var(--texto-principal);
     margin-bottom: 0.5rem;
     position: relative;
     display: inline-block;
@@ -172,29 +256,34 @@
         transform: translateX(-50%);
         width: 80px;
         height: 4px;
-        background: linear-gradient(90deg, var(--azul-principal), var(--azul-claro));
+        background: var(--gradiente-principal);
         border-radius: 2px;
     }
 
 .history-subtitle {
-    color: var(--gris-texto);
+    color: var(--texto-secundario);
     font-size: 1.1rem;
     margin-top: 1.5rem;
 }
 
-/* --- Filtros de historial --- */
+/* ========================================
+   FILTROS DE HISTORIAL - DARK MODE
+   ======================================== */
 .history-filters {
-    background: var(--blanco);
+    background: var(--fondo-secundario);
     padding: 1.5rem;
     border-radius: var(--borde-redondeado-fuerte);
     box-shadow: var(--sombra-media);
     margin-bottom: 2rem;
+    border: 1px solid var(--borde-suave);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
 .filter-title {
     font-size: 1.3rem;
     font-weight: 600;
-    color: var(--azul-oscuro);
+    color: var(--texto-principal);
     margin-bottom: 1.5rem;
     display: flex;
     align-items: center;
@@ -204,6 +293,7 @@
         content: '🔍';
         margin-right: 10px;
         font-size: 1.2rem;
+        filter: brightness(1.2);
     }
 
 .filter-row {
@@ -222,38 +312,37 @@
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 500;
-    color: var(--azul-oscuro);
+    color: var(--texto-secundario);
 }
 
-.filter-input {
-    width: 100%;
-    padding: 0.7rem 1rem;
-    border: 1px solid var(--gris-medio);
-    border-radius: var(--borde-redondeado-suave);
-    font-size: 1rem;
-    transition: var(--transicion-suave);
-}
-
-    .filter-input:focus {
-        outline: none;
-        border-color: var(--azul-principal);
-        box-shadow: 0 0 0 3px rgba(69, 123, 157, 0.1);
-    }
-
+.filter-input,
 .filter-select {
     width: 100%;
     padding: 0.7rem 1rem;
-    border: 1px solid var(--gris-medio);
+    border: 1px solid var(--borde-medio);
     border-radius: var(--borde-redondeado-suave);
     font-size: 1rem;
-    background-color: var(--blanco);
+    background-color: var(--fondo-input);
+    color: var(--texto-principal);
     transition: var(--transicion-suave);
 }
 
+    .filter-input::placeholder,
+    .filter-select::placeholder {
+        color: var(--texto-terciario);
+    }
+
+    .filter-input:focus,
     .filter-select:focus {
         outline: none;
         border-color: var(--azul-principal);
-        box-shadow: 0 0 0 3px rgba(69, 123, 157, 0.1);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+        background-color: rgba(15, 23, 42, 0.95);
+    }
+
+    .filter-select option {
+        background-color: var(--fondo-secundario);
+        color: var(--texto-principal);
     }
 
 .filter-actions {
@@ -263,15 +352,18 @@
     margin-top: 1rem;
 }
 
-/* --- Tarjeta de historial --- */
+/* ========================================
+   TARJETA DE HISTORIAL - DARK MODE
+   ======================================== */
 .history-card {
-    background: var(--blanco);
+    background: var(--fondo-secundario);
     border-radius: var(--borde-redondeado-fuerte);
     overflow: hidden;
     box-shadow: var(--sombra-media);
     margin-bottom: 1.5rem;
     transition: var(--transicion-suave);
     position: relative;
+    border: 1px solid var(--borde-suave);
 }
 
     .history-card::before {
@@ -294,12 +386,13 @@
     .history-card:hover {
         transform: translateY(-5px);
         box-shadow: var(--sombra-fuerte);
+        border-color: var(--borde-fuerte);
     }
 
 .history-card-header {
     padding: 1.5rem;
-    background: linear-gradient(135deg, var(--blanco) 0%, var(--blanco-suave) 100%);
-    border-bottom: 1px solid var(--gris-claro);
+    background: linear-gradient(135deg, var(--fondo-terciario) 0%, var(--fondo-secundario) 100%);
+    border-bottom: 1px solid var(--borde-suave);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -308,7 +401,7 @@
 .history-card-title {
     font-size: 1.3rem;
     font-weight: 600;
-    color: var(--azul-oscuro);
+    color: var(--texto-principal);
     margin: 0;
     display: flex;
     align-items: center;
@@ -318,10 +411,11 @@
         content: '📋';
         margin-right: 10px;
         font-size: 1.2rem;
+        filter: brightness(1.2);
     }
 
 .history-card-date {
-    color: var(--gris-texto-claro);
+    color: var(--texto-terciario);
     font-size: 0.9rem;
     font-style: italic;
 }
@@ -338,7 +432,7 @@
     display: flex;
     margin-bottom: 0.8rem;
     padding-bottom: 0.8rem;
-    border-bottom: 1px solid var(--gris-claro);
+    border-bottom: 1px solid var(--borde-suave);
 }
 
     .history-detail:last-child {
@@ -349,13 +443,13 @@
 
 .history-detail-label {
     font-weight: 600;
-    color: var(--azul-oscuro);
+    color: var(--texto-secundario);
     margin-right: 1rem;
     min-width: 120px;
 }
 
 .history-detail-value {
-    color: var(--gris-texto);
+    color: var(--texto-principal);
     flex-grow: 1;
 }
 
@@ -366,7 +460,7 @@
 .history-treatments-title {
     font-size: 1.1rem;
     font-weight: 600;
-    color: var(--azul-oscuro);
+    color: var(--texto-principal);
     margin-bottom: 1rem;
     display: flex;
     align-items: center;
@@ -375,6 +469,7 @@
     .history-treatments-title::before {
         content: '💉';
         margin-right: 8px;
+        filter: brightness(1.2);
     }
 
 .treatment-list {
@@ -385,36 +480,39 @@
 
 .treatment-item {
     padding: 0.8rem 1rem;
-    background: var(--gris-fondo);
+    background: var(--fondo-input);
     border-radius: var(--borde-redondeado-suave);
     margin-bottom: 0.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     transition: var(--transicion-suave);
+    border: 1px solid var(--borde-suave);
 }
 
     .treatment-item:hover {
-        background: var(--gris-claro);
+        background: var(--fondo-hover);
         transform: translateX(5px);
+        border-color: var(--borde-fuerte);
     }
 
 .treatment-name {
     font-weight: 500;
-    color: var(--azul-oscuro);
+    color: var(--texto-principal);
 }
 
 .treatment-date {
     font-size: 0.9rem;
-    color: var(--gris-texto-claro);
+    color: var(--texto-terciario);
 }
 
 .history-card-footer {
     padding: 1rem 1.5rem;
-    background: var(--gris-fondo);
+    background: var(--fondo-terciario);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-top: 1px solid var(--borde-suave);
 }
 
 .history-actions {
@@ -422,7 +520,9 @@
     gap: 0.5rem;
 }
 
-/* --- Botones de acción --- */
+/* ========================================
+   BOTONES DE ACCIÓN - DARK MODE
+   ======================================== */
 .btn-action {
     padding: 0.5rem 1rem;
     border-radius: var(--borde-redondeado-suave);
@@ -436,6 +536,7 @@
     justify-content: center;
     position: relative;
     overflow: hidden;
+    color: #FFFFFF;
 }
 
     .btn-action::before {
@@ -445,7 +546,7 @@
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
         transition: left 0.5s;
     }
 
@@ -453,10 +554,12 @@
         left: 100%;
     }
 
+/* Botón VIEW - Ajustado para dark */
 .btn-view {
-    background: linear-gradient(45deg, var(--azul-suave), var(--azul-medio));
-    color: var(--azul-oscuro);
-    box-shadow: 0 2px 8px rgba(102, 179, 255, 0.2);
+    background: linear-gradient(135deg, #1E3A5F, #162E45);
+    color: var(--azul-suave);
+    border: 1px solid var(--azul-suave);
+    box-shadow: 0 2px 8px rgba(147, 197, 253, 0.2);
 }
 
     .btn-view::after {
@@ -466,13 +569,17 @@
 
     .btn-view:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(102, 179, 255, 0.3);
+        background: linear-gradient(135deg, var(--azul-suave), var(--azul-medio));
+        color: #FFFFFF;
+        border-color: transparent;
+        box-shadow: 0 4px 12px rgba(147, 197, 253, 0.4);
     }
 
+/* Botón DOWNLOAD - Dark */
 .btn-download {
-    background: linear-gradient(45deg, var(--azul-principal), var(--azul-oscuro));
-    color: var(--blanco);
-    box-shadow: 0 2px 8px rgba(69, 123, 157, 0.3);
+    background: linear-gradient(135deg, var(--azul-principal), #1E40AF);
+    color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
 }
 
     .btn-download::after {
@@ -482,13 +589,15 @@
 
     .btn-download:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(69, 123, 157, 0.4);
+        background: linear-gradient(135deg, #93C5FD, #60A5FA);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5);
     }
 
+/* Botón DELETE - Dark */
 .btn-delete {
-    background: linear-gradient(45deg, var(--rojo-coral), #c9302c);
-    color: var(--blanco);
-    box-shadow: 0 2px 8px rgba(230, 57, 70, 0.3);
+    background: linear-gradient(135deg, var(--rojo-coral), var(--rojo-coral-hover));
+    color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
 }
 
     .btn-delete::after {
@@ -498,10 +607,13 @@
 
     .btn-delete:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(230, 57, 70, 0.4);
+        background: linear-gradient(135deg, #FCA5A5, #DC2626);
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.5);
     }
 
-/* --- Paginación --- */
+/* ========================================
+   PAGINACIÓN - DARK MODE
+   ======================================== */
 .history-pagination {
     display: flex;
     justify-content: center;
@@ -516,10 +628,12 @@
     border-radius: var(--borde-redondeado);
     overflow: hidden;
     box-shadow: var(--sombra-suave);
+    background: var(--fondo-secundario);
+    border: 1px solid var(--borde-suave);
 }
 
 .page-item {
-    border-right: 1px solid #e9ecef;
+    border-right: 1px solid var(--borde-suave);
 }
 
     .page-item:last-child {
@@ -532,61 +646,70 @@
     justify-content: center;
     width: 40px;
     height: 40px;
-    background-color: var(--blanco);
-    color: var(--azul-principal);
+    background-color: var(--fondo-input);
+    color: var(--texto-principal);
     text-decoration: none;
     font-weight: 500;
     transition: var(--transicion-suave);
+    border: none;
 }
 
     .page-link:hover {
         background-color: var(--azul-principal);
-        color: var(--blanco);
+        color: #FFFFFF;
     }
 
 .page-item.active .page-link {
     background-color: var(--azul-principal);
-    color: var(--blanco);
+    color: #FFFFFF;
+    font-weight: 600;
 }
 
 .page-item.disabled .page-link {
-    background-color: #f8f9fa;
-    color: #6c757d;
+    background-color: var(--fondo-terciario);
+    color: var(--texto-terciario);
     pointer-events: none;
+    opacity: 0.6;
 }
 
-/* --- Vista vacía --- */
+/* ========================================
+   VISTA VACÍA - DARK MODE
+   ======================================== */
 .empty-state {
     text-align: center;
     padding: 3rem 2rem;
-    background: var(--blanco);
+    background: var(--fondo-secundario);
     border-radius: var(--borde-redondeado-fuerte);
     box-shadow: var(--sombra-media);
     margin: 2rem 0;
+    border: 1px solid var(--borde-suave);
 }
 
 .empty-state-icon {
     font-size: 4rem;
     margin-bottom: 1rem;
     opacity: 0.7;
+    filter: brightness(1.2);
 }
 
 .empty-state-title {
     font-size: 1.5rem;
     font-weight: 600;
-    color: var(--azul-oscuro);
+    color: var(--texto-principal);
     margin-bottom: 1rem;
 }
 
 .empty-state-description {
-    color: var(--gris-texto);
+    color: var(--texto-secundario);
     margin-bottom: 2rem;
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
 }
 
-/* --- Responsive Design --- */
+/* ========================================
+   RESPONSIVE DESIGN - DARK MODE
+   ======================================== */
 @media (max-width: 992px) {
     .history-title {
         font-size: 2.2rem;
@@ -680,7 +803,9 @@
     }
 }
 
-/* --- Animaciones adicionales --- */
+/* ========================================
+   ANIMACIONES - DARK MODE OPTIMIZADAS
+   ======================================== */
 .pulse {
     animation: pulse 2s infinite;
 }
@@ -688,14 +813,17 @@
 @keyframes pulse {
     0% {
         transform: scale(1);
+        box-shadow: var(--sombra-suave);
     }
 
     50% {
-        transform: scale(1.05);
+        transform: scale(1.03);
+        box-shadow: var(--sombra-media);
     }
 
     100% {
         transform: scale(1);
+        box-shadow: var(--sombra-suave);
     }
 }
 
@@ -710,7 +838,9 @@
         transform: translateY(0);
     }
 
-/* --- Estados de carga --- */
+/* ========================================
+   ESTADOS DE CARGA & DESHABILITADOS - DARK
+   ======================================== */
 .btn-loading {
     position: relative;
     color: transparent !important;
@@ -726,9 +856,9 @@
         left: 50%;
         margin-left: -10px;
         margin-top: -10px;
-        border: 2px solid rgba(255, 255, 255, 0.3);
+        border: 2px solid rgba(255, 255, 255, 0.2);
         border-radius: 50%;
-        border-top-color: var(--blanco);
+        border-top-color: #FFFFFF;
         animation: spin 1s ease-in-out infinite;
     }
 
@@ -738,14 +868,140 @@
     }
 }
 
-/* --- Estados deshabilitados --- */
-.btn-custom:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+/* Estados deshabilitados - Dark Mode */
+.btn-custom:disabled,
+button:disabled,
+input:disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
     transform: none !important;
+    filter: grayscale(0.3);
+    background: var(--fondo-terciario) !important;
+    color: var(--texto-terciario) !important;
+    border-color: var(--borde-suave) !important;
+    box-shadow: none !important;
 }
 
-    .btn-custom:disabled:hover {
+    .btn-custom:disabled:hover,
+    button:disabled:hover {
         transform: none !important;
         box-shadow: none !important;
     }
+
+/* ========================================
+   SCROLLBAR PERSONALIZADO - DARK MODE
+   ======================================== */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--fondo-principal);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--fondo-terciario);
+    border-radius: 5px;
+    border: 2px solid var(--fondo-principal);
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--azul-principal);
+    }
+
+/* ========================================
+   UTILIDADES ADICIONALES - DARK MODE
+   ======================================== */
+.text-muted-dark {
+    color: var(--texto-terciario) !important;
+}
+
+.bg-card-dark {
+    background: var(--fondo-secundario) !important;
+    border: 1px solid var(--borde-suave) !important;
+}
+
+.border-dark {
+    border-color: var(--borde-medio) !important;
+}
+
+.hover-lift-dark:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: var(--sombra-fuerte) !important;
+    border-color: var(--borde-fuerte) !important;
+}
+
+/* Foco accesible para navegación por teclado */
+:focus-visible {
+    outline: 2px solid var(--azul-principal);
+    outline-offset: 2px;
+    border-radius: var(--borde-redondeado-suave);
+}
+
+/* Transiciones suaves para cambio de tema */
+*, *::before, *::after {
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* ========================================
+   OVERRIDE PARA BOOTSTRAP EN DARK MODE
+   ======================================== */
+.form-control,
+input[type="text"],
+input[type="date"],
+input[type="number"],
+textarea,
+select {
+    background-color: var(--fondo-input) !important;
+    color: var(--texto-principal) !important;
+    border: 1px solid var(--borde-medio) !important;
+    border-radius: var(--borde-redondeado-suave) !important;
+}
+
+    .form-control:focus,
+    input:focus,
+    textarea:focus,
+    select:focus {
+        background-color: rgba(15, 23, 42, 0.95) !important;
+        border-color: var(--azul-principal) !important;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25) !important;
+        color: var(--texto-principal) !important;
+    }
+
+    .form-control::placeholder,
+    input::placeholder,
+    textarea::placeholder {
+        color: var(--texto-terciario) !important;
+        opacity: 1 !important;
+    }
+
+    select option {
+        background-color: var(--fondo-secundario) !important;
+        color: var(--texto-principal) !important;
+    }
+
+/* Labels */
+label,
+.form-label {
+    color: var(--texto-secundario) !important;
+    font-weight: 500 !important;
+}
+
+/* Cards y contenedores */
+.card,
+.panel,
+[class*="card"],
+[class*="panel"] {
+    background: var(--fondo-secundario) !important;
+    border: 1px solid var(--borde-suave) !important;
+    color: var(--texto-principal) !important;
+}
+
+.card-header,
+.panel-heading {
+    background: var(--fondo-terciario) !important;
+    border-bottom: 1px solid var(--borde-medio) !important;
+    color: var(--texto-principal) !important;
+}

@@ -1,16 +1,68 @@
 ﻿/* --- ARCHIVO: css/estiloTratamientos.css --- */
+/* --- MODO OSCURO PROFESIONAL --- */
 
-/* --- Mensajes de Alerta Personalizados (MEJORADOS) --- */
+/* ========================================
+   VARIABLES DE TEMA OSCURO
+   ======================================== */
+:root {
+    /* Fondos base */
+    --fondo-principal: #0F172A;
+    --fondo-secundario: #1E293B;
+    --fondo-terciario: #334155;
+    --fondo-input: #1a2231;
+    --fondo-hover: rgba(110, 168, 254, 0.1);
+    /* Texto */
+    --texto-principal: #F1F5F9;
+    --texto-secundario: #94A3B8;
+    --texto-terciario: #64748B;
+    --texto-enlace: #7DD3FC;
+    /* Bordes */
+    --borde-suave: rgba(51, 65, 85, 0.6);
+    --borde-medio: rgba(51, 65, 85, 0.9);
+    --borde-fuerte: rgba(110, 168, 254, 0.5);
+    /* Sombras para dark mode */
+    --sombra-suave: 0 2px 10px rgba(0, 0, 0, 0.4);
+    --sombra-media: 0 4px 20px rgba(0, 0, 0, 0.5);
+    --sombra-fuerte: 0 8px 30px rgba(0, 0, 0, 0.7);
+    /* Colores de estado (ajustados para dark) */
+    --verde-whatsapp: #22C55E;
+    --verde-whatsapp-hover: #16A34A;
+    --rojo-coral: #EF4444;
+    --rojo-coral-hover: #DC2626;
+    --azul-profesional: #3B82F6;
+    --azul-principal: #60A5FA;
+    --azul-suave: #93C5FD;
+    --azul-medio: #60A5FA;
+    --amarillo-alerta: #F59E0B;
+    /* Gradientes oscuros profesionales */
+    --gradiente-principal: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%);
+    --gradiente-success: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
+    --gradiente-danger: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+    --gradiente-warning: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+    --gradiente-info: linear-gradient(135deg, #3B82F6 0%, #0EA5E9 100%);
+    /* Bordes y transiciones */
+    --borde-redondeado: 12px;
+    --borde-redondeado-suave: 8px;
+    --transicion-suave: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ========================================
+   MENSAJES DE ALERTA PERSONALIZADOS - DARK
+   ======================================== */
 .alert-custom {
     padding: 1.2rem 1.8rem;
     border-radius: var(--borde-redondeado);
-    border: none;
+    border: 1px solid var(--borde-suave);
     margin-bottom: 1.5rem;
     position: relative;
     padding-left: 4rem;
     box-shadow: var(--sombra-suave);
     transition: var(--transicion-suave);
     overflow: hidden;
+    background: var(--fondo-secundario);
+    color: var(--texto-principal);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
     .alert-custom::before {
@@ -20,6 +72,7 @@
         left: 0;
         width: 4px;
         height: 100%;
+        border-radius: var(--borde-redondeado-suave) 0 0 var(--borde-redondeado-suave);
     }
 
     .alert-custom::after {
@@ -31,82 +84,103 @@
         width: 1.5rem;
         height: 1.5rem;
         background-size: contain;
+        background-repeat: no-repeat;
+        filter: brightness(1.1);
     }
 
     .alert-custom:hover {
         transform: translateY(-2px);
         box-shadow: var(--sombra-media);
+        border-color: var(--borde-fuerte);
     }
 
+/* Alerta ERROR - Dark Mode */
 .alert-error {
-    color: #721c24;
-    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+    color: #FECACA;
+    background: linear-gradient(135deg, #3D1F23 0%, #4A2328 100%);
+    border-color: var(--rojo-coral);
     text-align: center;
     font-weight: 500;
 }
 
     .alert-error::before {
-        background-color: var(--rojo-coral);
+        background: linear-gradient(180deg, var(--rojo-coral), var(--rojo-coral-hover));
+        box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
     }
 
     .alert-error::after {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23721c24'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'/%3E%3C/svg%3E");
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FECACA'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'/%3E%3C/svg%3E");
+        filter: none;
     }
 
+/* Alerta INFO - Dark Mode */
 .alert-info {
-    color: #0c5460;
-    background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+    color: #BAE6FD;
+    background: linear-gradient(135deg, #1E3A5F 0%, #162E45 100%);
+    border-color: var(--azul-profesional);
     text-align: center;
 }
 
     .alert-info::before {
-        background-color: var(--azul-profesional);
+        background: linear-gradient(180deg, var(--azul-profesional), #2563EB);
+        box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
     }
 
     .alert-info::after {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230c5460'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z'/%3E%3C/svg%3E");
+        background-image: url("image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23BAE6FD'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z'/%3E%3C/svg%3E");
+        filter: none;
     }
 
+/* Alerta SUCCESS - Dark Mode */
 .alert-success {
-    color: #155724;
-    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    color: #BBF7D0;
+    background: linear-gradient(135deg, #1A3D2E 0%, #144533 100%);
+    border-color: var(--verde-whatsapp);
     text-align: center;
 }
 
     .alert-success::before {
-        background-color: var(--verde-whatsapp);
+        background: linear-gradient(180deg, var(--verde-whatsapp), var(--verde-whatsapp-hover));
+        box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
     }
 
     .alert-success::after {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23155724'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+        background-image: url("image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23BBF7D0'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+        filter: none;
     }
 
+/* Alerta WARNING - Dark Mode */
 .alert-warning {
-    color: #856404;
-    background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%);
+    color: #FDE68A;
+    background: linear-gradient(135deg, #4A3618 0%, #57411D 100%);
+    border-color: var(--amarillo-alerta);
     text-align: center;
 }
 
     .alert-warning::before {
-        background-color: #ffc107;
+        background: linear-gradient(180deg, var(--amarillo-alerta), #D97706);
+        box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
     }
 
     .alert-warning::after {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23856404'%3E%3Cpath d='M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z'/%3E%3C/svg%3E");
+        background-image: url("image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FDE68A'%3E%3Cpath d='M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z'/%3E%3C/svg%3E");
+        filter: none;
     }
 
-/* --- Botones de Adición/Edición (MEJORADOS) --- */
+/* ========================================
+   BOTONES DE ADICIÓN/EDICIÓN - DARK MODE
+   ======================================== */
 .btn-add-new {
     background: var(--gradiente-principal);
     border: none;
-    color: var(--blanco);
+    color: #FFFFFF;
     font-weight: 600;
     padding: 0.8rem 1.8rem;
     border-radius: var(--borde-redondeado);
     transition: var(--transicion-suave);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(29, 53, 87, 0.3);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -119,7 +193,7 @@
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
         transition: left 0.5s;
     }
 
@@ -132,8 +206,8 @@
 
     .btn-add-new:hover {
         transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(29, 53, 87, 0.4);
-        color: var(--blanco);
+        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6);
+        color: #FFFFFF;
     }
 
         .btn-add-new:hover::before {
@@ -144,18 +218,27 @@
         transform: translateY(-1px);
     }
 
-/* --- Variantes de Botones Personalizados (MEJORADOS) --- */
+    .btn-add-new:focus-visible {
+        outline: 2px solid var(--azul-principal);
+        outline-offset: 2px;
+    }
+
+/* ========================================
+   VARIANTES DE BOTONES PERSONALIZADOS - DARK
+   ======================================== */
+
+/* Botón SUCCESS */
 .btn-success-custom {
-    background: linear-gradient(45deg, var(--verde-whatsapp), #128C7E);
+    background: var(--gradiente-success);
     border: none;
-    color: var(--blanco);
+    color: #FFFFFF;
     font-weight: 600;
     padding: 0.8rem 1.5rem;
     border-radius: var(--borde-redondeado);
     transition: var(--transicion-suave);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -168,7 +251,7 @@
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
         transition: left 0.5s;
     }
 
@@ -180,25 +263,26 @@
 
     .btn-success-custom:hover {
         transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
-        color: var(--blanco);
+        box-shadow: 0 8px 25px rgba(34, 197, 94, 0.6);
+        color: #FFFFFF;
     }
 
         .btn-success-custom:hover::before {
             left: 100%;
         }
 
+/* Botón SECONDARY */
 .btn-secondary-custom {
-    background: linear-gradient(45deg, #6c757d, #5a6268);
-    border: none;
-    color: var(--blanco);
+    background: linear-gradient(135deg, #475569, #334155);
+    border: 1px solid var(--borde-medio);
+    color: var(--texto-principal);
     font-weight: 600;
     padding: 0.8rem 1.5rem;
     border-radius: var(--borde-redondeado);
     transition: var(--transicion-suave);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+    box-shadow: var(--sombra-suave);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -211,7 +295,7 @@
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
         transition: left 0.5s;
     }
 
@@ -223,26 +307,28 @@
 
     .btn-secondary-custom:hover {
         transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(108, 117, 125, 0.4);
-        color: var(--blanco);
+        box-shadow: var(--sombra-media);
+        background: linear-gradient(135deg, #64748B, #475569);
+        color: #FFFFFF;
+        border-color: var(--borde-fuerte);
     }
 
         .btn-secondary-custom:hover::before {
             left: 100%;
         }
 
-/* --- Botón de eliminación personalizado --- */
+/* Botón DANGER */
 .btn-danger-custom {
-    background: linear-gradient(45deg, var(--rojo-coral), #c9302c);
+    background: var(--gradiente-danger);
     border: none;
-    color: var(--blanco);
+    color: #FFFFFF;
     font-weight: 600;
     padding: 0.8rem 1.5rem;
     border-radius: var(--borde-redondeado);
     transition: var(--transicion-suave);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -255,7 +341,7 @@
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
         transition: left 0.5s;
     }
 
@@ -266,26 +352,26 @@
 
     .btn-danger-custom:hover {
         transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(230, 57, 70, 0.4);
-        color: var(--blanco);
+        box-shadow: 0 8px 25px rgba(239, 68, 68, 0.6);
+        color: #FFFFFF;
     }
 
         .btn-danger-custom:hover::before {
             left: 100%;
         }
 
-/* --- Botón de edición personalizado --- */
+/* Botón EDIT */
 .btn-edit-custom {
-    background: linear-gradient(45deg, var(--azul-profesional), var(--azul-principal));
+    background: var(--gradiente-principal);
     border: none;
-    color: var(--blanco);
+    color: #FFFFFF;
     font-weight: 600;
     padding: 0.8rem 1.5rem;
     border-radius: var(--borde-redondeado);
     transition: var(--transicion-suave);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(102, 179, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -298,7 +384,7 @@
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
         transition: left 0.5s;
     }
 
@@ -309,26 +395,26 @@
 
     .btn-edit-custom:hover {
         transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(102, 179, 255, 0.4);
-        color: var(--blanco);
+        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6);
+        color: #FFFFFF;
     }
 
         .btn-edit-custom:hover::before {
             left: 100%;
         }
 
-/* --- Botón de vista personalizado --- */
+/* Botón VIEW - Ajustado para dark mode */
 .btn-view-custom {
-    background: linear-gradient(45deg, var(--azul-suave), var(--azul-medio));
-    border: none;
-    color: var(--azul-oscuro);
+    background: linear-gradient(135deg, #1E3A5F, #162E45);
+    border: 1px solid var(--azul-suave);
+    color: var(--azul-suave);
     font-weight: 600;
     padding: 0.8rem 1.5rem;
     border-radius: var(--borde-redondeado);
     transition: var(--transicion-suave);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(102, 179, 255, 0.2);
+    box-shadow: 0 4px 15px rgba(147, 197, 253, 0.2);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -341,7 +427,7 @@
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        background: linear-gradient(90deg, transparent, rgba(147, 197, 253, 0.15), transparent);
         transition: left 0.5s;
     }
 
@@ -352,26 +438,28 @@
 
     .btn-view-custom:hover {
         transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(102, 179, 255, 0.3);
-        color: var(--azul-oscuro);
+        box-shadow: 0 8px 20px rgba(147, 197, 253, 0.4);
+        color: #FFFFFF;
+        background: linear-gradient(135deg, var(--azul-suave), var(--azul-medio));
+        border-color: transparent;
     }
 
         .btn-view-custom:hover::before {
             left: 100%;
         }
 
-/* --- Botón de descarga personalizado --- */
+/* Botón DOWNLOAD - Ajustado para dark mode */
 .btn-download-custom {
-    background: linear-gradient(45deg, var(--azul-principal), var(--azul-oscuro));
+    background: linear-gradient(135deg, var(--azul-profesional), #1E40AF);
     border: none;
-    color: var(--blanco);
+    color: #FFFFFF;
     font-weight: 600;
     padding: 0.8rem 1.5rem;
     border-radius: var(--borde-redondeado);
     transition: var(--transicion-suave);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(69, 123, 157, 0.3);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -384,7 +472,7 @@
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
         transition: left 0.5s;
     }
 
@@ -396,15 +484,17 @@
 
     .btn-download-custom:hover {
         transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(69, 123, 157, 0.4);
-        color: var(--blanco);
+        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6);
+        color: #FFFFFF;
     }
 
         .btn-download-custom:hover::before {
             left: 100%;
         }
 
-/* --- Grupo de botones --- */
+/* ========================================
+   GRUPO DE BOTONES & ICONOS - DARK
+   ======================================== */
 .btn-group-custom {
     display: flex;
     gap: 0.5rem;
@@ -417,7 +507,6 @@
         min-width: 120px;
     }
 
-/* --- Botones con iconos --- */
 .btn-icon-custom {
     width: 40px;
     height: 40px;
@@ -427,13 +516,27 @@
     align-items: center;
     justify-content: center;
     font-size: 1.2rem;
+    background: var(--fondo-terciario);
+    border: 1px solid var(--borde-medio);
+    color: var(--texto-principal);
+    transition: var(--transicion-suave);
 }
 
     .btn-icon-custom::after {
         margin: 0;
     }
 
-/* --- Responsive Design --- */
+    .btn-icon-custom:hover {
+        background: var(--fondo-hover);
+        border-color: var(--borde-fuerte);
+        transform: translateY(-2px);
+        box-shadow: var(--sombra-media);
+        color: var(--azul-principal);
+    }
+
+/* ========================================
+   RESPONSIVE DESIGN - DARK MODE
+   ======================================== */
 @media (max-width: 768px) {
     .btn-custom {
         padding: 0.6rem 1.2rem;
@@ -458,10 +561,21 @@
     .alert-custom {
         padding: 1rem 1.2rem;
         padding-left: 3.5rem;
+        font-size: 0.9rem;
+    }
+
+    .btn-add-new,
+    .btn-success-custom,
+    .btn-danger-custom,
+    .btn-edit-custom {
+        width: 100%;
+        justify-content: center;
     }
 }
 
-/* --- Animaciones adicionales --- */
+/* ========================================
+   ANIMACIONES - DARK MODE OPTIMIZADAS
+   ======================================== */
 .pulse {
     animation: pulse 2s infinite;
 }
@@ -469,14 +583,17 @@
 @keyframes pulse {
     0% {
         transform: scale(1);
+        box-shadow: var(--sombra-suave);
     }
 
     50% {
-        transform: scale(1.05);
+        transform: scale(1.03);
+        box-shadow: var(--sombra-media);
     }
 
     100% {
         transform: scale(1);
+        box-shadow: var(--sombra-suave);
     }
 }
 
@@ -491,7 +608,9 @@
         transform: translateY(0);
     }
 
-/* --- Estados de carga --- */
+/* ========================================
+   ESTADOS DE CARGA & DESHABILITADOS - DARK
+   ======================================== */
 .btn-loading {
     position: relative;
     color: transparent !important;
@@ -507,9 +626,9 @@
         left: 50%;
         margin-left: -10px;
         margin-top: -10px;
-        border: 2px solid rgba(255, 255, 255, 0.3);
+        border: 2px solid rgba(255, 255, 255, 0.2);
         border-radius: 50%;
-        border-top-color: var(--blanco);
+        border-top-color: #FFFFFF;
         animation: spin 1s ease-in-out infinite;
     }
 
@@ -519,14 +638,1243 @@
     }
 }
 
-/* --- Estados deshabilitados --- */
-.btn-custom:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+/* Estados deshabilitados - Dark Mode */
+.btn-custom:disabled,
+button:disabled,
+input:disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
     transform: none !important;
+    filter: grayscale(0.3);
+    background: var(--fondo-terciario) !important;
+    color: var(--texto-terciario) !important;
+    border-color: var(--borde-suave) !important;
+    box-shadow: none !important;
 }
 
-    .btn-custom:disabled:hover {
+    .btn-custom:disabled:hover,
+    button:disabled:hover {
         transform: none !important;
         box-shadow: none !important;
     }
+
+/* ========================================
+   SCROLLBAR PERSONALIZADO - DARK MODE
+   ======================================== */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--fondo-principal);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--fondo-terciario);
+    border-radius: 5px;
+    border: 2px solid var(--fondo-principal);
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--azul-principal);
+    }
+
+/* ========================================
+   UTILIDADES ADICIONALES - DARK MODE
+   ======================================== */
+.text-muted-dark {
+    color: var(--texto-terciario) !important;
+}
+
+.bg-card-dark {
+    background: var(--fondo-secundario) !important;
+    border: 1px solid var(--borde-suave) !important;
+}
+
+.border-dark {
+    border-color: var(--borde-medio) !important;
+}
+
+.hover-lift-dark:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: var(--sombra-fuerte) !important;
+    border-color: var(--borde-fuerte) !important;
+}
+
+/* Foco accesible para navegación por teclado */
+:focus-visible {
+    outline: 2px solid var(--azul-principal);
+    outline-offset: 2px;
+    border-radius: var(--borde-redondeado-suave);
+}
+
+/* Transiciones suaves para cambio de tema */
+*, *::before, *::after {
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+/* ========================================
+   OVERRIDE PARA BOOTSTRAP EN DARK MODE
+   ======================================== */
+.btn-primary {
+    background: var(--gradiente-principal) !important;
+    border-color: var(--azul-profesional) !important;
+    color: #FFFFFF !important;
+}
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #60A5FA, #3B82F6) !important;
+        border-color: #60A5FA !important;
+    }
+
+.btn-success {
+    background: var(--gradiente-success) !important;
+    border-color: var(--verde-whatsapp) !important;
+    color: #FFFFFF !important;
+}
+
+.btn-danger {
+    background: var(--gradiente-danger) !important;
+    border-color: var(--rojo-coral) !important;
+    color: #FFFFFF !important;
+}
+
+.btn-warning {
+    background: var(--gradiente-warning) !important;
+    border-color: var(--amarillo-alerta) !important;
+    color: #1F2937 !important;
+    font-weight: 600 !important;
+}
+
+.btn-info {
+    background: var(--gradiente-info) !important;
+    border-color: var(--azul-profesional) !important;
+    color: #FFFFFF !important;
+}
+
+/* Inputs en dark mode */
+.form-control,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea,
+select {
+    background-color: var(--fondo-input) !important;
+    color: var(--texto-principal) !important;
+    border: 1px solid var(--borde-medio) !important;
+    border-radius: var(--borde-redondeado-suave) !important;
+}
+
+    .form-control:focus,
+    input:focus,
+    textarea:focus,
+    select:focus {
+        background-color: rgba(30, 41, 59, 0.95) !important;
+        border-color: var(--azul-principal) !important;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25) !important;
+        color: var(--texto-principal) !important;
+    }
+
+    .form-control::placeholder,
+    input::placeholder,
+    textarea::placeholder {
+        color: var(--texto-terciario) !important;
+        opacity: 1 !important;
+    }
+
+    select option {
+        background-color: var(--fondo-secundario) !important;
+        color: var(--texto-principal) !important;
+    }
+
+/* Labels */
+label {
+    color: var(--texto-secundario) !important;
+    font-weight: 500 !important;
+}
+ 
+z
+/* Cards y contenedores */
+.card,
+.panel,
+[class*="card"],
+[class*="panel"] {
+    background: var(--fondo-secundario) !important;
+    border: 1px solid var(--borde-suave) !important;
+    color: var(--texto-principal) !important;
+}
+
+.card-header,
+.panel-heading {
+    background: var(--fondo-terciario) !important;
+    border-bottom: 1px solid var(--borde-medio) !important;
+    color: var(--texto-principal) !important;
+}
+
+/* =============================================
+   🎯 TABLA DE TRATAMIENTOS - MODO OSCURO
+   Corrección específica para el contenedor
+   ============================================= */
+
+/* Contenedor principal de la tabla */
+.table-responsive,
+.table-responsive-custom,
+.treatments-table-container,
+[class*="tratamiento"] .table,
+[id*="gvTratamientos"],
+#<%= gvTratamientos.ClientID % >,
+div[style*="background-color: White"],
+div[style*="background: White"],
+div[style*="background-color: #FFFFFF"],
+div[style*="background: #FFFFFF"] {
+    background: rgba(30, 41, 59, 0.95) !important;
+    background-color: #1E293B !important;
+    border: 1px solid rgba(51, 65, 85, 0.8) !important;
+    border-radius: 12px !important;
+    color: #F1F5F9 !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+}
+
+    /* Tabla de tratamientos */
+    table.treatments-table,
+    .table-treatments,
+    #<%= gvTratamientos.ClientID % > table,
+    [class*="tratamientos"] table,
+    div[style*="background-color: White"] table,
+    .table {
+        background: transparent !important;
+        color: #F1F5F9 !important;
+        border-collapse: separate !important;
+        border-spacing: 0 !important;
+    }
+
+        /* Header de la tabla */
+        table thead th,
+        .table thead th,
+        thead th,
+        GridViewHeaderStyle,
+        [class*="HeaderStyle"] th,
+        [id*="gvTratamientos"] thead th,
+        th[style*="background-color"],
+        th[style*="background"] {
+            background: linear-gradient(135deg, #1e3a5f 0%, #162440 100%) !important;
+            background-color: #1e3a5f !important;
+            color: #F1F5F9 !important;
+            border-color: #334155 !important;
+            border-bottom: 2px solid #60A5FA !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            padding: 1rem 1.25rem !important;
+        }
+
+        /* Celdas del cuerpo */
+        table tbody td,
+        .table tbody td,
+        tbody td,
+        GridViewRow,
+        [class*="Row"] td,
+        [id*="gvTratamientos"] tbody td,
+        td[style*="background-color"],
+        td[style*="background"] {
+            background: rgba(30, 41, 59, 0.6) !important;
+            background-color: #1E293B !important;
+            color: #F1F5F9 !important;
+            border-color: #334155 !important;
+            border-bottom: 1px solid rgba(51, 65, 85, 0.6) !important;
+            padding: 1rem 1.25rem !important;
+            vertical-align: middle !important;
+        }
+
+        /* Filas hover */
+        table tbody tr:hover,
+        .table tbody tr:hover,
+        tbody tr:hover,
+        [id*="gvTratamientos"] tbody tr:hover {
+            background: linear-gradient(90deg, rgba(96, 165, 250, 0.15) 0%, transparent 100%) !important;
+            border-left: 3px solid #60A5FA !important;
+            transform: translateX(3px) !important;
+            transition: all 0.3s ease !important;
+        }
+
+        /* Filas alternas */
+        table tbody tr:nth-child(even),
+        .table tbody tr:nth-child(even),
+        tbody tr:nth-child(even),
+        GridViewAlternatingRowStyle {
+            background: rgba(30, 41, 59, 0.8) !important;
+            background-color: rgba(30, 41, 59, 0.8) !important;
+        }
+
+/* Mensaje "No hay tratamientos registrados" */
+.no-data-message,
+.empty-data,
+[class*="no-data"],
+[class*="empty"],
+div[style*="text-align: center"],
+td[colspan] {
+    background: rgba(30, 58, 95, 0.6) !important;
+    color: #94A3B8 !important;
+    border: 1px dashed rgba(51, 65, 85, 0.8) !important;
+    border-radius: 8px !important;
+    padding: 2rem !important;
+    font-style: italic !important;
+    text-align: center !important;
+}
+
+/* Textos dentro de celdas */
+table tbody td strong,
+.table tbody td strong,
+td strong {
+    color: #F1F5F9 !important;
+    font-weight: 600 !important;
+}
+
+table tbody td span,
+.table tbody td span,
+td span {
+    color: #94A3B8 !important;
+}
+
+/* Fechas y datos específicos */
+td[class*="fecha"],
+td[class*="date"],
+td[class*="fecha"],
+.date-cell {
+    color: #60A5FA !important;
+    font-weight: 500 !important;
+}
+
+/* Badges en la tabla */
+table .badge,
+.table .badge,
+.badge-treatment,
+[class*="badge"] {
+    padding: 0.4rem 0.9rem !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    border-radius: 20px !important;
+    border: 1px solid transparent !important;
+}
+
+/* Badge completado/exitoso */
+.badge-success,
+.badge-completed,
+[class*="completed"],
+[class*="success"],
+[style*="background-color: Green"],
+[style*="background: Green"] {
+    background: rgba(34, 197, 94, 0.2) !important;
+    color: #6EE7B7 !important;
+    border-color: rgba(34, 197, 94, 0.5) !important;
+}
+
+/* Badge pendiente */
+.badge-warning,
+.badge-pending,
+[class*="pending"],
+[class*="warning"],
+[style*="background-color: Orange"],
+[style*="background: Orange"] {
+    background: rgba(245, 158, 11, 0.2) !important;
+    color: #FDE68A !important;
+    border-color: rgba(245, 158, 11, 0.5) !important;
+}
+
+/* Badge cancelado */
+.badge-danger,
+.badge-cancelled,
+[class*="cancelled"],
+[class*="danger"],
+[style*="background-color: Red"],
+[style*="background: Red"] {
+    background: rgba(239, 68, 68, 0.2) !important;
+    color: #FCA5A5 !important;
+    border-color: rgba(239, 68, 68, 0.5) !important;
+}
+
+/* Botones en la tabla */
+table .btn,
+.table .btn,
+.btn-edit-treatment,
+.btn-delete-treatment,
+.btn-view-treatment,
+[class*="btn"][class*="treatment"] {
+    padding: 0.45rem 0.9rem !important;
+    font-size: 0.85rem !important;
+    border-radius: 6px !important;
+    border: none !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Botón editar */
+.btn-edit,
+.btn-editar,
+[class*="Editar"] {
+    background: linear-gradient(135deg, #60A5FA, #3B82F6) !important;
+    color: #FFFFFF !important;
+}
+
+    .btn-edit:hover,
+    .btn-editar:hover {
+        background: linear-gradient(135deg, #93C5FD, #60A5FA) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 20px rgba(96, 165, 250, 0.4) !important;
+    }
+
+/* Botón eliminar */
+.btn-delete,
+.btn-eliminar,
+[class*="Eliminar"] {
+    background: linear-gradient(135deg, #EF4444, #DC2626) !important;
+    color: #FFFFFF !important;
+}
+
+    .btn-delete:hover,
+    .btn-eliminar:hover {
+        background: linear-gradient(135deg, #FCA5A5, #DC2626) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4) !important;
+    }
+
+/* Paginación */
+.pager,
+.pagination,
+[class*="pager"],
+[class*="pagination"],
+[id*="Pager"] {
+    background: rgba(30, 41, 59, 0.95) !important;
+    border-top: 1px solid rgba(51, 65, 85, 0.8) !important;
+    padding: 1rem !important;
+}
+
+    .pager span,
+    .pager a,
+    .pagination span,
+    .pagination a,
+    [class*="pager"] span,
+    [class*="pager"] a {
+        background: rgba(15, 23, 42, 0.8) !important;
+        color: #F1F5F9 !important;
+        border: 1px solid rgba(51, 65, 85, 0.8) !important;
+        padding: 0.5rem 1rem !important;
+        border-radius: 6px !important;
+        margin: 0 0.25rem !important;
+    }
+
+        .pager a:hover,
+        .pagination a:hover,
+        [class*="pager"] a:hover {
+            background: #60A5FA !important;
+            color: #FFFFFF !important;
+            border-color: #60A5FA !important;
+            transform: translateY(-2px) !important;
+        }
+
+        .pager .selected,
+        .pagination .selected,
+        .pager span[style*="font-weight:bold"] {
+            background: #60A5FA !important;
+            color: #FFFFFF !important;
+            font-weight: 700 !important;
+        }
+
+/* =============================================
+   🎯 OVERRIDE DE ESTILOS EN LÍNEA
+   Para elementos con style="background: White"
+   ============================================= */
+
+/* Forzar override de estilos en línea */
+[style*="background-color: White"],
+[style*="background: White"],
+[style*="background-color: #FFFFFF"],
+[style*="background: #FFFFFF"],
+[style*="background-color: white"],
+[style*="background: white"],
+[style*="color: Black"],
+[style*="color: #000000"],
+[style*="color: black"] {
+    background: #1E293B !important;
+    background-color: #1E293B !important;
+    color: #F1F5F9 !important;
+}
+
+/* Tablas con estilos en línea */
+table[style*="background-color: White"],
+table[style*="background: White"],
+table[style*="background-color: #FFFFFF"] {
+    background: transparent !important;
+}
+
+/* Celdas con estilos en línea */
+td[style*="background-color: White"],
+th[style*="background-color: White"],
+td[style*="background: White"],
+th[style*="background: White"] {
+    background: #1E293B !important;
+    color: #F1F5F9 !important;
+    border-color: #334155 !important;
+}
+
+/* Textos negros a blancos */
+[style*="color: Black"],
+[style*="color: #000000"],
+[style*="color: black"],
+[style*="color: #333333"],
+[style*="color: #333"] {
+    color: #F1F5F9 !important;
+}
+
+/* =============================================
+   🎯 ASP.NET GRIDVIEW SPECIFIC
+   ============================================= */
+
+/* GridView contenedor */
+asp:GridView,
+.GridViewStyle,
+[class*="GridViewStyle"] {
+    background: #1E293B !important;
+    color: #F1F5F9 !important;
+}
+
+/* Header específico de ASP.NET */
+.GridViewHeaderStyle,
+[id*="HeaderStyle"] {
+    background: linear-gradient(135deg, #1e3a5f 0%, #162440 100%) !important;
+    color: #F1F5F9 !important;
+}
+
+/* Row específico */
+.GridViewRow,
+[id*="Row"] {
+    background: rgba(30, 41, 59, 0.6) !important;
+    color: #F1F5F9 !important;
+}
+
+/* Alternating Row */
+.GridViewAlternatingRowStyle,
+[id*="AlternatingRowStyle"] {
+    background: rgba(30, 41, 59, 0.8) !important;
+    color: #F1F5F9 !important;
+}
+
+/* Selected Row */
+.GridViewSelectedRowStyle,
+[id*="SelectedRowStyle"] {
+    background: rgba(96, 165, 250, 0.2) !important;
+    color: #F1F5F9 !important;
+    border-left: 3px solid #60A5FA !important;
+}
+
+/* Pager específico */
+.GridViewPagerStyle,
+[id*="PagerStyle"] {
+    background: rgba(30, 41, 59, 0.95) !important;
+    color: #F1F5F9 !important;
+}
+
+/* =============================================
+   🎯 SELECTORES ULTRA-ESPECÍFICOS
+   Último recurso si nada funciona
+   ============================================= */
+
+/* Body form table */
+body form table,
+body form div table,
+body form div[style*="background"] table {
+    background: transparent !important;
+    color: #F1F5F9 !important;
+}
+
+    body form table thead th,
+    body form table tbody td {
+        background: #1E293B !important;
+        color: #F1F5F9 !important;
+        border-color: #334155 !important;
+    }
+
+/* Contenedores específicos de tratamientos */
+#MainContent table,
+#ContentPlaceHolder1 table,
+[class*="tratamientos"] table,
+[id*="tratamiento"] table {
+    background: transparent !important;
+}
+
+    #MainContent table thead th,
+    #ContentPlaceHolder1 table thead th {
+        background: linear-gradient(135deg, #1e3a5f 0%, #162440 100%) !important;
+        color: #F1F5F9 !important;
+    }
+
+    #MainContent table tbody td,
+    #ContentPlaceHolder1 table tbody td {
+        background: rgba(30, 41, 59, 0.6) !important;
+        color: #F1F5F9 !important;
+    }
+
+/* =============================================
+   🎯 RESPONSIVE PARA MÓVIL
+   ============================================= */
+@media (max-width: 768px) {
+    table thead th,
+    .table thead th {
+        font-size: 0.8rem !important;
+        padding: 0.75rem !important;
+    }
+
+    table tbody td,
+    .table tbody td {
+        padding: 0.75rem !important;
+        font-size: 0.9rem !important;
+    }
+
+    .btn-edit,
+    .btn-delete,
+    .btn-action {
+        padding: 0.35rem 0.6rem !important;
+        font-size: 0.75rem !important;
+    }
+}
+
+/* =============================================
+   🎯 ANIMACIONES SUAVES
+   ============================================= */
+table tbody tr {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+    table tbody tr:hover {
+        box-shadow: 0 4px 12px rgba(96, 165, 250, 0.15) !important;
+    }
+
+/* =============================================
+   🎯 FORMULARIO DE TRATAMIENTOS - MODO OSCURO
+   Corrección específica para textos y campos
+   ============================================= */
+
+/* --- OVERRIDE DE ESTILOS EN LÍNEA (BackColor) --- */
+/* TextBoxes con BackColor en línea */
+input[style*="background-color: #f8f9fa"],
+input[style*="background: #f8f9fa"],
+input[style*="background-color: #e8f5e8"],
+input[style*="background: #e8f5e8"],
+input[style*="background-color: White"],
+input[style*="background: White"],
+input[style*="BackColor"],
+[BackColor],
+input[backcolor],
+input[BACKCOLOR] {
+    background-color: var(--fondo-input) !important;
+    background: var(--fondo-input) !important;
+    color: var(--texto-principal) !important;
+    border-color: var(--borde-medio) !important;
+}
+
+/* Readonly inputs específicos del formulario */
+#<%= txtFechaTratamiento.ClientID % >,
+#<%= txtNombreServicio.ClientID % >,
+#<%= txtNombreProducto.ClientID % >,
+#<%= txtInventarioDisponible.ClientID % >,
+input[readonly],
+.readonly-input,
+.form-control[readonly] {
+    background-color: rgba(30, 41, 59, 0.8) !important;
+    background: rgba(30, 41, 59, 0.8) !important;
+    color: var(--texto-secundario) !important;
+    border-color: var(--borde-medio) !important;
+    cursor: not-allowed;
+    opacity: 0.9;
+}
+    /* Hover en readonly para feedback visual */
+    input[readonly]:hover,
+    .form-control[readonly]:hover {
+        background-color: rgba(30, 41, 59, 0.95) !important;
+        border-color: var(--borde-fuerte) !important;
+    }
+
+/* --- TEXTOS DE AYUDA (form-text, text-muted) --- */
+/* Bootstrap helpers en modo oscuro */
+.form-text,
+.text-muted,
+.small,
+small,
+.help-block,
+.helper-text,
+[class*="form-text"],
+[class*="text-muted"],
+[id*="form-text"],
+[id*="text-muted"] {
+    color: var(--texto-terciario) !important;
+    font-size: 0.85rem !important;
+    line-height: 1.4 !important;
+}
+
+/* Textos dentro de labels */
+label small,
+label .text-muted,
+label .form-text,
+.form-label small {
+    color: var(--texto-terciario) !important;
+    font-weight: 400 !important;
+    display: block;
+    margin-top: 0.25rem !important;
+}
+
+/* Textos con asterisco requerido */
+.text-danger,
+.required,
+[style*="color: #dc3545"],
+[style*="color: red"] {
+    color: #F87171 !important;
+    font-weight: 600 !important;
+}
+
+/* --- LABELS Y FORM-LABEL --- */
+label,
+.form-label,
+.fw-bold,
+[class*="fw-"],
+asp:Label,
+asp:Label[runat="server"] {
+    color: var(--texto-principal) !important;
+    font-weight: 600 !important;
+    margin-bottom: 0.4rem !important;
+}
+
+    /* Labels con texto secundario */
+    label.fw-bold,
+    .form-label.fw-bold {
+        color: var(--texto-principal) !important;
+    }
+
+/* --- DROPDOWN LISTS (SELECT) --- */
+select.form-select,
+select[disabled],
+select[readonly],
+#<%= ddlCita.ClientID % >,
+#<%= ddlPaciente.ClientID % > {
+    background-color: var(--fondo-input) !important;
+    color: var(--texto-principal) !important;
+    border-color: var(--borde-medio) !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%2394A3B8' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e") !important;
+}
+
+    select.form-select:focus,
+    select:focus {
+        background-color: rgba(15, 23, 42, 0.95) !important;
+        border-color: var(--azul-principal) !important;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25) !important;
+        color: var(--texto-principal) !important;
+    }
+
+select option {
+    background-color: var(--fondo-secundario) !important;
+    color: var(--texto-principal) !important;
+}
+
+select:disabled,
+select[disabled] {
+    background-color: rgba(30, 41, 59, 0.6) !important;
+    color: var(--texto-terciario) !important;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+/* --- TEXTBOXES Y FORM-CONTROLS --- */
+.form-control,
+input[type="text"],
+input[type="date"],
+input[type="number"],
+input[type="email"],
+textarea,
+#<%= txtObservaciones.ClientID % >,
+#<%= txtFechaTratamiento.ClientID % >,
+#<%= txtCantidad.ClientID % > {
+    background-color: var(--fondo-input) !important;
+    color: var(--texto-principal) !important;
+    border: 1px solid var(--borde-medio) !important;
+    border-radius: var(--borde-redondeado-suave) !important;
+    padding: 0.6rem 1rem !important;
+    font-size: 0.95rem !important;
+}
+
+    .form-control:focus,
+    input:focus,
+    textarea:focus {
+        background-color: rgba(15, 23, 42, 0.95) !important;
+        border-color: var(--azul-principal) !important;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25) !important;
+        color: var(--texto-principal) !important;
+        outline: none !important;
+    }
+
+    .form-control::placeholder,
+    input::placeholder,
+    textarea::placeholder {
+        color: var(--texto-terciario) !important;
+        opacity: 1 !important;
+    }
+    /* Inputs con validación */
+    .form-control.is-valid,
+    input[style*="border-color: #28a745"] {
+        border-color: var(--verde-whatsapp) !important;
+        box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15) !important;
+    }
+
+    .form-control.is-invalid,
+    input[style*="border-color: #dc3545"] {
+        border-color: var(--rojo-coral) !important;
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15) !important;
+    }
+
+/* --- CARD Y PANEL DEL FORMULARIO --- */
+.card,
+.card-custom,
+.panel,
+#<%= pnlFormularioTratamiento.ClientID % >,
+[class*="card"],
+[class*="panel"] {
+    background: var(--fondo-secundario) !important;
+    border: 1px solid var(--borde-suave) !important;
+    color: var(--texto-principal) !important;
+    box-shadow: var(--sombra-media) !important;
+}
+
+.card-header,
+.panel-heading,
+[class*="card-header"],
+[class*="panel-heading"] {
+    background: linear-gradient(135deg, #1e3a5f 0%, #162440 100%) !important;
+    border-bottom: 1px solid var(--borde-medio) !important;
+    color: var(--texto-principal) !important;
+    padding: 1rem 1.5rem !important;
+}
+
+    .card-header h4,
+    .card-header h3,
+    .panel-heading h4,
+    .panel-heading h3 {
+        color: var(--texto-principal) !important;
+        margin: 0 !important;
+    }
+
+.card-body,
+.panel-body,
+[class*="card-body"],
+[class*="panel-body"] {
+    background: transparent !important;
+    color: var(--texto-principal) !important;
+    padding: 1.5rem !important;
+}
+
+/* --- REPEATER DE SERVICIOS - FILAS OSCURAS --- */
+.servicio-detalle,
+.row[class*="servicio"],
+[id*="rptServiciosProductos"] .row {
+    background: rgba(30, 41, 59, 0.4) !important;
+    border: 1px solid var(--borde-suave) !important;
+    border-radius: var(--borde-redondeado-suave) !important;
+    padding: 1rem !important;
+    margin-bottom: 0.75rem !important;
+}
+
+    .servicio-detalle:hover {
+        background: rgba(30, 41, 59, 0.7) !important;
+        border-color: var(--borde-fuerte) !important;
+        transition: var(--transicion-suave);
+    }
+
+    /* Labels dentro del repeater */
+    .servicio-detalle label,
+    .servicio-detalle .form-label {
+        color: var(--texto-secundario) !important;
+        font-size: 0.85rem !important;
+        margin-bottom: 0.3rem !important;
+    }
+
+    /* Inputs dentro del repeater */
+    .servicio-detalle .form-control {
+        background-color: var(--fondo-input) !important;
+        color: var(--texto-principal) !important;
+        font-size: 0.9rem !important;
+    }
+
+/* --- MENSAJES DE VALIDACIÓN DE CANTIDAD --- */
+.cantidad-mensaje,
+[style*="color: #dc3545"],
+.validation-message,
+.error-message {
+    color: #F87171 !important;
+    font-size: 0.8rem !important;
+    font-weight: 500 !important;
+    margin-top: 0.25rem !important;
+    display: block !important;
+}
+
+    /* Mensaje de éxito en validación */
+    .cantidad-mensaje[style*="display: none"] + .form-control[style*="border-color: #28a745"],
+    input[style*="border-color: #28a745"] {
+        border-color: var(--verde-whatsapp) !important;
+        box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2) !important;
+    }
+
+/* --- ALERTAS Y MENSAJES DEL SISTEMA --- */
+.alert-custom,
+#<%= lblMensaje.ClientID % >,
+[class*="alert"],
+[role="alert"] {
+    background: var(--fondo-secundario) !important;
+    color: var(--texto-principal) !important;
+    border: 1px solid var(--borde-medio) !important;
+    border-left: 4px solid var(--azul-principal) !important;
+}
+
+    .alert-custom.alert-info,
+    .alert-info {
+        background: linear-gradient(135deg, #1E3A5F, #162E45) !important;
+        border-left-color: var(--azul-profesional) !important;
+        color: #BAE6FD !important;
+    }
+
+    .alert-custom.alert-success,
+    .alert-success {
+        background: linear-gradient(135deg, #1A3D2E, #144533) !important;
+        border-left-color: var(--verde-whatsapp) !important;
+        color: #BBF7D0 !important;
+    }
+
+    .alert-custom.alert-error,
+    .alert-custom.alert-danger,
+    .alert-danger,
+    .alert-error {
+        background: linear-gradient(135deg, #3D1F23, #4A2328) !important;
+        border-left-color: var(--rojo-coral) !important;
+        color: #FECACA !important;
+    }
+
+    .alert-custom.alert-warning,
+    .alert-warning {
+        background: linear-gradient(135deg, #4A3618, #57411D) !important;
+        border-left-color: var(--amarillo-alerta) !important;
+        color: #FDE68A !important;
+    }
+
+/* --- GRIDVIEW DE TRATAMIENTOS - MODO OSCURO --- */
+.table-responsive-custom,
+#<%= gvTratamientos.ClientID % >,
+GridView,
+[class*="GridView"] {
+    background: var(--fondo-secundario) !important;
+    border: 1px solid var(--borde-suave) !important;
+    border-radius: var(--borde-redondeado) !important;
+    overflow: hidden !important;
+}
+
+    /* Tabla interna */
+    .table-custom,
+    #<%= gvTratamientos.ClientID % > table,
+    GridView table {
+        background: transparent !important;
+        color: var(--texto-principal) !important;
+        margin: 0 !important;
+    }
+
+        /* Header de GridView */
+        GridViewHeaderStyle,
+        [class*="HeaderStyle"],
+        #<%= gvTratamientos.ClientID % > thead th,
+        .table-custom thead th {
+            background: linear-gradient(135deg, #1e3a5f 0%, #162440 100%) !important;
+            color: var(--texto-principal) !important;
+            border-color: var(--borde-medio) !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            font-size: 0.85rem !important;
+            letter-spacing: 0.5px !important;
+            padding: 1rem !important;
+        }
+
+        /* Celdas del cuerpo */
+        GridViewRow,
+        [class*="Row"],
+        #<%= gvTratamientos.ClientID % > tbody td,
+        .table-custom tbody td {
+            background: rgba(30, 41, 59, 0.6) !important;
+            color: var(--texto-principal) !important;
+            border-color: var(--borde-suave) !important;
+            padding: 1rem !important;
+            vertical-align: middle !important;
+        }
+
+    /* Filas alternas */
+    GridViewAlternatingRowStyle,
+    [id*="AlternatingRow"],
+    #<%= gvTratamientos.ClientID % > tbody tr:nth-child(even) td {
+        background: rgba(30, 41, 59, 0.8) !important;
+    }
+
+    /* Filas hover */
+    #<%= gvTratamientos.ClientID % > tbody tr:hover,
+    .table-custom tbody tr:hover {
+        background: linear-gradient(90deg, rgba(96, 165, 250, 0.15), transparent) !important;
+        border-left: 3px solid var(--azul-principal) !important;
+        transform: translateX(3px) !important;
+        transition: all 0.3s ease !important;
+    }
+
+/* Botones de acción en GridView */
+.table-actions,
+.btn-action,
+.btn-action-edit,
+.btn-action-delete,
+#<%= btnEditar.ClientID % >,
+#<%= btnEliminar.ClientID % > {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.4rem !important;
+    padding: 0.45rem 0.9rem !important;
+    font-size: 0.85rem !important;
+    border-radius: 6px !important;
+    border: none !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+    text-decoration: none !important;
+}
+
+/* Botón editar */
+.btn-action-edit,
+#<%= btnEditar.ClientID % > {
+    background: linear-gradient(135deg, #60A5FA, #3B82F6) !important;
+    color: #FFFFFF !important;
+}
+
+    .btn-action-edit:hover,
+    #<%= btnEditar.ClientID % > :hover {
+        background: linear-gradient(135deg, #93C5FD, #60A5FA) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 20px rgba(96, 165, 250, 0.4) !important;
+    }
+
+/* Botón eliminar */
+.btn-action-delete,
+#<%= btnEliminar.ClientID % > {
+    background: linear-gradient(135deg, #EF4444, #DC2626) !important;
+    color: #FFFFFF !important;
+}
+
+    .btn-action-delete:hover,
+    #<%= btnEliminar.ClientID % > :hover {
+        background: linear-gradient(135deg, #FCA5A5, #DC2626) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4) !important;
+    }
+
+    /* Iconos en botones */
+    .btn-action i,
+    .btn-action-edit i,
+    .btn-action-delete i,
+    .bi {
+        font-size: 0.9rem !important;
+        vertical-align: -2px !important;
+    }
+
+/* EmptyDataTemplate */
+.EmptyDataTemplate,
+#<%= gvTratamientos.ClientID % > .alert-info {
+    background: rgba(30, 58, 95, 0.6) !important;
+    color: var(--texto-secundario) !important;
+    border: 1px dashed var(--borde-medio) !important;
+    border-radius: var(--borde-redondeado) !important;
+    padding: 2rem !important;
+    text-align: center !important;
+    font-style: italic !important;
+}
+
+/* Paginación de GridView */
+GridViewPagerStyle,
+[id*="PagerStyle"],
+#<%= gvTratamientos.ClientID % > .pager {
+    background: var(--fondo-terciario) !important;
+    border-top: 1px solid var(--borde-medio) !important;
+    padding: 1rem !important;
+}
+
+    #<%= gvTratamientos.ClientID % > .pager span,
+    #<%= gvTratamientos.ClientID % > .pager a {
+        background: var(--fondo-input) !important;
+        color: var(--texto-principal) !important;
+        border: 1px solid var(--borde-medio) !important;
+        padding: 0.4rem 0.9rem !important;
+        border-radius: 6px !important;
+        margin: 0 0.25rem !important;
+        text-decoration: none !important;
+    }
+
+        #<%= gvTratamientos.ClientID % > .pager a:hover {
+            background: var(--azul-principal) !important;
+            color: #FFFFFF !important;
+            border-color: var(--azul-principal) !important;
+            transform: translateY(-2px) !important;
+        }
+
+        #<%= gvTratamientos.ClientID % > .pager span[style*="font-weight:bold"],
+        #<%= gvTratamientos.ClientID % > .pager .selected {
+            background: var(--azul-principal) !important;
+            color: #FFFFFF !important;
+            font-weight: 700 !important;
+        }
+
+/* --- BOTONES DEL FORMULARIO --- */
+#<%= btnGuardarTratamiento.ClientID % >,
+#<%= btnCancelarTratamiento.ClientID % >,
+#<%= btnNuevoTratamiento.ClientID % >,
+.btn-success-custom,
+.btn-secondary-custom,
+.btn-add-new {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    padding: 0.8rem 1.5rem !important;
+    border: none !important;
+    border-radius: var(--borde-redondeado) !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    cursor: pointer !important;
+    transition: var(--transicion-suave) !important;
+    text-decoration: none !important;
+    box-shadow: var(--shadow-md) !important;
+}
+
+/* Guardar - Success */
+#<%= btnGuardarTratamiento.ClientID % >,
+.btn-success-custom {
+    background: linear-gradient(135deg, #22C55E, #16A34A) !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4) !important;
+}
+
+    #<%= btnGuardarTratamiento.ClientID % > :hover,
+    .btn-success-custom:hover {
+        background: linear-gradient(135deg, #4ADE80, #22C55E) !important;
+        transform: translateY(-3px) !important;
+        box-shadow: 0 8px 25px rgba(34, 197, 94, 0.6) !important;
+        color: #FFFFFF !important;
+    }
+
+/* Cancelar - Secondary */
+#<%= btnCancelarTratamiento.ClientID % >,
+.btn-secondary-custom {
+    background: linear-gradient(135deg, #475569, #334155) !important;
+    color: var(--texto-principal) !important;
+    border: 1px solid var(--borde-medio) !important;
+    box-shadow: var(--sombra-suave) !important;
+}
+
+    #<%= btnCancelarTratamiento.ClientID % > :hover,
+    .btn-secondary-custom:hover {
+        background: linear-gradient(135deg, #64748B, #475569) !important;
+        transform: translateY(-3px) !important;
+        color: #FFFFFF !important;
+        border-color: var(--borde-fuerte) !important;
+    }
+
+/* Nuevo - Primary */
+#<%= btnNuevoTratamiento.ClientID % >,
+.btn-add-new {
+    background: linear-gradient(135deg, #60A5FA, #3B82F6) !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4) !important;
+}
+
+    #<%= btnNuevoTratamiento.ClientID % > :hover,
+    .btn-add-new:hover {
+        background: linear-gradient(135deg, #93C5FD, #60A5FA) !important;
+        transform: translateY(-3px) !important;
+        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6) !important;
+        color: #FFFFFF !important;
+    }
+
+/* --- RESPONSIVE PARA MÓVIL --- */
+@media (max-width: 768px) {
+    .servicio-detalle {
+        padding: 0.75rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+
+        .servicio-detalle .col-md-3,
+        .servicio-detalle .col-md-2,
+        .servicio-detalle .col-md-4 {
+            margin-bottom: 0.5rem !important;
+        }
+
+    #<%= btnGuardarTratamiento.ClientID % >,
+    #<%= btnCancelarTratamiento.ClientID % >,
+    #<%= btnNuevoTratamiento.ClientID % > {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    .d-flex.gap-2 {
+        flex-direction: column !important;
+    }
+
+    #<%= gvTratamientos.ClientID % > thead th,
+    .table-custom thead th {
+        font-size: 0.75rem !important;
+        padding: 0.75rem !important;
+    }
+
+    #<%= gvTratamientos.ClientID % > tbody td,
+    .table-custom tbody td {
+        padding: 0.75rem !important;
+        font-size: 0.9rem !important;
+    }
+
+    .btn-action {
+        padding: 0.35rem 0.6rem !important;
+        font-size: 0.75rem !important;
+    }
+}
+
+/* --- ACCESIBILIDAD Y FOCUS --- */
+:focus-visible {
+    outline: 2px solid var(--azul-principal) !important;
+    outline-offset: 2px !important;
+    border-radius: var(--borde-redondeado-suave) !important;
+}
+
+/* Transiciones suaves */
+*, *::before, *::after {
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
