@@ -1,0 +1,846 @@
+﻿/* --- ARCHIVO: css/estiloInventario.css --- */
+
+/* --- Insignias (Badges) para Estado del Producto (MEJORADAS) --- */
+.badge-status {
+    padding: 0.5em 1em;
+    font-size: 0.85em;
+    font-weight: 600;
+    border-radius: 30px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    transition: var(--transicion-suave);
+    display: inline-flex;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+    .badge-status::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        transition: left 0.5s;
+    }
+
+    .badge-status:hover::before {
+        left: 100%;
+    }
+
+    .badge-status:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .badge-status.activo {
+        background: linear-gradient(135deg, var(--verde-whatsapp) 0%, #128C7E 100%);
+        color: var(--blanco);
+        border-left: 3px solid #0a6e5f;
+    }
+
+        .badge-status.activo::after {
+            content: '✓';
+            margin-left: 5px;
+        }
+
+    .badge-status.inactivo {
+        background: linear-gradient(135deg, var(--rojo-coral) 0%, #c9302c 100%);
+        color: var(--blanco);
+        border-left: 3px solid #a02622;
+    }
+
+        .badge-status.inactivo::after {
+            content: '✕';
+            margin-left: 5px;
+        }
+
+/* --- Insignias (Badges) para Alertas de Inventario (MEJORADAS) --- */
+.badge-inventory {
+    padding: 0.5em 1em;
+    font-size: 0.85em;
+    font-weight: 600;
+    border-radius: 30px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    transition: var(--transicion-suave);
+    display: inline-flex;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+    .badge-inventory::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        transition: left 0.5s;
+    }
+
+    .badge-inventory:hover::before {
+        left: 100%;
+    }
+
+    .badge-inventory:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .badge-inventory.alert-stock-low {
+        background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+        color: #212529;
+        border-left: 3px solid #d39e00;
+    }
+
+        .badge-inventory.alert-stock-low::after {
+            content: '⚠';
+            margin-left: 5px;
+        }
+
+    .badge-inventory.alert-expired {
+        background: linear-gradient(135deg, var(--rojo-coral) 0%, #c9302c 100%);
+        color: var(--blanco);
+        border-left: 3px solid #a02622;
+    }
+
+        .badge-inventory.alert-expired::after {
+            content: '⏰';
+            margin-left: 5px;
+        }
+
+    .badge-inventory.alert-ok {
+        background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+        color: #0c5460;
+        border-left: 3px solid #0c5460;
+    }
+
+        .badge-inventory.alert-ok::after {
+            content: '✓';
+            margin-left: 5px;
+        }
+
+/* --- Mensajes de Alerta Personalizados (MEJORADOS) --- */
+.alert-custom {
+    padding: 1.2rem 1.8rem;
+    border-radius: var(--borde-redondeado);
+    border: none;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-left: 4rem;
+    box-shadow: var(--sombra-suave);
+    transition: var(--transicion-suave);
+    overflow: hidden;
+}
+
+    .alert-custom::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+    }
+
+    .alert-custom::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 1.5rem;
+        transform: translateY(-50%);
+        width: 1.5rem;
+        height: 1.5rem;
+        background-size: contain;
+    }
+
+    .alert-custom:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--sombra-media);
+    }
+
+.alert-error {
+    color: #721c24;
+    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+    text-align: center;
+    font-weight: 500;
+}
+
+    .alert-error::before {
+        background-color: var(--rojo-coral);
+    }
+
+    .alert-error::after {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23721c24'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'/%3E%3C/svg%3E");
+    }
+
+.alert-info {
+    color: #0c5460;
+    background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+    text-align: center;
+}
+
+    .alert-info::before {
+        background-color: var(--azul-profesional);
+    }
+
+    .alert-info::after {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230c5460'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z'/%3E%3C/svg%3E");
+    }
+
+.alert-success {
+    color: #155724;
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    text-align: center;
+}
+
+    .alert-success::before {
+        background-color: var(--verde-whatsapp);
+    }
+
+    .alert-success::after {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23155724'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+    }
+
+.alert-warning {
+    color: #856404;
+    background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%);
+    text-align: center;
+}
+
+    .alert-warning::before {
+        background-color: #ffc107;
+    }
+
+    .alert-warning::after {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23856404'%3E%3Cpath d='M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z'/%3E%3C/svg%3E");
+    }
+
+/* --- Botones de Adición/Edición (MEJORADOS) --- */
+.btn-add-new {
+    background: var(--gradiente-principal);
+    border: none;
+    color: var(--blanco);
+    font-weight: 600;
+    padding: 0.8rem 1.8rem;
+    border-radius: var(--borde-redondeado);
+    transition: var(--transicion-suave);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(29, 53, 87, 0.3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .btn-add-new::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
+    }
+
+    .btn-add-new::after {
+        content: '+';
+        margin-right: 8px;
+        font-size: 1.2rem;
+        font-weight: 700;
+    }
+
+    .btn-add-new:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(29, 53, 87, 0.4);
+        color: var(--blanco);
+    }
+
+        .btn-add-new:hover::before {
+            left: 100%;
+        }
+
+    .btn-add-new:active {
+        transform: translateY(-1px);
+    }
+
+/* --- Variantes de Botones Personalizados (MEJORADOS) --- */
+.btn-success-custom {
+    background: linear-gradient(45deg, var(--verde-whatsapp), #128C7E);
+    border: none;
+    color: var(--blanco);
+    font-weight: 600;
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--borde-redondeado);
+    transition: var(--transicion-suave);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .btn-success-custom::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
+    }
+
+    .btn-success-custom::after {
+        content: '✓';
+        margin-right: 8px;
+        font-weight: 700;
+    }
+
+    .btn-success-custom:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+        color: var(--blanco);
+    }
+
+        .btn-success-custom:hover::before {
+            left: 100%;
+        }
+
+.btn-secondary-custom {
+    background: linear-gradient(45deg, #6c757d, #5a6268);
+    border: none;
+    color: var(--blanco);
+    font-weight: 600;
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--borde-redondeado);
+    transition: var(--transicion-suave);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .btn-secondary-custom::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
+    }
+
+    .btn-secondary-custom::after {
+        content: '↺';
+        margin-right: 8px;
+        font-weight: 700;
+    }
+
+    .btn-secondary-custom:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(108, 117, 125, 0.4);
+        color: var(--blanco);
+    }
+
+        .btn-secondary-custom:hover::before {
+            left: 100%;
+        }
+
+/* --- Botón de eliminación personalizado --- */
+.btn-danger-custom {
+    background: linear-gradient(45deg, var(--rojo-coral), #c9302c);
+    border: none;
+    color: var(--blanco);
+    font-weight: 600;
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--borde-redondeado);
+    transition: var(--transicion-suave);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .btn-danger-custom::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
+    }
+
+    .btn-danger-custom::after {
+        content: '🗑';
+        margin-right: 8px;
+    }
+
+    .btn-danger-custom:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(230, 57, 70, 0.4);
+        color: var(--blanco);
+    }
+
+        .btn-danger-custom:hover::before {
+            left: 100%;
+        }
+
+/* --- Botón de edición personalizado --- */
+.btn-edit-custom {
+    background: linear-gradient(45deg, var(--azul-profesional), var(--azul-principal));
+    border: none;
+    color: var(--blanco);
+    font-weight: 600;
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--borde-redondeado);
+    transition: var(--transicion-suave);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(102, 179, 255, 0.3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .btn-edit-custom::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
+    }
+
+    .btn-edit-custom::after {
+        content: '✎';
+        margin-right: 8px;
+    }
+
+    .btn-edit-custom:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(102, 179, 255, 0.4);
+        color: var(--blanco);
+    }
+
+        .btn-edit-custom:hover::before {
+            left: 100%;
+        }
+
+/* --- Tarjeta de producto de inventario --- */
+.inventory-card {
+    background: var(--blanco);
+    border-radius: var(--borde-redondeado-fuerte);
+    overflow: hidden;
+    box-shadow: var(--sombra-media);
+    transition: var(--transicion-suave);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+    .inventory-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: var(--gradiente-principal);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s ease;
+    }
+
+    .inventory-card:hover::before {
+        transform: scaleX(1);
+    }
+
+    .inventory-card:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--sombra-fuerte);
+    }
+
+.inventory-image {
+    height: 180px;
+    overflow: hidden;
+    position: relative;
+}
+
+    .inventory-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+.inventory-card:hover .inventory-image img {
+    transform: scale(1.1);
+}
+
+.inventory-status {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.inventory-content {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.inventory-name {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--azul-oscuro);
+    margin-bottom: 0.8rem;
+}
+
+.inventory-code {
+    font-size: 0.9rem;
+    color: var(--gris-texto-claro);
+    margin-bottom: 1rem;
+    font-family: monospace;
+    background: var(--gris-fondo);
+    padding: 0.3rem 0.6rem;
+    border-radius: var(--borde-redondeado-suave);
+    display: inline-block;
+}
+
+.inventory-details {
+    margin-bottom: 1rem;
+    flex-grow: 1;
+}
+
+.inventory-detail {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--gris-claro);
+}
+
+    .inventory-detail:last-child {
+        border-bottom: none;
+    }
+
+.inventory-detail-label {
+    font-weight: 500;
+    color: var(--gris-texto);
+}
+
+.inventory-detail-value {
+    font-weight: 600;
+    color: var(--azul-oscuro);
+}
+
+.inventory-stock {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.stock-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+.stock-high {
+    background-color: var(--verde-whatsapp);
+}
+
+.stock-medium {
+    background-color: #ffc107;
+}
+
+.stock-low {
+    background-color: var(--rojo-coral);
+}
+
+.inventory-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--gris-claro);
+}
+
+.inventory-price {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--azul-oscuro);
+}
+
+.inventory-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* --- Filtros de inventario --- */
+.inventory-filters {
+    background: var(--blanco);
+    padding: 1.5rem;
+    border-radius: var(--borde-redondeado);
+    box-shadow: var(--sombra-suave);
+    margin-bottom: 2rem;
+}
+
+.filter-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--azul-oscuro);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+    .filter-title::before {
+        content: '🔍';
+        margin-right: 8px;
+    }
+
+.filter-group {
+    margin-bottom: 1rem;
+}
+
+.filter-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--gris-oscuro);
+}
+
+.filter-input {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    border: 1px solid var(--gris-medio);
+    border-radius: var(--borde-redondeado-suave);
+    background-color: var(--blanco);
+    transition: var(--transicion-suave);
+}
+
+    .filter-input:focus {
+        outline: none;
+        border-color: var(--azul-principal);
+        box-shadow: 0 0 0 3px rgba(69, 123, 157, 0.1);
+    }
+
+.filter-select {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    border: 1px solid var(--gris-medio);
+    border-radius: var(--borde-redondeado-suave);
+    background-color: var(--blanco);
+    transition: var(--transicion-suave);
+}
+
+    .filter-select:focus {
+        outline: none;
+        border-color: var(--azul-principal);
+        box-shadow: 0 0 0 3px rgba(69, 123, 157, 0.1);
+    }
+
+.filter-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+/* --- Grupo de botones --- */
+.btn-group-custom {
+    display: flex;
+    gap: 0.5rem;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+}
+
+    .btn-group-custom .btn-custom {
+        flex: 1;
+        min-width: 120px;
+    }
+
+/* --- Botones con iconos --- */
+.btn-icon-custom {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+    .btn-icon-custom::after {
+        margin: 0;
+    }
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    .inventory-card {
+        margin-bottom: 2rem;
+    }
+
+    .inventory-footer {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+
+    .inventory-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .inventory-filters {
+        margin-bottom: 1.5rem;
+    }
+
+    .filter-actions {
+        flex-direction: column;
+    }
+
+    .btn-custom {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
+
+    .btn-group-custom {
+        flex-direction: column;
+    }
+
+        .btn-group-custom .btn-custom {
+            width: 100%;
+        }
+}
+
+@media (max-width: 480px) {
+    .inventory-card {
+        margin-bottom: 1.5rem;
+    }
+
+    .inventory-content {
+        padding: 1rem;
+    }
+
+    .inventory-name {
+        font-size: 1.1rem;
+    }
+
+    .inventory-detail {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .inventory-detail-value {
+        margin-top: 0.3rem;
+    }
+
+    .btn-custom {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .badge-status, .badge-inventory {
+        padding: 0.4em 0.8em;
+        font-size: 0.75em;
+    }
+
+    .alert-custom {
+        padding: 1rem 1.2rem;
+        padding-left: 3.5rem;
+    }
+}
+
+/* --- Animaciones adicionales --- */
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+/* --- Estados de carga --- */
+.btn-loading {
+    position: relative;
+    color: transparent !important;
+    pointer-events: none;
+}
+
+    .btn-loading::after {
+        content: '';
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        top: 50%;
+        left: 50%;
+        margin-left: -10px;
+        margin-top: -10px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: var(--blanco);
+        animation: spin 1s ease-in-out infinite;
+    }
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* --- Estados deshabilitados --- */
+.btn-custom:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+    .btn-custom:disabled:hover {
+        transform: none !important;
+        box-shadow: none !important;
+    }

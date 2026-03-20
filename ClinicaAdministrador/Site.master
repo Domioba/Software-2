@@ -1,0 +1,119 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.Master.cs" Inherits="ClinicaAdministrador.SiteMaster" %>
+<!DOCTYPE html>
+<html lang="es">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <!-- =========================================== -->
+    <!-- NUESTRA HOJA DE ESTILOS PERSONALIZADA -->
+    <link href="css/site.css" rel="stylesheet" type="text/css" />
+    <!-- =========================================== -->
+
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server"></asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        
+        <!-- ================================================= -->
+        <!-- CAMBIO CLAVE: AÑADIR EL SCRIPTMANAGER AQUÍ (Versión Corregida) -->
+        <asp:ScriptManager runat="server" EnablePageMethods="true"></asp:ScriptManager>
+        <!-- ================================================= -->
+
+        <!-- Barra de Navegación con Nuevas Clases -->
+        <nav class="navbar navbar-expand-lg main-navbar">
+            <div class="container-fluid">
+                <!-- LOGO Y NOMBRE MEJORADO -->
+                <a class="navbar-brand" href="Default.aspx">
+                    <div class="brand-container">
+                        <div class="brand-logo">
+                            <i class="bi bi-heart-pulse"></i>
+                        </div>
+                        <div class="brand-text">
+                            <span class="brand-main">Clínica Medica y Estética</span>
+                            <span class="brand-sub">Dr. Jorge Ibarra</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="Default.aspx"><i class="bi bi-speedometer2"></i> Inicio</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="gestionDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-clipboard2-pulse"></i> Gestión
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="gestionDropdown">
+                                <li><a class="dropdown-item" href="Pacientes.aspx"><i class="bi bi-people"></i> Pacientes</a></li>
+                                <li><a class="dropdown-item" href="Citas.aspx"><i class="bi bi-calendar-check"></i> Citas</a></li>
+                                <li><a class="dropdown-item" href="Facturacion.aspx"><i class="bi bi-receipt"></i> Facturación</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="Servicios.aspx"><i class="bi bi-list-check"></i> Servicios</a></li>
+                                <li><a class="dropdown-item" href="Inventario.aspx"><i class="bi bi-box-seam"></i> Inventario</a></li>
+                                <li><a class="dropdown-item" href="Tratamientos.aspx"><i class="bi bi-clipboard2-pulse"></i> Tratamientos</a></li>
+                            </ul>
+                        </li>
+                        <!-- NUEVO Menú de Consultas -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="consultasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-search"></i> Consultas
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="consultasDropdown">
+                                <li><a class="dropdown-item" href="HistorialTratamientos.aspx"><i class="bi bi-clock-history"></i> Historial de Tratamientos</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <div class="dropdown">
+                            <a class="nav-link dropdown-toggle user-menu-btn" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person-circle"></i> 
+                                <div class="user-info">
+                                    <span class="user-name"><asp:Label ID="lblNombreUsuario" runat="server" Text="Usuario"></asp:Label></span>
+                                    <span class="user-role">Administrador</span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                              
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <asp:LinkButton ID="btnLogout" runat="server" CssClass="dropdown-item logout-item" OnClick="btnLogout_Click">
+                                        <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                                    </asp:LinkButton>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Contenido Principal de la Página -->
+        <main class="main-content container">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+        </main>
+    </form>
+
+    <!-- Pie de Página con Nueva Clase -->
+    <footer class="main-footer text-center">
+        <div class="container">
+            <span>&copy; <%: DateTime.Now.Year %> - Clínica Estética Dr. Jorge Ibarra. Todos los derechos reservados.</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>

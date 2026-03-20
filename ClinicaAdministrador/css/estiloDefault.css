@@ -1,0 +1,344 @@
+﻿/* =============================================
+   1. VARIABLES GLOBALES Y PALETA DE COLORES PASTEL
+   ============================================= */
+:root {
+    /* Fuentes */
+    --font-family-sans: 'Poppins', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    /* Paleta de Colores Pastel */
+    --primary-pastel-blue: #B3D9FF; /* Azul clínico suave */
+    --primary-pastel-blue-light: #E6F2FF;
+    --accent-pastel-blue: #80C0FF;
+    --secondary-pastel-mint: #B3FFDF; /* Verde menta */
+    --secondary-pastel-mint-light: #E6FFF2;
+    --accent-pastel-mint: #80FFCC;
+    --tertiary-pastel-lavender: #D9B3FF; /* Lavanda */
+    --tertiary-pastel-lavender-light: #F0E6FF;
+    --accent-pastel-lavender: #C280FF;
+    --quaternary-pastel-pink: #FFB3D9; /* Rosa tenue */
+    --quaternary-pastel-pink-light: #FFE6F0;
+    --accent-pastel-pink: #FF80CC;
+    /* Colores para Alertas - Rojo #E83B31 */
+    --alert-pastel-red: #E83B31;
+    --alert-pastel-red-light: #FDE8E7;
+    --accent-pastel-red: #D32A20;
+    /* Colores Neutros */
+    --bg-color: #F8F9FA; /* Beige muy claro */
+    --card-bg: #FFFFFF;
+    --text-primary: #343A40;
+    --text-secondary: #6C757D;
+    --border-color: #E9ECEF;
+    /* Sombras y Efectos */
+    --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.05);
+    --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.1);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* =============================================
+   2. ESTILOS GENERALES Y FONDO
+   ============================================= */
+body {
+    font-family: var(--font-family-sans);
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    position: relative;
+    overflow-x: hidden;
+}
+
+    /* Fondo con formas orgánicas sutiles */
+    body::before, body::after {
+        content: '';
+        position: fixed;
+        border-radius: 50%;
+        z-index: -1;
+        filter: blur(80px);
+        opacity: 0.4;
+    }
+
+    body::before {
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, var(--primary-pastel-blue), transparent);
+        top: -100px;
+        right: -100px;
+    }
+
+    body::after {
+        width: 350px;
+        height: 350px;
+        background: radial-gradient(circle, var(--secondary-pastel-mint), transparent);
+        bottom: -100px;
+        left: -100px;
+    }
+
+.dashboard-container {
+    padding: 2rem 3rem;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+    /* =============================================
+   3. TIPOGRAFÍA Y MENSAJE DE BIENVENIDA
+   ============================================= */
+    .dashboard-container h1 {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+        font-size: 2.2rem;
+    }
+
+    .dashboard-container p {
+        color: var(--text-secondary);
+        font-size: 1.1rem;
+        margin-bottom: 2.5rem;
+    }
+
+/* =============================================
+   4. TARJETAS ESTADÍSTICAS (dashboard-card)
+   ============================================= */
+.dashboard-card {
+    background-color: var(--card-bg);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-soft);
+    transition: var(--transition-smooth);
+    border: 1px solid var(--border-color);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-decoration: none;
+    color: inherit;
+    overflow: hidden;
+    position: relative;
+}
+
+    /* Efecto hover para todas las tarjetas */
+    .dashboard-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-hover);
+        text-decoration: none;
+        color: inherit;
+    }
+
+    /* Icono dentro de las tarjetas */
+    .dashboard-card .card-body i {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        display: inline-block;
+        padding: 1rem;
+        border-radius: 12px;
+        color: var(--card-bg);
+    }
+
+/* --- Personalización por color de tarjeta --- */
+
+/* Pacientes - Verde Menta */
+.dashboard-pacientes {
+    border-left: 5px solid var(--secondary-pastel-mint);
+}
+
+    .dashboard-pacientes:hover {
+        background: linear-gradient(135deg, var(--card-bg) 0%, var(--secondary-pastel-mint-light) 100%);
+    }
+
+    .dashboard-pacientes .card-body i {
+        background-color: var(--secondary-pastel-mint);
+    }
+
+/* Citas - Lavanda */
+.dashboard-citas {
+    border-left: 5px solid var(--tertiary-pastel-lavender);
+}
+
+    .dashboard-citas:hover {
+        background: linear-gradient(135deg, var(--card-bg) 0%, var(--tertiary-pastel-lavender-light) 100%);
+    }
+
+    .dashboard-citas .card-body i {
+        background-color: var(--tertiary-pastel-lavender);
+    }
+
+/* Ingresos - Rosa */
+.dashboard-ingresos {
+    border-left: 5px solid var(--quaternary-pastel-pink);
+}
+
+    .dashboard-ingresos:hover {
+        background: linear-gradient(135deg, var(--card-bg) 0%, var(--quaternary-pastel-pink-light) 100%);
+    }
+
+    .dashboard-ingresos .card-body i {
+        background-color: var(--quaternary-pastel-pink);
+    }
+
+/* Alertas - Rojo #E83B31 */
+.dashboard-alertas {
+    border-left: 5px solid var(--alert-pastel-red);
+}
+
+    .dashboard-alertas:hover {
+        background: linear-gradient(135deg, var(--card-bg) 0%, #FFD1D1 100%);
+    }
+    .dashboard-alertas .card-body i {
+        background-color: var(--alert-pastel-red);
+        color: #FFFFFF;
+    }
+
+/* Estilo del texto dentro de las tarjetas */
+.dashboard-card .card-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.dashboard-card .card-text {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+/* Animación de entrada para las tarjetas */
+.col-md-3 {
+    animation: fadeInUp 0.6s ease-out;
+    animation-fill-mode: both;
+}
+
+    .col-md-3:nth-child(1) {
+        animation-delay: 0.1s;
+    }
+
+    .col-md-3:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+
+    .col-md-3:nth-child(3) {
+        animation-delay: 0.3s;
+    }
+
+    .col-md-3:nth-child(4) {
+        animation-delay: 0.4s;
+    }
+
+
+/* =============================================
+   5. SECCIÓN DE INFORMACIÓN (Citas y Servicios)
+   ============================================= */
+.info-section .card {
+    border: none;
+    border-radius: 16px;
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+    transition: var(--transition-smooth);
+}
+
+    .info-section .card:hover {
+        box-shadow: var(--shadow-hover);
+    }
+
+.info-section .card-header {
+    background-color: var(--bg-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+}
+
+    .info-section .card-header i {
+        margin-right: 0.75rem;
+        color: var(--primary-pastel-blue);
+        font-size: 1.2rem;
+    }
+
+.info-section .card-body {
+    padding: 0;
+}
+
+/* Estilo para la lista personalizada */
+.custom-list-group {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+    /* Asumimos que el contenido de proximas_citas y servicios_populares
+   se genera como <a> o <div> dentro de este contenedor. */
+    .custom-list-group > div,
+    .custom-list-group > a {
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid var(--border-color);
+        color: var(--text-primary);
+        text-decoration: none;
+        transition: var(--transition-smooth);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .custom-list-group > div:last-child,
+        .custom-list-group > a:last-child {
+            border-bottom: none;
+        }
+
+        .custom-list-group > div:hover,
+        .custom-list-group > a:hover {
+            background-color: var(--primary-pastel-blue-light);
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+    /* Si el contenido es una cita, podemos estilizarlo así */
+    .custom-list-group .cita-item {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .custom-list-group .cita-paciente {
+        font-weight: 500;
+    }
+
+    .custom-list-group .cita-hora {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+
+/* =============================================
+   6. ANIMACIONES
+   ============================================= */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =============================================
+   7. RESPONSIVIDAD
+   ============================================= */
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 1.5rem;
+    }
+
+        .dashboard-container h1 {
+            font-size: 1.8rem;
+        }
+
+    .dashboard-card .card-text {
+        font-size: 1.5rem;
+    }
+
+    body::before, body::after {
+        filter: blur(60px);
+        opacity: 0.3;
+    }
+}
